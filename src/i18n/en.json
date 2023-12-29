@@ -1,0 +1,13 @@
+{
+    "menu": {
+        "home": "Anasayfa",
+        "trends": "Trends",
+        "notifications": "Bildirim",
+        "message": "Mesaj",
+        "bookmarks": "Kaydedilenler",
+        "list": "Liste",
+        "profile": "Profil",
+        "more": "Fazlası",
+        "shop": "Market"
+    }
+}
