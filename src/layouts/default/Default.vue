@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-import DefaultBar from "./SideBar.vue";
+import DefaultBar from './SideBar.vue';
 
 </script>

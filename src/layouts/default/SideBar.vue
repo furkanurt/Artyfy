@@ -8,7 +8,6 @@
           <v-list-item class="logo">
             <v-img
               :width="300"
-              aspect-ratio="16/9"
               cover
               src="../../assets/logo.svg"
             ></v-img>
@@ -54,14 +53,34 @@
             :title="$t('menu.more')"
             value="more"
           ></v-list-item>
-          <v-list-item style="width: 200px;margin-top: 30px;">
-            <v-btn block rounded="xl" size="medium">
-              <v-list-item
-                prepend-icon="mdi-cart-minus"
-                :title="$t('menu.shop')"
-                value="shop"
-              />
-            </v-btn>
+          <v-list-item
+            prepend-icon="mdi-cart-minus"
+            :title="$t('menu.shop')"
+            value="shop"
+            class="shop-menu-btn"
+            style="color: #fff"
+          ></v-list-item>
+          <v-list-item
+            style="bottom: 10px;position: fixed;"
+          >
+            <div class="profile">
+              <div style="display: flex;">
+                <v-img
+                  :width="40"
+                  :height="40"
+                  cover
+                  src="../../assets/profile.svg"
+                  class="profile-img"
+                  ></v-img>
+                  <div style="display: grid;margin-left: 10px;">
+                    <span>{{ user.userName }}</span>
+                    <span>@{{ user.userId }}</span>
+                  </div>
+              </div>
+              <div style="padding-left: 60px;padding-top: 10px;">
+                <v-icon icon="mdi-dots-horizontal"></v-icon>
+              </div>
+            </div>
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
@@ -76,6 +95,11 @@ import DefaultView from './View.vue';
 import i18n from '@/i18n';
 
 const { t } = i18n;
+
+const user = {
+  userName: 'Gülsüm Vural',
+  userId: 'glsmvrl'
+};
 
 </script>
 
@@ -106,13 +130,26 @@ const { t } = i18n;
     .v-list {
       margin: 20px 30px;
       .v-list-item {
-        color: black;
-        .v-list-item__content {
-          .v-list-item {
-            color: white;
-          }
-        }
+        color: #000;
       }
+    }
+  }
+
+  .shop-menu-btn {
+    margin-top: 30px;
+    width: 200px;
+    height: 40px;
+    background-color: #fa9392;
+    border-radius: 100px;
+    padding: 0px 30px;
+  }
+
+  .profile {
+    display: flex;
+    justify-content: space-between;
+    .profile-img {
+      border-radius: 100%;
+      align-items: center;
     }
   }
 }
