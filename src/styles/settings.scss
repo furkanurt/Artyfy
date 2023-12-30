@@ -1,10 +1,10 @@
-/**
- * src/styles/settings.scss
- *
- * Configures SASS variables and Vuetify overwrites
- */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
-// https://vuetifyjs.com/features/sass-variables/`
-// @use 'vuetify/settings' with (
-//   $color-pack: false
-// );
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.v-list-item--nav .v-list-item-title {
+    font-size: 20px !important;
+    line-height: 40px;
+}
