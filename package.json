@@ -11,6 +11,7 @@
   "dependencies": {
     "@mdi/font": "7.0.96",
     "axios": "^1.6.3",
+    "babel-eslint": "^10.1.0",
     "core-js": "^3.29.0",
     "dayjs": "^1.11.10",
     "pinia": "^2.0.0",

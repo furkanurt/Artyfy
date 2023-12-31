@@ -1,13 +1,18 @@
 {
-    "menu": {
-        "home": "Anasayfa",
-        "trends": "Trends",
-        "notifications": "Bildirim",
-        "message": "Mesaj",
-        "bookmarks": "Kaydedilenler",
-        "lists": "Liste",
-        "profile": "Profil",
-        "more": "Fazlası",
-        "shop": "Market"
-    }
+  "menu": {
+    "home": "Anasayfa",
+    "trends": "Trends",
+    "notifications": "Bildirim",
+    "message": "Mesaj",
+    "bookmarks": "Kaydedilenler",
+    "lists": "Liste",
+    "profile": "Profil",
+    "more": "Fazlası",
+    "shop": "Market"
+  },
+  "whatsTrend": "What’s Trend On ARTFY",
+  "trendingWith": "Trending With",
+  "showMore": "Show More",
+  "followSuggestion": "Who to Follow",
+  "follow": "Follow"
 }
