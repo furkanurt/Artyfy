@@ -20,7 +20,7 @@
         <div class="card-item">
           <div style="min-width: 130px; margin-right: 10px">
             <v-card-subtitle>@{{ item.writer }} • Last Night</v-card-subtitle>
-            <v-card-text class="font-italic" style="margin: 6px 0px">
+            <v-card-text style="margin: 6px 0px">
               {{ item.text }}
             </v-card-text>
             <v-card-subtitle
@@ -72,7 +72,6 @@
 
         <template v-slot:append>
           <v-btn
-            class="font-italic"
             color="grey-lighten-1"
             variant="text"
             style="
@@ -92,7 +91,7 @@
       </v-card-item>
     </v-card>
 
-    <v-footer style="ont-style: italic"
+    <v-footer
       >Terms of Service Privacy Policy Cookie Policy Ads info More ©{{
         year
       }}
@@ -105,7 +104,7 @@
 import DummyService from '@/services/dummy.service';
 import dayjs from 'dayjs';
 
-const posts = DummyService.fetchPost();
+const posts = DummyService.fetchTrendSuggestions();
 const userSuggestions = DummyService.fetchUserSuggestions();
 const year = dayjs().year();
 </script>
@@ -113,6 +112,7 @@ const year = dayjs().year();
 <style lang="scss" scoped>
 .v-layout {
   display: grid !important;
+  position: fixed !important;
 
   .v-input {
     padding: 0px 4px;

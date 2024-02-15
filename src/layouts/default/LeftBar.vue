@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout class="left-bar">
     <!-- burası side bar kısmı sayfa akışında fix kalıcak -->
     <v-navigation-drawer permanent theme="dark">
       <div class="logo">
@@ -12,6 +12,7 @@
           :value="item.text"
           :title="$t(`menu.${item.text}`)"
           @click="clickMenuItem(item.text)"
+          class="flex justify-center"
         >
           <template v-slot:prepend>
             <v-icon :icon="item.icon"></v-icon>
@@ -19,7 +20,7 @@
           <v-list-item-title :v-text="item.text"></v-list-item-title>
         </v-list-item>
       </v-list>
-      <div style="bottom: 20px; position: fixed; left: 50px; cursor: pointer">
+      <div style="bottom: 20px; position: fixed; left: 60px; cursor: pointer">
         <div class="profile">
           <div style="display: flex" @click="goToProfile()">
             <v-img
@@ -74,13 +75,12 @@ function goToProfile() {
 </script>
 
 <style lang="scss" scoped>
-.v-layout {
+.left-bar {
   background-color: #fff;
-  width: 100%;
-  height: 100vh;
   font-size: 20px;
-  font-style: italic;
   position: fixed !important;
+  width: 23%;
+  height: 100vh;
 }
 
 .logo {
@@ -93,17 +93,16 @@ function goToProfile() {
 }
 
 .v-navigation-drawer {
-  width: 340px !important;
   background-color: #fbf5e6;
-  position: fixed;
-
+  position: static;
+  width: 100% !important;
   .v-navigation-drawer--left {
     border-right-width: none;
   }
 
   .v-navigation-drawer__content {
     .v-list {
-      margin: 20px 30px;
+      margin: 20px 60px;
 
       .v-list-item {
         color: #000;
