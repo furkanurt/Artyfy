@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout class="h-screen">
     <v-text-field
       label="Search"
       variant="solo-filled"

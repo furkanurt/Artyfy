@@ -26,6 +26,6 @@ import DefaultView from './View.vue';
 .v-divider {
   height: 100vh !important;
   z-index: 10000;
-  position: absolute;
+  position: fixed !important;
 }
 </style>

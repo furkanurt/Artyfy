@@ -45,10 +45,6 @@
 </template>
 
 <script setup>
-import i18n from '@/i18n';
-
-const { t } = i18n;
-
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },

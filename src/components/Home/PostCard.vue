@@ -63,11 +63,16 @@
               <div class="w-full flex justify-between">
                 <div class="flex justify-start">
                   <div>
-                    <v-btn icon="mdi-heart-outline" size="x-small"></v-btn>
+                    <v-btn
+                      icon="mdi-heart"
+                      size="x-small"
+                      :color="likeCount ? `red` : `black`"
+                      @click="likeCount = !likeCount"
+                    ></v-btn>
                     <span class="align-middle">{{ post.likeCount }}</span>
                   </div>
                   <div class="ml-5">
-                    <v-btn icon="mdi-comment-outline" size="x-small"></v-btn>
+                    <v-btn icon="mdi-comment" size="x-small"></v-btn>
                     <span class="align-middle">{{ post.commentCount }}</span>
                   </div>
                 </div>
@@ -86,11 +91,13 @@
 </template>
 <script setup>
 import DummyService from '@/services/dummy.service';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const posts = DummyService.fetchPost();
 const loading = computed(() => {
   if (posts) return false;
   return true;
 });
+
+const likeCount = ref(false);
 </script>
