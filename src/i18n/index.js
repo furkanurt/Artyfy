@@ -7,6 +7,7 @@ import tr from './tr.json';
 const current = localStorage.getItem('portalLang') || 'tr';
 
 const i18n = createI18n({
+  legacy: false,
   locale: current,
   fallbackLocale: current,
   messages: {
