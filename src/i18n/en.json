@@ -14,5 +14,17 @@
   "trendingWith": "Trending With",
   "showMore": "Show More",
   "followSuggestion": "Who to Follow",
-  "follow": "Follow"
+  "follow": "Follow",
+  "login": {
+    "title": "Welcome back!",
+    "email": "Email Address",
+    "password": "Password",
+    "enterEmail": "Enter your email addres",
+    "enterPassword": "Enter your password",
+    "validEmail": "Must be a valid e-mail.",
+    "forgotPassword": "Forgot login password?",
+    "dontHaveAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "login": "Login"
+  }
 }
