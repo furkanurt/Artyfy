@@ -26,6 +26,18 @@
     "dontHaveAccount": "Don't have an account?",
     "signUp": "Sign up",
     "login": "Login",
-    "dontSentEmpty": "Email and password cannot be sent empty!"
+    "checkInfo": "Check your information"
+  },
+  "register": {
+    "title": "Register",
+    "name": "Name",
+    "surname": "Surname",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "haveAccount": "Have an account?",
+    "login": "Login",
+    "checkInfo": "Check your information"
   }
 }
