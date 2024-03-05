@@ -172,7 +172,7 @@ const rules = computed(() => {
     },
     confirmPassword: {
       required,
-      sameAs: sameAs(user.value.password),
+      sameAs: sameAs(user.password),
     },
   };
 });
