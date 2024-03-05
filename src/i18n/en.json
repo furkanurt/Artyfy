@@ -25,6 +25,7 @@
     "forgotPassword": "Forgot login password?",
     "dontHaveAccount": "Don't have an account?",
     "signUp": "Sign up",
-    "login": "Login"
+    "login": "Login",
+    "dontSentEmpty": "Email and password cannot be sent empty!"
   }
 }

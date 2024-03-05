@@ -75,6 +75,13 @@
               {{ $t('login.signUp') }}
             </a>
           </div>
+          <v-alert
+            v-if="showAlert"
+            type="error"
+            class="mt-20"
+            transition="slide-y-transition"
+            >{{ $t('login.dontSentEmpty') }}</v-alert
+          >
         </v-sheet>
       </v-col>
       <v-col>
@@ -96,6 +103,7 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const showPassword = ref(false);
 const disabledBtn = ref(false);
+const showAlert = ref(false);
 const form = ref(null);
 const user = ref({
   email: '',
@@ -116,9 +124,17 @@ const emailRule = [
 ];
 
 const login = () => {
-  localStorage.setItem('token', '12345');
-  router.push('/');
-  console.log(user.value);
+  if (user.value.email === '' || user.value.password === '') {
+    showAlert.value = true;
+    setInterval(() => {
+      showAlert.value = false;
+    }, 3000);
+    clearInterval();
+  } else {
+    localStorage.setItem('token', '12345');
+    router.push('/');
+    console.log(user.value);
+  }
 };
 </script>
 
