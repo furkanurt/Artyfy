@@ -13,12 +13,18 @@ export type User = {
 };
 
 export type KeycloakUser = null | {
-  name?: string;
-  surname?: string;
-  username?: string;
-  email?: string;
-  phoneNumber?: string;
-  password?: string;
+  access_token: string;
+  expires_in: number;
+  not_before_policy: number;
+  refresh_expires_in: number;
+  refresh_token: string;
+  scope: string;
+  session_state: string;
+  token_type: string;
+};
+
+export type AccountStore = {
+  user: KeycloakUser;
 };
 
 export type Post = {
@@ -55,3 +61,10 @@ export type ErrorResponse = AxiosError<{
   errCode: string;
   message: string;
 }>;
+
+export type AppStore = {
+  locale: any;
+  breakpoint: string;
+  isMobile: boolean;
+  mobileMenuCollapsed: boolean;
+};

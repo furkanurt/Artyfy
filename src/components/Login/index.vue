@@ -89,6 +89,7 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -115,6 +116,8 @@ const emailRule = [
 ];
 
 const login = () => {
+  localStorage.setItem('token', '12345');
+  router.push('/');
   console.log(user.value);
 };
 </script>

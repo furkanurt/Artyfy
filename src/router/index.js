@@ -19,4 +19,19 @@ const router = createRouter({
   routes,
 });
 
+const isLoggedIn = () => {
+  return localStorage.getItem('token');
+};
+
+const protectedRoutes = ['Home'];
+
+router.beforeEach((to, from, next) => {
+  const isProtected = protectedRoutes.includes(to.name);
+  if (isProtected && !isLoggedIn()) {
+    next({
+      path: '/login',
+    });
+  } else next();
+});
+
 export default router;
