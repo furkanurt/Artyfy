@@ -1,11 +1,23 @@
 <template>
-  <div>
-    <div class="w-full py-5 pl-7">
+  <div :class="appStore.isMobile ? 'pt-4' : ''">
+    <div
+      class="flex justify-between items-center py-5 pl-7"
+      v-if="!appStore.isMobile"
+    >
       <p class="font-extrabold text-xl">Home</p>
+      <div v-if="appStore.breakpoint === 'md'" class="w-full px-3">
+        <v-text-field
+          label="Search"
+          density="compact"
+          variant="solo"
+          hide-details="auto"
+          append-inner-icon="mdi-magnify"
+        ></v-text-field>
+      </div>
     </div>
-    <v-divider></v-divider>
+    <v-divider v-if="!appStore.isMobile"></v-divider>
     <v-textarea
-      bg-color="white"
+      color="#FFF"
       label="What's Happening?"
       rows="3"
       class="px-7"
@@ -33,3 +45,7 @@
     </div>
   </div>
 </template>
+<script setup>
+import { useAppStore } from '@/store/app';
+const appStore = useAppStore();
+</script>

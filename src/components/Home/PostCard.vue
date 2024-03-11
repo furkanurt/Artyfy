@@ -12,16 +12,16 @@
             <v-card-item>
               <div class="flex justify-between">
                 <div class="flex align-middle my-2">
-                  <v-avatar size="48">
+                  <v-avatar :size="appStore.isMobile ? '32' : '48'">
                     <img :src="post.avatar" alt="avatar" />
                   </v-avatar>
-                  <div>
-                    <div class="flex ml-5 align-middle">
-                      <div class="mr-2 font-bold">{{ post.name }}</div>
-                      <div class="mr-2">@{{ post.userName }}</div>
+                  <div class="mobile-user-info">
+                    <div class="flex ml-5 align-middle div-1">
+                      <div class="font-bold mr-2 div1-1">{{ post.name }}</div>
+                      <div class="mr-2 div1-2">@{{ post.userName }}</div>
                       <div>• {{ post.time }}</div>
                     </div>
-                    <div class="ml-5">{{ post.postDescription }}</div>
+                    <div class="ml-5 div-2">{{ post.postDescription }}</div>
                   </div>
                 </div>
                 <div>
@@ -37,6 +37,7 @@
                         "
                         class="text-white w-4 h-4 mx-2 my-2"
                         rounded="xl"
+                        :size="appStore.isMobile ? 'x-small' : 'small'"
                       >
                         <v-icon color="white"> mdi-shopping-outline </v-icon>
                       </v-btn>
@@ -48,7 +49,7 @@
               </div>
             </v-card-item>
             <v-card-text>
-              <div class="w-full">
+              <div class="w-full mobile-carousel">
                 <v-carousel hide-delimiter-background show-arrows="hover">
                   <v-carousel-item
                     v-for="(image, i) in post.postImage"
@@ -92,8 +93,10 @@
 <script setup>
 import DummyService from '@/services/dummy.service';
 import { computed, ref } from 'vue';
+import { useAppStore } from '@/store/app';
 
 const posts = DummyService.fetchPost();
+const appStore = useAppStore();
 const loading = computed(() => {
   if (posts) return false;
   return true;
@@ -101,3 +104,32 @@ const loading = computed(() => {
 
 const likeCount = ref(false);
 </script>
+<style lang="scss" scoped>
+@media screen and (max-width: 425px) {
+  .mobile-user-info {
+    font-size: 12px;
+    .div-1 {
+      margin-left: 10px !important;
+      .div1-1 {
+        margin-right: 3px !important;
+      }
+      .div1-2 {
+        margin-right: 3px !important;
+      }
+    }
+    .div-2 {
+      margin-left: 10px !important;
+    }
+  }
+
+  .mobile-carousel {
+    .v-carousel {
+      .v-carousel-item {
+        .v-img {
+          object-fit: contain !important;
+        }
+      }
+    }
+  }
+}
+</style>

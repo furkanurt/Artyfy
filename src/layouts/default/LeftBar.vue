@@ -5,22 +5,33 @@
       <div class="logo">
         <v-img :width="300" cover src="../../assets/logo.svg"></v-img>
       </div>
-      <v-list nav>
-        <v-list-item
-          v-for="(item, index) in value"
-          :key="index"
-          :value="item.text"
-          :title="$t(`menu.${item.text}`)"
-          @click="clickMenuItem(item.text)"
-          class="flex justify-center"
-        >
-          <template v-slot:prepend>
-            <v-icon :icon="item.icon"></v-icon>
-          </template>
-          <v-list-item-title :v-text="item.text"></v-list-item-title>
-        </v-list-item>
-      </v-list>
-      <div style="bottom: 20px; position: fixed; left: 60px; cursor: pointer">
+      <div style="display: flex; justify-content: center">
+        <v-list nav>
+          <v-list-item
+            v-for="(item, index) in value"
+            :key="index"
+            :value="item.text"
+            :title="$t(`menu.${item.text}`)"
+            @click="clickMenuItem(item.text)"
+            class="flex justify-center"
+          >
+            <template v-slot:prepend>
+              <v-icon :icon="item.icon"></v-icon>
+            </template>
+            <v-list-item-title :v-text="item.text"></v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </div>
+      <div
+        style="
+          width: 100%;
+          bottom: 20px;
+          position: fixed;
+          display: flex;
+          justify-content: center;
+          cursor: pointer;
+        "
+      >
         <div class="profile">
           <div style="display: flex" @click="goToProfile()">
             <v-img
@@ -35,7 +46,7 @@
               <span style="font-style: normal">@{{ user.userId }}</span>
             </div>
           </div>
-          <div style="padding-left: 60px; padding-top: 10px">
+          <div class="profile-div">
             <v-icon icon="mdi-dots-horizontal"></v-icon>
           </div>
         </div>
@@ -124,6 +135,35 @@ function goToProfile() {
   .profile-img {
     border-radius: 100%;
     align-items: center;
+  }
+
+  .profile-div {
+    padding-left: 60px;
+    padding-top: 10px;
+  }
+}
+
+@media screen and (max-width: 1264px) {
+  .left-bar {
+    width: 33.33%;
+  }
+  .v-navigation-drawer {
+    .v-navigation-drawer__content {
+      .v-list {
+        margin: 0px;
+      }
+    }
+  }
+  .profile {
+    .profile-div {
+      padding-left: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .v-layout {
+    display: none;
   }
 }
 </style>

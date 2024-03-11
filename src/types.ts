@@ -63,7 +63,7 @@ export type ErrorResponse = AxiosError<{
 }>;
 
 export type AppStore = {
-  locale: any;
+  locale?: any;
   breakpoint: string;
   isMobile: boolean;
   mobileMenuCollapsed: boolean;

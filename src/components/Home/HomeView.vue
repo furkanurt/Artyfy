@@ -16,4 +16,20 @@ import PostInput from './PostInput.vue';
   position: absolute !important;
   width: 50%;
 }
+
+@media screen and (max-width: 1264px) {
+  .v-layout {
+    display: block;
+    position: absolute !important;
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .v-layout {
+    display: block;
+    position: absolute !important;
+    width: 100%;
+  }
+}
 </style>

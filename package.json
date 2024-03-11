@@ -16,10 +16,11 @@
     "babel-eslint": "^10.1.0",
     "core-js": "^3.29.0",
     "dayjs": "^1.11.10",
+    "lodash.debounce": "^4.0.8",
     "pinia": "^2.0.0",
     "roboto-fontface": "*",
     "vue": "^3.2.0",
-    "vue-i18n": "^9.8.0",
+    "vue-i18n": "^9.10.1",
     "vue-router": "^4.0.0",
     "vuetify": "^3.0.0"
   },
@@ -36,6 +37,6 @@
     "tailwindcss": "^3.4.1",
     "unplugin-fonts": "^1.0.3",
     "vite": "^4.2.0",
-    "vite-plugin-vuetify": "^1.0.0"
+    "vite-plugin-vuetify": "^1.0.2"
   }
 }
