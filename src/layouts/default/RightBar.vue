@@ -132,4 +132,10 @@ const year = dayjs().year();
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .v-layout {
+    display: none;
+  }
+}
 </style>

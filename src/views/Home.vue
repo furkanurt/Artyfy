@@ -1,14 +1,31 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <v-app>
-    <v-row no-gutters>
-      <v-col cols="12" sm="3" style="max-width: 23%">
+  <div v-if="appStore.isMobile">
+    <AppBar />
+    <HomeView />
+  </div>
+  <v-app v-if="!appStore.isMobile">
+    <v-row no-gutters v-if="appStore.breakpoint === 'md'">
+      <v-col cols="4">
+        <v-sheet>
+          <left-bar />
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="8">
+        <v-sheet>
+          <HomeView />
+        </v-sheet>
+      </v-col>
+    </v-row>
+    <v-row no-gutters v-else>
+      <v-col cols="12" sm="3" style="max-width: 23%" class="mobile-left">
         <left-bar />
       </v-col>
       <v-col cols="12" sm="6">
         <HomeView />
       </v-col>
-      <v-col cols="12" sm="3">
+      <v-col cols="12" sm="3" class="mobile-right">
         <v-divider vertical></v-divider>
         <right-bar style="padding: 20px" />
       </v-col>
@@ -20,6 +37,11 @@
 import LeftBar from '@/layouts/default/LeftBar.vue';
 import RightBar from '@/layouts/default/RightBar.vue';
 import HomeView from '@/components/Home/HomeView.vue';
+import AppBar from '@/layouts/default/AppBar.vue';
+import { useAppStore } from '@/store/app';
+
+const appStore = useAppStore();
+console.log(appStore.breakpoint);
 </script>
 
 <style lang="scss" scoped>
@@ -27,5 +49,16 @@ import HomeView from '@/components/Home/HomeView.vue';
   height: 100vh !important;
   z-index: 10000;
   position: fixed !important;
+}
+
+@media screen and (max-width: 768px) {
+  .v-row {
+    .mobile-right {
+      display: none;
+    }
+    .mobile-left {
+      display: none;
+    }
+  }
 }
 </style>
