@@ -4,8 +4,8 @@
       class="flex justify-between items-center py-5 pl-7"
       v-if="!appStore.isMobile"
     >
-      <p class="font-extrabold text-xl">Home</p>
-      <div v-if="appStore.breakpoint === 'md'" class="w-full px-3">
+      <!-- <p class="font-extrabold text-xl">Home</p> -->
+      <div v-if="appStore.breakpoint === 'md'" class="w-full pr-3">
         <v-text-field
           label="Search"
           density="compact"

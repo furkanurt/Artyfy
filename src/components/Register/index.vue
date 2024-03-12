@@ -209,7 +209,7 @@ const register = async () => {
 @media screen and (max-width: 768px) {
   .v-container {
     .col-1 {
-      padding-top: 10rem !important;
+      padding-top: 5rem !important;
     }
     .v-row {
       padding: 0px 20px;

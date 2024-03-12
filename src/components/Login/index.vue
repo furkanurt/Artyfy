@@ -87,7 +87,7 @@
       <v-col>
         <v-sheet class="login-bg h-screen">
           <div class="h-full flex items-center bg-[#fbf5e6]">
-            <v-img cover data-src="@/assets/images/login-bg.svg"></v-img>
+            <v-img cover src="@/assets/images/login-bg.svg"></v-img>
           </div>
         </v-sheet>
       </v-col>
@@ -153,7 +153,7 @@ const login = async () => {
 @media screen and (max-width: 768px) {
   .v-container {
     .col-1 {
-      padding-top: 8rem !important;
+      padding-top: 5rem !important;
     }
     .v-row {
       padding: 0px 20px;
