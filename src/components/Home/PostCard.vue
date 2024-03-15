@@ -204,16 +204,13 @@
 </template>
 <script setup>
 import DummyService from '@/services/dummy.service';
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useAppStore } from '@/store/app';
 import { useSearchStore } from '@/store/search';
 
 const likeCount = ref(false);
-const showComments = ref('false');
+const showComments = ref(false);
 
-onMounted(() => {
-  showComments.value = false;
-});
 const posts = DummyService.fetchPost();
 const appStore = useAppStore();
 const searchStore = useSearchStore();
