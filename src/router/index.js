@@ -17,6 +17,11 @@ const routes = [
     name: 'Register',
     component: () => import('@/components/Register/index.vue'),
   },
+  {
+    path: '/shop',
+    name: 'Shop',
+    component: () => import('@/views/Shop.vue'),
+  },
 ];
 
 const router = createRouter({
@@ -28,7 +33,7 @@ const isLoggedIn = () => {
   return localStorage.getItem('token');
 };
 
-const protectedRoutes = ['Home'];
+const protectedRoutes = ['Home', 'Shop'];
 
 router.beforeEach((to, from, next) => {
   const isProtected = protectedRoutes.includes(to.name);

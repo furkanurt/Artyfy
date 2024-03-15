@@ -13,7 +13,7 @@
             :value="item.text"
             :title="$t(`menu.${item.text}`)"
             @click="clickMenuItem(item.text)"
-            class="flex justify-center"
+            class="flex justify-center list-item"
           >
             <template v-slot:prepend>
               <v-icon :icon="item.icon"></v-icon>
@@ -56,14 +56,14 @@
 </template>
 
 <script setup>
+import router from '@/router';
+
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },
   { text: 'notifications', icon: 'mdi-bell-outline' },
   { text: 'message', icon: 'mdi-inbox-outline' },
   { text: 'bookmarks', icon: 'mdi-bookmark-outline' },
-  { text: 'lists', icon: 'mdi-list-box-outline' },
-  { text: 'more', icon: 'mdi-dots-horizontal-circle-outline' },
   { text: 'shop', icon: 'mdi-cart-minus' },
 ];
 
@@ -73,7 +73,11 @@ const user = {
 };
 
 function clickMenuItem(value) {
-  console.log('clicked item', value);
+  if (value === 'home') {
+    router.push('/');
+  } else {
+    router.push(`/${value}`);
+  }
 }
 
 function goToProfile() {

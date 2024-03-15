@@ -14,10 +14,12 @@
               </div>
 
               <v-text-field
+                v-model="searchValue"
                 density="compact"
                 variant="underline"
                 hide-details="auto"
                 append-inner-icon="mdi-magnify"
+                @input="filteredPosts"
               ></v-text-field>
             </v-app-bar>
           </v-layout>
@@ -36,7 +38,7 @@
                 :key="index"
                 :value="item.text"
                 :title="$t(`menu.${item.text}`)"
-                @click="showNav = false"
+                @click="clickMenuItem(item.text)"
                 class="flex justify-center"
               >
                 <template v-slot:prepend>
@@ -53,19 +55,39 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import { useSearchStore } from '@/store/search';
+import router from '@/router';
+import { useRoute } from 'vue-router';
 
+const searchStore = useSearchStore();
 const showNav = ref(false);
+const searchValue = ref('');
+const route = useRoute();
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },
   { text: 'notifications', icon: 'mdi-bell-outline' },
   { text: 'message', icon: 'mdi-inbox-outline' },
   { text: 'bookmarks', icon: 'mdi-bookmark-outline' },
-  { text: 'lists', icon: 'mdi-list-box-outline' },
-  { text: 'more', icon: 'mdi-dots-horizontal-circle-outline' },
   { text: 'shop', icon: 'mdi-cart-minus' },
   { text: 'profile', icon: 'mdi-account' },
 ];
+const filteredPosts = () => {
+  if (route.path === '/shop') {
+    searchStore.fetchMarketPost(searchValue.value);
+  } else {
+    searchStore.fetchPost(searchValue.value);
+  }
+};
+
+function clickMenuItem(value) {
+  showNav.value = false;
+  if (value === 'home') {
+    router.push('/');
+  } else {
+    router.push(`/${value}`);
+  }
+}
 </script>
 <style lang="scss" scoped>
 .v-container {

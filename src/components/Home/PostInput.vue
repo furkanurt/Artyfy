@@ -7,11 +7,13 @@
       <!-- <p class="font-extrabold text-xl">Home</p> -->
       <div v-if="appStore.breakpoint === 'md'" class="w-full pr-3">
         <v-text-field
+          v-model="searchValue"
           label="Search"
           density="compact"
           variant="solo"
           hide-details="auto"
           append-inner-icon="mdi-magnify"
+          @input="filteredPosts"
         ></v-text-field>
       </div>
     </div>
@@ -47,5 +49,14 @@
 </template>
 <script setup>
 import { useAppStore } from '@/store/app';
+import { computed, ref } from 'vue';
+import { useSearchStore } from '@/store/search';
+
 const appStore = useAppStore();
+const searchStore = useSearchStore();
+const searchValue = ref('');
+
+const filteredPosts = computed(() => {
+  return searchStore.fetchPost(searchValue.value);
+});
 </script>

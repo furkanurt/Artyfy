@@ -39,5 +39,8 @@
     "haveAccount": "Have an account?",
     "login": "Login",
     "checkInfo": "Check your information"
+  },
+  "shop": {
+    "review": "Review"
   }
 }

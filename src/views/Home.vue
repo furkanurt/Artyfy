@@ -41,7 +41,6 @@ import AppBar from '@/layouts/default/AppBar.vue';
 import { useAppStore } from '@/store/app';
 
 const appStore = useAppStore();
-console.log(appStore.breakpoint);
 </script>
 
 <style lang="scss" scoped>

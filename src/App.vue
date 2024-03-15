@@ -34,7 +34,7 @@ const setScreenSize = () => {
   } else if (innerWidth <= 768) {
     breakpoint = SM;
     isMobile = true;
-  } else if (innerWidth < 1264) {
+  } else if (innerWidth < 1265) {
     breakpoint = MD;
   } else if (innerWidth < 1904) {
     breakpoint = LG;
