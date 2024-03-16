@@ -54,7 +54,7 @@
   </v-container>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useSearchStore } from '@/store/search';
 import router from '@/router';
 import { useRoute } from 'vue-router';
@@ -67,11 +67,15 @@ const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },
   { text: 'notifications', icon: 'mdi-bell-outline' },
-  { text: 'message', icon: 'mdi-inbox-outline' },
   { text: 'bookmarks', icon: 'mdi-bookmark-outline' },
   { text: 'shop', icon: 'mdi-cart-minus' },
   { text: 'profile', icon: 'mdi-account' },
 ];
+
+onMounted(() => {
+  searchValue.value = '';
+});
+
 const filteredPosts = () => {
   if (route.path === '/shop') {
     searchStore.fetchMarketPost(searchValue.value);

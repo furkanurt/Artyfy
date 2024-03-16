@@ -62,7 +62,6 @@ const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },
   { text: 'notifications', icon: 'mdi-bell-outline' },
-  { text: 'message', icon: 'mdi-inbox-outline' },
   { text: 'bookmarks', icon: 'mdi-bookmark-outline' },
   { text: 'shop', icon: 'mdi-cart-minus' },
 ];

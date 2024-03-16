@@ -22,6 +22,11 @@ const routes = [
     name: 'Shop',
     component: () => import('@/views/Shop.vue'),
   },
+  {
+    path: '/post-detail/:id',
+    name: 'PostDetail',
+    component: () => import('@/views/PostDetail.vue'),
+  },
 ];
 
 const router = createRouter({

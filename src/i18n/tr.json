@@ -1,46 +1,50 @@
 {
   "menu": {
     "home": "Anasayfa",
-    "trends": "Trends",
-    "notifications": "Bildirim",
-    "message": "Mesaj",
-    "bookmarks": "Kaydedilenler",
-    "lists": "Liste",
+    "trends": "Trendler",
+    "notifications": "Bildirimler",
+    "bookmarks": "Yer İşaretleri",
     "profile": "Profil",
-    "more": "Fazlası",
-    "shop": "Market"
+    "shop": "Mağaza"
   },
-  "whatsTrend": "What’s Trend On ARTFY",
+  "whatsTrend": "ARTFY'de Trend Olanlar",
+  "search": "Ara",
+  "whatsHappenin": "Neler Oluyor?",
   "trendingWith": "Trending With",
-  "showMore": "Show More",
-  "followSuggestion": "Who to Follow",
-  "follow": "Follow",
+  "showMore": "Daha Fazla Göster",
+  "followSuggestion": "Kimleri Takip Etmelisin",
+  "follow": "Takip Et",
   "login": {
-    "title": "Welcome back!",
-    "email": "Email Address",
-    "password": "Password",
-    "enterEmail": "Enter your email addres",
-    "enterPassword": "Enter your password",
-    "validEmail": "Must be a valid e-mail.",
-    "forgotPassword": "Forgot login password?",
-    "dontHaveAccount": "Don't have an account?",
-    "signUp": "Sign up",
-    "login": "Login",
-    "checkInfo": "Check your information"
+    "title": "Tekrar Hoş Geldiniz!",
+    "email": "E-posta Adresi",
+    "password": "Şifre",
+    "enterEmail": "E-posta adresinizi girin",
+    "enterPassword": "Şifrenizi girin",
+    "validEmail": "Geçerli bir e-posta olmalıdır.",
+    "forgotPassword": "Giriş şifresini mi unuttunuz?",
+    "dontHaveAccount": "Hesabınız yok mu?",
+    "signUp": "Kaydol",
+    "login": "Giriş",
+    "checkInfo": "Bilgilerinizi kontrol edin"
   },
   "register": {
-    "title": "Register",
-    "name": "Name",
-    "surname": "Surname",
-    "username": "Username",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "haveAccount": "Have an account?",
-    "login": "Login",
-    "checkInfo": "Check your information"
+    "title": "Kayıt Ol",
+    "name": "Ad",
+    "surname": "Soyad",
+    "username": "Kullanıcı Adı",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "haveAccount": "Hesabınız var mı?",
+    "login": "Giriş",
+    "checkInfo": "Bilgilerinizi kontrol edin"
   },
   "shop": {
-    "review": "Review"
+    "review": "İncele"
+  },
+  "postCard": {
+    "onSale": "Satışta",
+    "notOnSale": "Satışta Değil",
+    "post": "Gönder"
   }
 }

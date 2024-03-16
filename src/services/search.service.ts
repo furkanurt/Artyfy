@@ -2,10 +2,17 @@ import ArtyfyService from './artyfy.service';
 import DummyService from './dummy.service';
 
 const posts = DummyService.fetchPost();
-const marketPost = DummyService.fetchShopProduct();
 
 class SearchService extends ArtyfyService {
-  fetchSearchPost(searchValue) {
+  fetchShopPost() {
+    return posts.filter((item) => {
+      if (item.isOnSale === true) {
+        return item;
+      }
+    });
+  }
+
+  fetchSearchPosts(searchValue) {
     return posts.filter(({ name, userName, postDescription }) =>
       [name, userName, postDescription].some((val) =>
         val.toLowerCase().includes(searchValue),
@@ -13,12 +20,26 @@ class SearchService extends ArtyfyService {
     );
   }
 
-  fetchSearchMarketPost(searchValue) {
-    return marketPost.filter(({ productDescription, userName }) =>
-      [productDescription, userName].some((val) =>
+  fetchSearchMarketPosts(searchValue) {
+    const marketPost = this.fetchShopPost();
+    return marketPost.filter(({ name, userName, postDescription }) =>
+      [name, userName, postDescription].some((val) =>
         val.toLowerCase().includes(searchValue),
       ),
     );
+  }
+
+  fetchSearchResultPost(params) {
+    return posts.filter((item) => {
+      if (item.id === params) return item;
+    });
+  }
+
+  fetchSearchMarketResultPost(params) {
+    const marketPost = this.fetchShopPost();
+    return marketPost.filter((item) => {
+      if (item.id === params) return item;
+    });
   }
 }
 

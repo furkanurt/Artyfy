@@ -2,7 +2,7 @@
   <v-layout class="h-screen">
     <v-text-field
       v-model="searchValue"
-      label="Search"
+      :label="$t('search')"
       variant="solo-filled"
       prepend-inner-icon="mdi-magnify"
       @input="filteredPosts"
@@ -56,7 +56,7 @@
       <v-card>
         <v-card-item>
           <div>
-            <div class="text-overline mb-1">Who To Follow</div>
+            <div class="text-overline mb-1">{{ $t('followSuggestion') }}</div>
             <v-divider horizontal></v-divider>
           </div>
         </v-card-item>
@@ -102,7 +102,7 @@
         theme="dark"
         v-for="(item, i) in searchStore.searchPostRightPanel"
         :key="i"
-        @click="router.push(`/post-detail/${item.id}`)"
+        @click="goPostDetail(item.id)"
       >
         <div class="d-flex flex-no-wrap justify-space-between">
           <div class="search-card-info">
@@ -113,11 +113,7 @@
             >
 
             <v-card-actions>
-              <v-btn
-                class="mt-3"
-                color="orange"
-                @click="router.push(`/post-detail/${item.id}`)"
-              >
+              <v-btn class="mt-3" color="orange" @click="goPostDetail(item.id)">
                 {{ $t('shop.review') }}
               </v-btn>
             </v-card-actions>
@@ -155,6 +151,14 @@ const year = dayjs().year();
 const filteredPosts = computed(() => {
   return searchStore.fetchPostForRightPanel(searchValue.value);
 });
+
+const goPostDetail = (id) => {
+  searchStore.fetchResultPost(id);
+
+  setTimeout(() => {
+    router.push(`/post-detail/${id}`);
+  }, 600);
+};
 </script>
 
 <style lang="scss" scoped>

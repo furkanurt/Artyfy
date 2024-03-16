@@ -8,7 +8,7 @@
       <div v-if="appStore.breakpoint === 'md'" class="w-full pr-3">
         <v-text-field
           v-model="searchValue"
-          label="Search"
+          :label="$t('search')"
           density="compact"
           variant="solo"
           hide-details="auto"
@@ -20,7 +20,7 @@
     <v-divider v-if="!appStore.isMobile"></v-divider>
     <v-textarea
       color="#FFF"
-      label="What's Happening?"
+      :label="$t('whatsHappenin')"
       rows="3"
       class="px-7"
       variant="plain"
@@ -40,9 +40,9 @@
       ></v-file-input>
       <v-btn
         rounded="xl"
-        class="w-10 text-white"
+        class="text-white"
         style="background-color: #fa9392"
-        >Post</v-btn
+        >{{ $t('postCard.post') }}</v-btn
       >
     </div>
   </div>

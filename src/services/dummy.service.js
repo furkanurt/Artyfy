@@ -48,6 +48,7 @@ class DummyService extends ArtyfyService {
         avatar: 'https://i.pravatar.cc/300',
         time: '5h',
         isOnSale: true,
+        productPrice: 800,
         postDescription:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
         postImage: [
@@ -87,6 +88,7 @@ class DummyService extends ArtyfyService {
         avatar: 'https://i.pravatar.cc/430',
         time: '10h',
         isOnSale: false,
+        productPrice: null,
         postDescription:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
         postImage: [
@@ -124,6 +126,7 @@ class DummyService extends ArtyfyService {
         avatar: 'https://i.pravatar.cc/320',
         time: '32m',
         isOnSale: true,
+        productPrice: 400,
         postDescription:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
         postImage: [
@@ -155,82 +158,101 @@ class DummyService extends ArtyfyService {
           },
         ],
       },
-    ];
-  }
-
-  fetchShopProduct() {
-    return [
       {
-        id: 1,
-        userName: 'Rose Becker',
-        productImage: [
+        id: 14,
+        name: 'Jordan Man',
+        userName: 'manjordan',
+        avatar: 'https://i.pravatar.cc/330',
+        time: '32m',
+        isOnSale: false,
+        productPrice: null,
+        postDescription:
+          'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
+        postImage: [
           'https://source.unsplash.com/random?sig=36',
           'https://source.unsplash.com/random?sig=9',
-          'https://source.unsplash.com/random?sig=62',
         ],
-        productPrice: '150',
-        productDescription:
-          'neque. In ornare sagittis felis. Donec tempor, est ac mattis semper, dui lectus rutrum urna, nec luctus felis purus ac tellus. Suspendisse sed dolor. Fusce mi lorem, vehicula et, rutrum',
+        likeCount: '45',
+        commentCount: '17',
+        shareCount: '13',
+        comments: [
+          {
+            prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: 'Brunch this weekend?',
+            subtitle:
+              'I`ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
+          },
+          {
+            prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: 'Brunch this weekend?',
+            subtitle:
+              'I`ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
+          },
+        ],
       },
       {
-        id: 2,
-        userName: 'Ivana Ayala',
-        productImage: [
+        id: 15,
+        name: 'Deneme',
+        userName: 'denemebir',
+        avatar: 'https://i.pravatar.cc/330',
+        time: '32m',
+        isOnSale: true,
+        productPrice: 1000,
+        postDescription:
+          'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
+        postImage: [
           'https://source.unsplash.com/random?sig=36',
           'https://source.unsplash.com/random?sig=9',
-          'https://source.unsplash.com/random?sig=62',
         ],
-        productPrice: '420',
-        productDescription:
-          'nunc sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse commodo tincidunt nibh. Phasellus nulla. Integer vulputate, risus a ultricies adipiscing, enim mi tempor lorem, eget mollis lectus pede et',
+        likeCount: '45',
+        commentCount: '17',
+        shareCount: '13',
+        comments: [
+          {
+            prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: 'Brunch this weekend?',
+            subtitle:
+              'I`ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
+          },
+          {
+            prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: 'Brunch this weekend?',
+            subtitle:
+              'I`ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
+          },
+        ],
       },
       {
-        id: 3,
-        userName: 'Colleen Frye',
-        productImage: [
+        id: 16,
+        name: 'Deneme 2',
+        userName: 'denemeiki',
+        avatar: 'https://i.pravatar.cc/330',
+        time: '32m',
+        isOnSale: false,
+        productPrice: null,
+        postDescription:
+          'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
+        postImage: [
           'https://source.unsplash.com/random?sig=36',
           'https://source.unsplash.com/random?sig=9',
-          'https://source.unsplash.com/random?sig=62',
         ],
-        productPrice: '300',
-        productDescription:
-          'cursus. Nunc mauris elit, dictum eu, eleifend nec, malesuada ut, sem. Nulla interdum. Curabitur dictum. Phasellus in felis. Nulla tempor augue ac ipsum. Phasellus vitae mauris sit amet lorem semper',
-      },
-      {
-        id: 4,
-        userName: 'Ila Dennis',
-        productImage: [
-          'https://source.unsplash.com/random?sig=36',
-          'https://source.unsplash.com/random?sig=9',
-          'https://source.unsplash.com/random?sig=62',
+        likeCount: '45',
+        commentCount: '17',
+        shareCount: '13',
+        comments: [
+          {
+            prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: 'Brunch this weekend?',
+            subtitle:
+              'I`ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
+          },
+          {
+            prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            title: 'Brunch this weekend?',
+            subtitle:
+              'I`ll be in your neighborhood doing errands this weekend. Do you want to hang out?',
+          },
         ],
-        productPrice: '1000',
-        productDescription:
-          'et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices iaculis odio. Nam interdum',
-      },
-      {
-        id: 5,
-        userName: 'Noah Blackwell',
-        productImage: [
-          'https://source.unsplash.com/random?sig=36',
-          'https://source.unsplash.com/random?sig=9',
-          'https://source.unsplash.com/random?sig=62',
-        ],
-        productPrice: '400',
-        productDescription:
-          'In tincidunt congue turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit',
-      },
-      {
-        id: 6,
-        userName: 'Noah Blackwell',
-        productImage: [
-          'https://source.unsplash.com/random?sig=36',
-          'https://source.unsplash.com/random?sig=9',
-          'https://source.unsplash.com/random?sig=62',
-        ],
-        productPrice: '400',
-        productDescription:
-          'In tincidunt congue turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae Donec tincidunt. Donec vitae erat vel pede blandit',
       },
     ];
   }

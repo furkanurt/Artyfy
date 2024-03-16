@@ -32,8 +32,8 @@
                         v-bind="props"
                         :style="
                           post.isOnSale
-                            ? `background-color: #FFB534`
-                            : `background-color: #65B741`
+                            ? `background-color: #65B741`
+                            : `background-color: #FFB534`
                         "
                         class="text-white w-4 h-4 mx-2 my-2"
                         rounded="xl"
@@ -42,8 +42,10 @@
                         <v-icon color="white"> mdi-shopping-outline </v-icon>
                       </v-btn>
                     </template>
-                    <span v-if="post.isOnSale">Not on Sale</span>
-                    <span v-else>On Sale</span>
+                    <span v-if="post.isOnSale">{{
+                      $t('postCard.onSale')
+                    }}</span>
+                    <span v-else>{{ $t('postCard.notOnSale') }}</span>
                   </v-tooltip>
                 </div>
               </div>
@@ -131,8 +133,8 @@
                         v-bind="props"
                         :style="
                           post.isOnSale
-                            ? `background-color: #FFB534`
-                            : `background-color: #65B741`
+                            ? `background-color: #65B741`
+                            : `background-color: #FFB534`
                         "
                         class="text-white w-4 h-4 mx-2 my-2"
                         rounded="xl"
@@ -141,8 +143,10 @@
                         <v-icon color="white"> mdi-shopping-outline </v-icon>
                       </v-btn>
                     </template>
-                    <span v-if="post.isOnSale">Not on Sale</span>
-                    <span v-else>On Sale</span>
+                    <span v-if="post.isOnSale">{{
+                      $t('postCard.onSale')
+                    }}</span>
+                    <span v-else>{{ $t('postCard.notOnSale') }}</span>
                   </v-tooltip>
                 </div>
               </div>
@@ -204,7 +208,7 @@
 </template>
 <script setup>
 import DummyService from '@/services/dummy.service';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useAppStore } from '@/store/app';
 import { useSearchStore } from '@/store/search';
 
@@ -214,6 +218,11 @@ const showComments = ref(false);
 const posts = DummyService.fetchPost();
 const appStore = useAppStore();
 const searchStore = useSearchStore();
+
+onMounted(() => {
+  searchStore.fetchPost('');
+});
+
 const loading = computed(() => {
   if (posts) return false;
   return true;
