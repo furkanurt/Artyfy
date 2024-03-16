@@ -1,31 +1,36 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router';
+import Home from '@/views/Home.vue';
+import Login from '@/components/Login/index.vue';
+import Register from '@/components/Register/index.vue';
+import Shop from '@/views/Shop.vue';
+import PostDetail from '@/views/PostDetail.vue';
 
 const routes = [
   {
     path: '',
     name: 'Home',
-    component: () => import('@/views/Home.vue'),
+    component: Home,
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/components/Login/index.vue'),
+    component: Login,
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('@/components/Register/index.vue'),
+    component: Register,
   },
   {
     path: '/shop',
     name: 'Shop',
-    component: () => import('@/views/Shop.vue'),
+    component: Shop,
   },
   {
     path: '/post-detail/:id',
     name: 'PostDetail',
-    component: () => import('@/views/PostDetail.vue'),
+    component: PostDetail,
   },
 ];
 
