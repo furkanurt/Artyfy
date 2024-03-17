@@ -58,6 +58,7 @@ class DummyService extends ArtyfyService {
           'https://source.unsplash.com/random?sig=74',
         ],
         likeCount: '30',
+        isLikeIt: false,
         commentCount: '5',
         shareCount: '2',
         comments: [
@@ -96,6 +97,7 @@ class DummyService extends ArtyfyService {
           'https://source.unsplash.com/random?sig=2',
         ],
         likeCount: '10',
+        isLikeIt: true,
         commentCount: '7',
         shareCount: '3',
         comments: [
@@ -135,6 +137,7 @@ class DummyService extends ArtyfyService {
           'https://source.unsplash.com/random?sig=62',
         ],
         likeCount: '45',
+        isLikeIt: false,
         commentCount: '17',
         shareCount: '13',
         comments: [
@@ -173,6 +176,7 @@ class DummyService extends ArtyfyService {
           'https://source.unsplash.com/random?sig=9',
         ],
         likeCount: '45',
+        isLikeIt: true,
         commentCount: '17',
         shareCount: '13',
         comments: [
@@ -205,6 +209,7 @@ class DummyService extends ArtyfyService {
           'https://source.unsplash.com/random?sig=9',
         ],
         likeCount: '45',
+        isLikeIt: false,
         commentCount: '17',
         shareCount: '13',
         comments: [
@@ -237,6 +242,7 @@ class DummyService extends ArtyfyService {
           'https://source.unsplash.com/random?sig=9',
         ],
         likeCount: '45',
+        isLikeIt: true,
         commentCount: '17',
         shareCount: '13',
         comments: [

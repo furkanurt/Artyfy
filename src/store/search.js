@@ -12,6 +12,8 @@ export const useSearchStore = defineStore('search', {
   }),
   actions: {
     fetchPost(params) {
+      this.searchPost = [];
+
       try {
         const res = SearchService.fetchSearchPosts(params);
         this.searchPost = res;
@@ -20,6 +22,8 @@ export const useSearchStore = defineStore('search', {
       }
     },
     fetchShopPost() {
+      this.marketPost = [];
+
       try {
         const res = SearchService.fetchShopPost();
         this.marketPost = res;
@@ -28,6 +32,8 @@ export const useSearchStore = defineStore('search', {
       }
     },
     fetchPostForRightPanel(params) {
+      this.searchPostRightPanel = [];
+
       try {
         const res = SearchService.fetchSearchPosts(params);
         this.searchPostRightPanel = res;
@@ -36,6 +42,8 @@ export const useSearchStore = defineStore('search', {
       }
     },
     fetchMarketPost(params) {
+      this.searchMarketPost = [];
+
       try {
         const res = SearchService.fetchSearchMarketPosts(params);
         this.searchMarketPost = res;

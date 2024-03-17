@@ -13,7 +13,6 @@
             :value="item.text"
             :title="$t(`menu.${item.text}`)"
             @click="clickMenuItem(item.text)"
-            class="flex justify-center list-item"
           >
             <template v-slot:prepend>
               <v-icon :icon="item.icon"></v-icon>

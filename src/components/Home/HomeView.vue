@@ -2,13 +2,27 @@
   <v-layout id="home-layout">
     <PostInput />
     <div>
-      <PostCard />
+      <PostCard
+        :posts="posts"
+        :search-result-post="filteredPosts"
+        :show-comments="false"
+      />
     </div>
   </v-layout>
 </template>
 <script setup>
-import PostCard from './PostCard.vue';
-import PostInput from './PostInput.vue';
+import { computed } from 'vue';
+import DummyService from '@/services/dummy.service';
+import { useSearchStore } from '@/store/search';
+import PostCard from '@/layouts/default/PostCard.vue';
+import PostInput from '@/components/Home/PostInput.vue';
+
+const searchStore = useSearchStore();
+const posts = DummyService.fetchPost();
+
+const filteredPosts = computed(() => {
+  return searchStore.searchPost;
+});
 </script>
 <style lang="scss" scoped>
 .v-layout {
@@ -33,3 +47,4 @@ import PostInput from './PostInput.vue';
   }
 }
 </style>
+../PostCard/PostCard.vue

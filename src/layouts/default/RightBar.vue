@@ -186,7 +186,6 @@ const goPostDetail = (id) => {
   }
 
   .v-footer {
-    position: fixed;
     bottom: 0px;
   }
 

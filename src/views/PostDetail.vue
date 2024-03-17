@@ -1,7 +1,11 @@
 <template>
   <div v-if="appStore.isMobile">
     <AppBar />
-    <PostDetail />
+    <PostCard
+      :search-result-post="fetchResultPost"
+      :search-market-result-post="fetchMarketResultPost"
+      :show-comments="false"
+    />
   </div>
   <v-app v-if="!appStore.isMobile">
     <v-row no-gutters v-if="appStore.breakpoint === 'md'">
@@ -13,7 +17,11 @@
 
       <v-col cols="8">
         <v-sheet>
-          <PostDetail />
+          <PostCard
+            :search-result-post="fetchResultPost"
+            :search-market-result-post="fetchMarketResultPost"
+            :show-comments="false"
+          />
         </v-sheet>
       </v-col>
     </v-row>
@@ -26,17 +34,32 @@
 
       <v-col cols="9">
         <v-sheet>
-          <PostDetail />
+          <PostCard
+            :search-result-post="fetchResultPost"
+            :search-market-result-post="fetchMarketResultPost"
+            :show-comments="false"
+          />
         </v-sheet>
       </v-col>
     </v-row>
   </v-app>
 </template>
 <script setup>
+import { computed } from 'vue';
 import LeftBar from '@/layouts/default/LeftBar.vue';
-import PostDetail from '@/components/PostDetail/index.vue';
 import AppBar from '@/layouts/default/AppBar.vue';
+import PostCard from '@/layouts/default/PostCard.vue';
 import { useAppStore } from '@/store/app';
+import { useSearchStore } from '@/store/search';
 
 const appStore = useAppStore();
+const searchStore = useSearchStore();
+
+const fetchResultPost = computed(() => {
+  return searchStore.fetchResPost;
+});
+
+const fetchMarketResultPost = computed(() => {
+  return searchStore.fetchMarketResPost;
+});
 </script>
