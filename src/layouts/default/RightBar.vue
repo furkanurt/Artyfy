@@ -25,7 +25,7 @@
             <div style="min-width: 130px; margin-right: 10px">
               <v-card-subtitle>@{{ item.writer }} • Last Night</v-card-subtitle>
               <v-card-text style="margin: 6px 0px">
-                {{ item.text }}
+                {{ item.text.substring(0, 40) }}...
               </v-card-text>
               <v-card-subtitle
                 >{{ $t('trendingWith') }}
