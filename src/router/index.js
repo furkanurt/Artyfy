@@ -5,6 +5,8 @@ import Login from '@/components/Login/index.vue';
 import Register from '@/components/Register/index.vue';
 import Shop from '@/views/Shop.vue';
 import PostDetail from '@/views/PostDetail.vue';
+import Trends from '@/views/Trends.vue';
+import Profile from '@/views/Profile.vue';
 
 const routes = [
   {
@@ -31,6 +33,16 @@ const routes = [
     path: '/post-detail/:id',
     name: 'PostDetail',
     component: PostDetail,
+  },
+  {
+    path: '/Trends',
+    name: 'Trends',
+    component: Trends,
+  },
+  {
+    path: '/Profile',
+    name: 'Profile',
+    component: Profile,
   },
 ];
 

@@ -37,7 +37,7 @@
               :width="40"
               :height="40"
               cover
-              src="../../assets/profile.svg"
+              src='https://randomuser.me/api/portraits/women/4.jpg'
               class="profile-img"
             ></v-img>
             <div style="display: grid; margin-left: 10px; font-size: 14px">
@@ -55,6 +55,7 @@
 </template>
 
 <script setup>
+  import { ref } from 'vue';
 import router from '@/router';
 
 const value = [
@@ -63,6 +64,7 @@ const value = [
   { text: 'notifications', icon: 'mdi-bell-outline' },
   { text: 'bookmarks', icon: 'mdi-bookmark-outline' },
   { text: 'shop', icon: 'mdi-cart-minus' },
+  { text: 'profile', icon: 'mdi-account' },
 ];
 
 const user = {
