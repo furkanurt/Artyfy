@@ -1,5 +1,5 @@
 <template>
-  <v-container class="w-full">
+  <v-container class="w-full" v-if="!loading">
     <v-row no-gutters>
       <v-col cols="5" class="flex justify-center col-1">
         <v-sheet width="500" class="sheet-1">
@@ -19,20 +19,7 @@
               :placeholder="$t('register.name')"
               variant="outlined"
               type="name"
-            ></v-text-field>
-
-            <div
-              class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
-            >
-              {{ $t('register.surname') }}
-            </div>
-
-            <v-text-field
-              v-model="user.surname"
-              density="compact"
-              :placeholder="$t('register.surname')"
-              variant="outlined"
-              type="name"
+              :error-messages="v$.name.$errors.map((e) => e.$message)"
             ></v-text-field>
 
             <div
@@ -47,6 +34,22 @@
               :placeholder="$t('register.username')"
               variant="outlined"
               type="name"
+              :error-messages="v$.username.$errors.map((e) => e.$message)"
+            ></v-text-field>
+
+            <div
+              class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+            >
+              Phone Number
+            </div>
+
+            <v-text-field
+              v-model="user.phoneNumber"
+              density="compact"
+              placeholder="Phone Number"
+              variant="outlined"
+              type="number"
+              :error-messages="v$.phoneNumber.$errors.map((e) => e.$message)"
             ></v-text-field>
 
             <div
@@ -61,6 +64,7 @@
               :placeholder="$t('register.email')"
               variant="outlined"
               type="email"
+              :error-messages="v$.email.$errors.map((e) => e.$message)"
             ></v-text-field>
 
             <div
@@ -75,6 +79,7 @@
               :type="showPassword ? 'text' : 'password'"
               density="compact"
               :placeholder="$t('register.password')"
+              :error-messages="v$.password.$errors.map((e) => e.$message)"
               variant="outlined"
               @click:append-inner="showPassword = !showPassword"
             ></v-text-field>
@@ -91,6 +96,9 @@
               :type="showPassword ? 'text' : 'password'"
               density="compact"
               :placeholder="$t('register.confirmPassword')"
+              :error-messages="
+                v$.confirmPassword.$errors.map((e) => e.$message)
+              "
               variant="outlined"
               @click:append-inner="showPassword = !showPassword"
             ></v-text-field>
@@ -124,7 +132,7 @@
               class="mb-10"
               transition="slide-y-transition"
             >
-              {{ $t('register.checkInfo') }}
+              {{ resgisterErr ? resgisterErr : $t('register.checkInfo') }}
             </v-alert>
           </div>
         </v-sheet>
@@ -138,37 +146,67 @@
       </v-col>
     </v-row>
   </v-container>
+  <div class="flex justify-center w-screen h-screen items-center" v-else>
+    <img src="@/assets/images/tube-spinner.svg" class="w-20 h-20" />
+  </div>
 </template>
 
 <script setup>
 import { reactive, ref, computed } from 'vue';
 import router from '@/router';
 import { useVuelidate } from '@vuelidate/core';
-import { minLength, required, email, sameAs } from '@vuelidate/validators';
+import {
+  minLength,
+  required,
+  email,
+  sameAs,
+  helpers,
+} from '@vuelidate/validators';
+import { useUserStore } from '@/store/user';
 
 const user = reactive({
   name: '',
-  surname: '',
   username: '',
   email: '',
+  phoneNumber: '',
   password: '',
   confirmPassword: '',
 });
+const userStore = useUserStore();
 const showPassword = ref(false);
 const showAlert = ref(false);
+const resgisterErr = ref('');
+const loading = ref(false);
+const mustBeLength = (value) => value.length === 11;
+const mustBeStartWith = (value) => value.charAt(0) === '0';
+const mustBePassword = (value) => /[A-Z]/.test(value) || /[a-z]/.test(value);
 
 const rules = computed(() => {
   return {
     name: { required, minLength: minLength(3) },
-    surname: { required, minLength: minLength(3) },
     username: { required, minLength: minLength(3) },
+    phoneNumber: {
+      required,
+      mustBeLength: helpers.withMessage(
+        'The phone number must consist of 11 characters',
+        mustBeLength,
+      ),
+      mustBeStartWith: helpers.withMessage(
+        'The phone number start with 0',
+        mustBeStartWith,
+      ),
+    },
     email: {
       required,
       email,
     },
     password: {
       required,
-      minLength: minLength(3),
+      minLength: minLength(6),
+      mustBePassword: helpers.withMessage(
+        'The password must be include upper and lower case',
+        mustBePassword,
+      ),
     },
     confirmPassword: {
       required,
@@ -179,19 +217,38 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, user);
 
+const payload = computed(() => {
+  return {
+    fullName: user.name,
+    email: user.email,
+    password: user.password,
+    phoneNumber: user.phoneNumber,
+    userName: user.username,
+  };
+});
+
 const register = async () => {
   const result = await v$.value.$validate();
-  console.log(v$.value);
+  loading.value = true;
   if (!result) {
+    loading.value = false;
     showAlert.value = true;
     setTimeout(() => {
       showAlert.value = false;
     }, 3000);
     return;
   } else {
-    console.log(user.value);
-    localStorage.setItem('token', '12345');
-    router.push('/login');
+    const res = await userStore.userRegister(payload.value);
+    if (res.data.error) {
+      loading.value = false;
+      resgisterErr.value = res.data.error.errors[0];
+      showAlert.value = true;
+      setTimeout(() => {
+        showAlert.value = false;
+      }, 3000);
+    } else {
+      router.push('/login');
+    }
   }
 };
 </script>
@@ -202,14 +259,14 @@ const register = async () => {
   padding: 0px;
 
   .col-1 {
-    padding-top: 10rem !important;
+    align-items: center;
   }
 }
 
 @media screen and (max-width: 768px) {
   .v-container {
     .col-1 {
-      padding-top: 5rem !important;
+      align-items: center;
     }
     .v-row {
       padding: 0px 20px;

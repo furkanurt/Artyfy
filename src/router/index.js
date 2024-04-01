@@ -11,26 +11,41 @@ const routes = [
     path: '',
     name: 'Home',
     component: Home,
+    meta: {
+      public: false,
+    },
   },
   {
     path: '/login',
     name: 'Login',
     component: Login,
+    meta: {
+      public: true,
+    },
   },
   {
     path: '/register',
     name: 'Register',
     component: Register,
+    meta: {
+      public: true,
+    },
   },
   {
     path: '/shop',
     name: 'Shop',
     component: Shop,
+    meta: {
+      public: false,
+    },
   },
   {
     path: '/post-detail/:id',
     name: 'PostDetail',
     component: PostDetail,
+    meta: {
+      public: false,
+    },
   },
 ];
 
@@ -39,19 +54,18 @@ const router = createRouter({
   routes,
 });
 
-const isLoggedIn = () => {
-  return localStorage.getItem('token');
-};
+router.afterEach(async (to) => {
+  const token = localStorage.getItem('token');
+  if (!to.meta.public && token === undefined) {
+    router.push('/login');
+  }
+});
 
-const protectedRoutes = ['Home', 'Shop'];
-
-router.beforeEach((to, from, next) => {
-  const isProtected = protectedRoutes.includes(to.name);
-  if (isProtected && !isLoggedIn()) {
-    next({
-      path: '/login',
-    });
-  } else next();
+router.beforeEach((to) => {
+  const token = localStorage.getItem('token');
+  if (!to.meta.public && !token) {
+    router.push('/login');
+  }
 });
 
 export default router;
