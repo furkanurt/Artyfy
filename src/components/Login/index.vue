@@ -1,5 +1,5 @@
 <template>
-  <v-container class="w-full">
+  <v-container class="w-full" v-if="!loading">
     <v-row no-gutters>
       <v-col cols="5" class="flex justify-center col-1">
         <v-sheet width="500" class="sheet-1">
@@ -79,7 +79,7 @@
               type="error"
               class="mb-10"
               transition="slide-y-transition"
-              >{{ $t('login.checkInfo') }}</v-alert
+              >{{ loginErr ? loginErr : $t('login.checkInfo') }}</v-alert
             >
           </div>
         </v-sheet>
@@ -93,22 +93,27 @@
       </v-col>
     </v-row>
   </v-container>
+  <div class="flex justify-center w-screen h-screen items-center" v-else>
+    <img src="@/assets/images/tube-spinner.svg" class="w-20 h-20" />
+  </div>
 </template>
 
 <script setup>
 import router from '@/router';
 import { ref, reactive, computed } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
-import { useI18n } from 'vue-i18n';
 import { minLength, required, email } from '@vuelidate/validators';
+import { useUserStore } from '@/store/user';
 
-const { t } = useI18n();
+const userStore = useUserStore();
+const loginErr = ref('');
 const user = reactive({
   email: '',
   password: '',
 });
 const showPassword = ref(false);
 const showAlert = ref(false);
+const loading = ref(false);
 const rules = computed(() => {
   return {
     email: {
@@ -117,7 +122,7 @@ const rules = computed(() => {
     },
     password: {
       required,
-      minLength: minLength(3),
+      minLength: minLength(6),
     },
   };
 });
@@ -126,16 +131,26 @@ const v$ = useVuelidate(rules, user);
 
 const login = async () => {
   const result = await v$.value.$validate();
+  loading.value = true;
   if (!result) {
+    loading.value = false;
     showAlert.value = true;
     setTimeout(() => {
       showAlert.value = false;
     }, 3000);
     return;
   } else {
-    console.log(user.value);
-    localStorage.setItem('token', '12345');
-    router.push('/');
+    const res = await userStore.userLogin(user);
+    loading.value = false;
+    if (res.data.error) {
+      loginErr.value = res.data.error.errors[0];
+      showAlert.value = true;
+      setTimeout(() => {
+        showAlert.value = false;
+      }, 3000);
+    } else {
+      router.push('/');
+    }
   }
 };
 </script>
@@ -146,14 +161,14 @@ const login = async () => {
   padding: 0px;
 
   .col-1 {
-    padding-top: 20rem !important;
+    align-items: center;
   }
 }
 
 @media screen and (max-width: 768px) {
   .v-container {
     .col-1 {
-      padding-top: 5rem !important;
+      align-items: center;
     }
     .v-row {
       padding: 0px 20px;

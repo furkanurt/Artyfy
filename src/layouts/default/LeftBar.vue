@@ -45,9 +45,26 @@
               <span style="font-style: normal">@{{ user.userId }}</span>
             </div>
           </div>
-          <div class="profile-div">
-            <v-icon icon="mdi-dots-horizontal"></v-icon>
-          </div>
+          <v-menu class="profile-div">
+            <template v-slot:activator="{ props }">
+              <v-btn
+                variant="text"
+                icon="mdi-dots-vertical"
+                v-bind="props"
+              ></v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item
+                v-for="(item, i) in items"
+                :key="i"
+                @click="logout"
+                class="cursor-pointer"
+              >
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </div>
       </div>
     </v-navigation-drawer>
@@ -57,6 +74,7 @@
 <script setup>
   import { ref } from 'vue';
 import router from '@/router';
+import { useUserStore } from '@/store/user';
 
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
@@ -67,22 +85,31 @@ const value = [
   { text: 'profile', icon: 'mdi-account' },
 ];
 
+const items = [{ title: 'Logout' }];
+
 const user = {
   userName: 'Gülsüm Vural',
   userId: 'glsmvrl',
 };
 
-function clickMenuItem(value) {
+const userStore = useUserStore();
+
+const clickMenuItem = (value) => {
   if (value === 'home') {
     router.push('/');
   } else {
     router.push(`/${value}`);
   }
-}
+};
 
-function goToProfile() {
+const goToProfile = () => {
   console.log('clicked profile');
-}
+};
+
+const logout = async () => {
+  await userStore.userLogout();
+  router.push('/login');
+};
 </script>
 
 <style lang="scss" scoped>
@@ -133,8 +160,9 @@ function goToProfile() {
 
 .profile {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   color: #000;
+  width: 100%;
 
   .profile-img {
     border-radius: 100%;

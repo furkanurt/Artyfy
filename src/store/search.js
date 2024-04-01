@@ -18,7 +18,7 @@ export const useSearchStore = defineStore('search', {
         const res = SearchService.fetchSearchPosts(params);
         this.searchPost = res;
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
     },
     fetchShopPost() {
@@ -28,7 +28,7 @@ export const useSearchStore = defineStore('search', {
         const res = SearchService.fetchShopPost();
         this.marketPost = res;
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
     },
     fetchPostForRightPanel(params) {
@@ -38,7 +38,7 @@ export const useSearchStore = defineStore('search', {
         const res = SearchService.fetchSearchPosts(params);
         this.searchPostRightPanel = res;
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
     },
     fetchMarketPost(params) {
@@ -48,7 +48,7 @@ export const useSearchStore = defineStore('search', {
         const res = SearchService.fetchSearchMarketPosts(params);
         this.searchMarketPost = res;
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
     },
     fetchResultPost(params) {
@@ -59,7 +59,7 @@ export const useSearchStore = defineStore('search', {
         const res = SearchService.fetchSearchResultPost(params);
         this.fetchResPost = res;
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
     },
     fetchMarketResultPost(params) {
@@ -70,7 +70,7 @@ export const useSearchStore = defineStore('search', {
         const res = SearchService.fetchSearchMarketResultPost(params);
         this.fetchMarketResPost = res;
       } catch (err) {
-        console.error(err);
+        console.log(err);
       }
     },
   },

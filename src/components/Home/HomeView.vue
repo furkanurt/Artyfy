@@ -47,4 +47,3 @@ const filteredPosts = computed(() => {
   }
 }
 </style>
-../PostCard/PostCard.vue
