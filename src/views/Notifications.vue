@@ -2,7 +2,7 @@
 <template>
   <div v-if="appStore.isMobile">
     <AppBar />
-    <notification />
+    <Notification />
   </div>
   <v-app v-if="!appStore.isMobile">
     <v-row no-gutters v-if="appStore.breakpoint === 'md'">
@@ -14,7 +14,7 @@
 
       <v-col cols="8">
         <v-sheet>
-          <notification />
+          <Notification />
         </v-sheet>
       </v-col>
     </v-row>
@@ -23,7 +23,7 @@
         <left-bar />
       </v-col>
       <v-col cols="12" sm="6">
-        <notification />
+        <Notification />
       </v-col>
       <v-col cols="12" sm="3" class="mobile-right">
         <v-divider vertical></v-divider>
@@ -36,7 +36,7 @@
 <script setup>
 import LeftBar from '@/layouts/default/LeftBar.vue';
 import RightBar from '@/layouts/default/RightBar.vue';
-import notification from '@/components/Notification/notification.vue';
+import Notification from '@/components/Notification/index.vue';
 import AppBar from '@/layouts/default/AppBar.vue';
 import { useAppStore } from '@/store/app';
 

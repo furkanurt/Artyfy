@@ -7,6 +7,7 @@ import Shop from '@/views/Shop.vue';
 import PostDetail from '@/views/PostDetail.vue';
 import Trends from '@/views/Trends.vue';
 import Profile from '@/views/Profile.vue';
+import Notifications from '@/views/Notifications.vue';
 
 const routes = [
   {
@@ -50,14 +51,19 @@ const routes = [
     },
   },
   {
-    path: '/Trends',
+    path: '/trends',
     name: 'Trends',
     component: Trends,
   },
   {
-    path: '/Profile',
+    path: '/profile',
     name: 'Profile',
     component: Profile,
+  },
+  {
+    path: '/notifications',
+    name: 'Notifications',
+    component: Notifications,
   },
 ];
 
