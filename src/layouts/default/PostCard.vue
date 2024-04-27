@@ -89,6 +89,13 @@
                 >
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
+                <v-btn
+  prepend-icon="mdi-bookmark-outline"
+  size="small"
+  @click="console.log('clicked saved')"
+>
+  <span class="align-middle">{{ post.saveCount }}</span>
+</v-btn>
               </div>
             </v-card-actions>
             <div v-if="showComments">
@@ -184,6 +191,7 @@
                     <span class="align-middle">{{ post.commentCount }}</span>
                   </v-btn>
                 </div>
+              
                 <v-btn
                   prepend-icon="mdi-export-variant"
                   size="small"
@@ -191,7 +199,15 @@
                 >
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
+                <v-btn
+  prepend-icon="mdi-bookmark-outline"
+  size="small"
+  @click="console.log('clicked saved')"
+>
+  <span class="align-middle">{{ post.saveCount }}</span>
+</v-btn>
               </div>
+
             </v-card-actions>
             <div v-if="showComments">
               <v-list :items="post.comments" lines="three" item-props>
@@ -281,6 +297,13 @@
                   >
                     <span class="align-middle">{{ post.commentCount }}</span>
                   </v-btn>
+                  <v-btn
+  prepend-icon="mdi-bookmark-outline"
+  size="small"
+  @click="console.log('clicked saved')"
+>
+  <span class="align-middle">{{ post.saveCount }}</span>
+</v-btn>
                 </div>
                 <v-btn
                   prepend-icon="mdi-export-variant"

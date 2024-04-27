@@ -8,12 +8,20 @@ import PostDetail from '@/views/PostDetail.vue';
 import Trends from '@/views/Trends.vue';
 import Profile from '@/views/Profile.vue';
 import Notifications from '@/views/Notifications.vue';
-
-const routes = [
+import Bookmark from '@/views/Bookmark.vue';
+const routes = [ 
   {
     path: '',
     name: 'Home',
     component: Home,
+    meta: {
+      public: false,
+    },
+  },
+  {
+    path: '/bookmarks',
+    name: 'Bookmark',
+    component: Bookmark,
     meta: {
       public: false,
     },
