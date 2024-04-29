@@ -12,6 +12,11 @@
             :key="index"
             :value="item.text"
             :title="$t(`menu.${item.text}`)"
+            :style="
+              route.name.toLowerCase() === item.text
+                ? 'color: #fa9392'
+                : 'color: #00000'
+            "
             @click="clickMenuItem(item.text)"
           >
             <template v-slot:prepend>
@@ -37,7 +42,7 @@
               :width="40"
               :height="40"
               cover
-              src='https://randomuser.me/api/portraits/women/4.jpg'
+              src="https://randomuser.me/api/portraits/women/4.jpg"
               class="profile-img"
             ></v-img>
             <div style="display: grid; margin-left: 10px; font-size: 14px">
@@ -72,10 +77,11 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
 import router from '@/router';
 import { useUserStore } from '@/store/user';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },
@@ -148,10 +154,6 @@ const logout = async () => {
       }
 
       .v-list-item:hover {
-        color: #fa9392;
-      }
-
-      .v-list-item:focus {
         color: #fa9392;
       }
     }

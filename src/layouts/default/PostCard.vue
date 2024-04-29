@@ -63,13 +63,16 @@
               </div>
             </v-card-text>
             <v-card-actions>
-              <div class="w-full flex justify-between">
+              <div class="w-full flex items-center">
                 <div class="flex justify-start">
                   <v-btn
                     prepend-icon="mdi-heart"
                     size="small"
                     :color="post.isLikeIt ? `red` : `black`"
-                    @click="post.isLikeIt = !post.isLikeIt"
+                    @click="
+                      (post.isLikeIt = !post.isLikeIt),
+                        console.log(post.isLikeIt)
+                    "
                   >
                     <span class="align-middle">{{ post.likeCount }}</span>
                   </v-btn>
@@ -90,12 +93,14 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-  prepend-icon="mdi-bookmark-outline"
-  size="small"
-  @click="console.log('clicked saved')"
->
-  <span class="align-middle">{{ post.saveCount }}</span>
-</v-btn>
+                  class="ml-0 pt-0 h-auto"
+                  :icon="
+                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                  "
+                  size="small"
+                  @click="post.isBookmarked = !post.isBookmarked"
+                >
+                </v-btn>
               </div>
             </v-card-actions>
             <div v-if="showComments">
@@ -172,7 +177,7 @@
               </div>
             </v-card-text>
             <v-card-actions>
-              <div class="w-full flex justify-between">
+              <div class="w-full flex">
                 <div class="flex justify-start">
                   <v-btn
                     prepend-icon="mdi-heart"
@@ -191,7 +196,6 @@
                     <span class="align-middle">{{ post.commentCount }}</span>
                   </v-btn>
                 </div>
-              
                 <v-btn
                   prepend-icon="mdi-export-variant"
                   size="small"
@@ -200,14 +204,15 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-  prepend-icon="mdi-bookmark-outline"
-  size="small"
-  @click="console.log('clicked saved')"
->
-  <span class="align-middle">{{ post.saveCount }}</span>
-</v-btn>
+                  class="ml-0 h-auto"
+                  :icon="
+                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                  "
+                  size="small"
+                  @click="post.isBookmarked = !post.isBookmarked"
+                >
+                </v-btn>
               </div>
-
             </v-card-actions>
             <div v-if="showComments">
               <v-list :items="post.comments" lines="three" item-props>
@@ -279,7 +284,7 @@
               </div>
             </v-card-text>
             <v-card-actions>
-              <div class="w-full flex justify-between">
+              <div class="w-full flex">
                 <div class="flex justify-start">
                   <v-btn
                     prepend-icon="mdi-heart"
@@ -297,13 +302,6 @@
                   >
                     <span class="align-middle">{{ post.commentCount }}</span>
                   </v-btn>
-                  <v-btn
-  prepend-icon="mdi-bookmark-outline"
-  size="small"
-  @click="console.log('clicked saved')"
->
-  <span class="align-middle">{{ post.saveCount }}</span>
-</v-btn>
                 </div>
                 <v-btn
                   prepend-icon="mdi-export-variant"
@@ -311,6 +309,15 @@
                   @click="console.log('cliked share')"
                 >
                   <span class="align-middle">{{ post.shareCount }}</span>
+                </v-btn>
+                <v-btn
+                  class="ml-0 h-auto"
+                  :icon="
+                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                  "
+                  size="small"
+                  @click="post.isBookmarked = !post.isBookmarked"
+                >
                 </v-btn>
               </div>
             </v-card-actions>
