@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-if="posts && searchResultPost.length === 0">
+      <v-col v-if="posts">
         <v-skeleton-loader :loading="loading" type="list-item-two-line,image">
           <v-card
             v-for="(post, i) in posts"
@@ -95,10 +95,12 @@
                 <v-btn
                   class="ml-0 pt-0 h-auto"
                   :icon="
-                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                    userEffects.bookmarked
+                      ? `mdi-bookmark`
+                      : `mdi-bookmark-outline`
                   "
                   size="small"
-                  @click="post.isBookmarked = !post.isBookmarked"
+                  @click="getBookmarked"
                 >
                 </v-btn>
               </div>
@@ -206,10 +208,12 @@
                 <v-btn
                   class="ml-0 h-auto"
                   :icon="
-                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                    userEffects.bookmarked
+                      ? `mdi-bookmark`
+                      : `mdi-bookmark-outline`
                   "
                   size="small"
-                  @click="post.isBookmarked = !post.isBookmarked"
+                  @click="getBookmarked"
                 >
                 </v-btn>
               </div>
@@ -313,10 +317,12 @@
                 <v-btn
                   class="ml-0 h-auto"
                   :icon="
-                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                    userEffects.bookmarked
+                      ? `mdi-bookmark`
+                      : `mdi-bookmark-outline`
                   "
                   size="small"
-                  @click="post.isBookmarked = !post.isBookmarked"
+                  @click="getBookmarked"
                 >
                 </v-btn>
               </div>
@@ -342,18 +348,29 @@ import { useAppStore } from '@/store/app';
 const props = defineProps({
   posts: Array,
   searchResultPost: Array,
-  searchMarketResultPost: Array,
   showComments: Boolean,
 });
+
+const userEffects = {
+  like: props.posts.isLikeIt,
+  bookmarked: props.posts.isBookmarked,
+};
 
 const appStore = useAppStore();
 const showComments = ref(props.showComments);
 
 const loading = computed(() => {
-  if (props.posts || props.searchResultPost || props.searchMarketResultPost)
-    return false;
+  if (props.posts || props.searchResultPost) return false;
   return true;
 });
+
+const getLike = () => {
+  userEffects.like = !userEffects.like;
+};
+
+const getBookmarked = () => {
+  userEffects.bookmarked = !userEffects.bookmarked;
+};
 </script>
 <style lang="scss" scoped>
 @media screen and (max-width: 425px) {

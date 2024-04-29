@@ -19,6 +19,7 @@
     </div>
     <v-divider v-if="!appStore.isMobile"></v-divider>
     <v-textarea
+      v-model="post.content"
       color="#FFF"
       :label="$t('whatsHappenin')"
       rows="3"
@@ -30,6 +31,43 @@
       hide-details
     >
     </v-textarea>
+    <div class="px-7 py-4">
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-title>
+            <v-row no-gutters>
+              <v-col class="d-flex justify-start" cols="4">
+                Edit Post Detail
+              </v-col>
+            </v-row>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
+            <v-row justify="space-between" no-gutters>
+              <v-col cols="9" class="mr-3">
+                <v-select
+                  v-model="value"
+                  :items="items"
+                  label="Select Categories"
+                  variant="solo"
+                  @update:model-value="selectMenu"
+                  chips
+                  multiple
+                ></v-select>
+              </v-col>
+
+              <v-col>
+                <v-switch
+                  v-model="post.isSellable"
+                  color="primary"
+                  label="Is Sellable"
+                  hide-details
+                ></v-switch>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
     <div id="file-input" class="px-7 flex justify-between">
       <v-file-input
         class="pr-7"
@@ -49,14 +87,52 @@
 </template>
 <script setup>
 import { useAppStore } from '@/store/app';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useSearchStore } from '@/store/search';
+import categoriesService from '@/services/categories.service';
 
 const appStore = useAppStore();
 const searchStore = useSearchStore();
 const searchValue = ref('');
+const items = ref([]);
+const post = ref({
+  title: '',
+  content: '',
+  image: '',
+  likeCount: 0,
+  saveCount: 0,
+  isSellable: true,
+  appUserId: '',
+  categoryId: 0,
+  postId: 0,
+});
+const categories = ref([]);
+const value = ref([]);
+const categoryIds = ref([]); // to be used in post create
 
 const filteredPosts = computed(() => {
   return searchStore.fetchPost(searchValue.value);
 });
+
+onMounted(async () => {
+  const res = await categoriesService.fetchCategories();
+  categories.value = res.data.data;
+  Object.values(res).map((x) => {
+    x.data.map((y) => {
+      items.value = [...items.value, y.name];
+    });
+  });
+});
+
+const selectMenu = (v) => {
+  let id = [];
+  v.map((y) => {
+    categories.value.filter((x) => {
+      if (y === x.name) {
+        id = [...id, x.id];
+      }
+    });
+  });
+  categoryIds.value = id;
+};
 </script>

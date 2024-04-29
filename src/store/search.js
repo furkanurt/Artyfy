@@ -52,25 +52,23 @@ export const useSearchStore = defineStore('search', {
       }
     },
     fetchResultPost(params) {
-      this.fetchResPost = [];
-      this.fetchMarketResPost = [];
-
       try {
         const res = SearchService.fetchSearchResultPost(params);
         this.fetchResPost = res;
+        return res;
       } catch (err) {
         console.log(err);
+        return err;
       }
     },
     fetchMarketResultPost(params) {
-      this.fetchMarketResPost = [];
-      this.fetchResPost = [];
-
       try {
         const res = SearchService.fetchSearchMarketResultPost(params);
         this.fetchMarketResPost = res;
+        return res;
       } catch (err) {
         console.log(err);
+        return err;
       }
     },
   },

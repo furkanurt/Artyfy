@@ -31,14 +31,14 @@ class SearchService extends ArtyfyService {
 
   fetchSearchResultPost(params) {
     return posts.filter((item) => {
-      if (item.id === params) return item;
+      if (item.id == params) return item;
     });
   }
 
   fetchSearchMarketResultPost(params) {
     const marketPost = this.fetchShopPost();
     return marketPost.filter((item) => {
-      if (item.id === params) return item;
+      if (item.id == params) return item;
     });
   }
 }
