@@ -11,9 +11,9 @@ class AuthService extends ArtyfyService {
       return res;
     });
   }
-  async fetchUser(params) {
+  async fetchUserDetail(params) {
     return await this._axios
-      .post('/api/Auth/getByUserId', params)
+      .get(`/api/Auth/getByUserId?userId=${params}`)
       .then((res) => {
         return res;
       });

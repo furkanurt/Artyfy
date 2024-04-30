@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-if="posts && searchResultPost.length === 0">
+      <v-col v-if="posts">
         <v-skeleton-loader :loading="loading" type="list-item-two-line,image">
           <v-card
             v-for="(post, i) in posts"
@@ -68,11 +68,8 @@
                   <v-btn
                     prepend-icon="mdi-heart"
                     size="small"
-                    :color="post.isLikeIt ? `red` : `black`"
-                    @click="
-                      (post.isLikeIt = !post.isLikeIt),
-                        console.log(post.isLikeIt)
-                    "
+                    :color="post.isLikeIt ? 'red' : 'black'"
+                    @click="post.isLikeIt = !post.isLikeIt"
                   >
                     <span class="align-middle">{{ post.likeCount }}</span>
                   </v-btn>
@@ -93,8 +90,8 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-                  class="ml-0 pt-0 h-auto"
-                  :icon="
+                  class="ml-0"
+                  :prepend-icon="
                     post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                   "
                   size="small"
@@ -204,8 +201,8 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-                  class="ml-0 h-auto"
-                  :icon="
+                  class="ml-0"
+                  :prepend-icon="
                     post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                   "
                   size="small"
@@ -311,8 +308,8 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-                  class="ml-0 h-auto"
-                  :icon="
+                  class="ml-0"
+                  :prepend-icon="
                     post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                   "
                   size="small"
@@ -336,22 +333,25 @@
   </v-container>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useAppStore } from '@/store/app';
 
+const userEffects = ref({});
 const props = defineProps({
   posts: Array,
   searchResultPost: Array,
-  searchMarketResultPost: Array,
   showComments: Boolean,
+});
+
+onMounted(() => {
+  userEffects.value = { ...props };
 });
 
 const appStore = useAppStore();
 const showComments = ref(props.showComments);
 
 const loading = computed(() => {
-  if (props.posts || props.searchResultPost || props.searchMarketResultPost)
-    return false;
+  if (props.posts || props.searchResultPost) return false;
   return true;
 });
 </script>

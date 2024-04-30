@@ -45,8 +45,11 @@ export default class BaseService implements Service {
 
   static requestInterceptor(config) {
     const token = localStorage.getItem('token');
+    const userStore = useUserStore();
     if (token && config.headers && !config.params?.isPublic) {
       config.headers.Authorization = `Bearer ${token}`;
+
+      userStore.fetchUserID(token);
     }
 
     return config;

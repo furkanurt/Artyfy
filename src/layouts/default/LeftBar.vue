@@ -42,18 +42,23 @@
               :width="40"
               :height="40"
               cover
-              src="https://randomuser.me/api/portraits/women/4.jpg"
+              :src="
+                userDetail.imageUrl
+                  ? userDetail.imageUrl
+                  : `https://randomuser.me/api/portraits/women/4.jpg`
+              "
               class="profile-img"
             ></v-img>
             <div style="display: grid; margin-left: 10px; font-size: 14px">
-              <span>{{ user.userName }}</span>
-              <span style="font-style: normal">@{{ user.userId }}</span>
+              <span>{{ userDetail.fullName }}</span>
+              <span style="font-style: normal">@{{ userDetail.userName }}</span>
             </div>
           </div>
           <v-menu class="profile-div">
             <template v-slot:activator="{ props }">
               <v-btn
-                variant="text"
+                variant="plain"
+                size="large"
                 icon="mdi-dots-vertical"
                 v-bind="props"
               ></v-btn>
@@ -77,10 +82,12 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
 import router from '@/router';
 import { useUserStore } from '@/store/user';
 import { useRoute } from 'vue-router';
 
+const userDetail = ref([]);
 const route = useRoute();
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
@@ -92,13 +99,12 @@ const value = [
 ];
 
 const items = [{ title: 'Logout' }];
-
-const user = {
-  userName: 'Gülsüm Vural',
-  userId: 'glsmvrl',
-};
-
 const userStore = useUserStore();
+
+onMounted(async () => {
+  const res = await userStore.fetchUserDetail();
+  userDetail.value = res.data.data;
+});
 
 const clickMenuItem = (value) => {
   if (value === 'home') {
