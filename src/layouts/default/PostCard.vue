@@ -68,11 +68,8 @@
                   <v-btn
                     prepend-icon="mdi-heart"
                     size="small"
-                    :color="post.isLikeIt ? `red` : `black`"
-                    @click="
-                      (post.isLikeIt = !post.isLikeIt),
-                        console.log(post.isLikeIt)
-                    "
+                    :color="post.isLikeIt ? 'red' : 'black'"
+                    @click="post.isLikeIt = !post.isLikeIt"
                   >
                     <span class="align-middle">{{ post.likeCount }}</span>
                   </v-btn>
@@ -93,14 +90,12 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-                  class="ml-0 pt-0 h-auto"
-                  :icon="
-                    userEffects.bookmarked
-                      ? `mdi-bookmark`
-                      : `mdi-bookmark-outline`
+                  class="ml-0"
+                  :prepend-icon="
+                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                   "
                   size="small"
-                  @click="getBookmarked"
+                  @click="post.isBookmarked = !post.isBookmarked"
                 >
                 </v-btn>
               </div>
@@ -206,14 +201,12 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-                  class="ml-0 h-auto"
-                  :icon="
-                    userEffects.bookmarked
-                      ? `mdi-bookmark`
-                      : `mdi-bookmark-outline`
+                  class="ml-0"
+                  :prepend-icon="
+                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                   "
                   size="small"
-                  @click="getBookmarked"
+                  @click="post.isBookmarked = !post.isBookmarked"
                 >
                 </v-btn>
               </div>
@@ -315,14 +308,12 @@
                   <span class="align-middle">{{ post.shareCount }}</span>
                 </v-btn>
                 <v-btn
-                  class="ml-0 h-auto"
-                  :icon="
-                    userEffects.bookmarked
-                      ? `mdi-bookmark`
-                      : `mdi-bookmark-outline`
+                  class="ml-0"
+                  :prepend-icon="
+                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                   "
                   size="small"
-                  @click="getBookmarked"
+                  @click="post.isBookmarked = !post.isBookmarked"
                 >
                 </v-btn>
               </div>
@@ -342,19 +333,19 @@
   </v-container>
 </template>
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useAppStore } from '@/store/app';
 
+const userEffects = ref({});
 const props = defineProps({
   posts: Array,
   searchResultPost: Array,
   showComments: Boolean,
 });
 
-const userEffects = {
-  like: props.posts.isLikeIt,
-  bookmarked: props.posts.isBookmarked,
-};
+onMounted(() => {
+  userEffects.value = { ...props };
+});
 
 const appStore = useAppStore();
 const showComments = ref(props.showComments);
@@ -363,14 +354,6 @@ const loading = computed(() => {
   if (props.posts || props.searchResultPost) return false;
   return true;
 });
-
-const getLike = () => {
-  userEffects.like = !userEffects.like;
-};
-
-const getBookmarked = () => {
-  userEffects.bookmarked = !userEffects.bookmarked;
-};
 </script>
 <style lang="scss" scoped>
 @media screen and (max-width: 425px) {

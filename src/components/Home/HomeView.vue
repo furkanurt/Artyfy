@@ -11,14 +11,17 @@
   </v-layout>
 </template>
 <script setup>
-import { computed } from 'vue';
-import DummyService from '@/services/dummy.service';
+import { computed, onMounted } from 'vue';
 import { useSearchStore } from '@/store/search';
 import PostCard from '@/layouts/default/PostCard.vue';
 import PostInput from '@/components/Home/PostInput.vue';
 
+onMounted(() => {
+  searchStore.fetchPost('');
+});
+
 const searchStore = useSearchStore();
-const posts = DummyService.fetchPost();
+const posts = searchStore.searchPost;
 
 const filteredPosts = computed(() => {
   return searchStore.searchPost;

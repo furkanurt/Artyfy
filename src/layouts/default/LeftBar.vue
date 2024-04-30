@@ -99,7 +99,6 @@ const value = [
 ];
 
 const items = [{ title: 'Logout' }];
-
 const userStore = useUserStore();
 
 onMounted(async () => {
