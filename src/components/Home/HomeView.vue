@@ -1,5 +1,10 @@
 <template>
-  <v-layout id="home-layout">
+  <v-skeleton-loader
+    v-if="!posts"
+    :elevation="6"
+    type="card"
+  ></v-skeleton-loader>
+  <v-layout v-else id="home-layout">
     <PostInput />
     <div>
       <PostCard
@@ -11,16 +16,13 @@
   </v-layout>
 </template>
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import { useSearchStore } from '@/store/search';
 import PostCard from '@/layouts/default/PostCard.vue';
 import PostInput from '@/components/Home/PostInput.vue';
 
-onMounted(() => {
-  searchStore.fetchPost('');
-});
-
 const searchStore = useSearchStore();
+searchStore.fetchPost('');
 const posts = searchStore.searchPost;
 
 const filteredPosts = computed(() => {

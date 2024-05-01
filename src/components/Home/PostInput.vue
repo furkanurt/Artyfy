@@ -49,7 +49,7 @@
                   :items="items"
                   label="Select Categories"
                   variant="solo"
-                  @update:model-value="selectMenu"
+                  @update:modelValue="selectMenu"
                   chips
                   multiple
                 ></v-select>
@@ -68,14 +68,34 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </div>
-    <div id="file-input" class="px-7 flex justify-between">
+    <div id="file-input" class="px-7 flex justify-between items-center">
       <v-file-input
-        class="pr-7"
-        accept="image/*"
-        density="compact"
+        v-model="post.image"
+        :show-size="1000"
+        label="File input"
+        placeholder="Select your files"
+        prepend-icon="mdi-paperclip"
         variant="underlined"
+        accept="image/*"
+        @change="imagesUploaded"
+        counter
         multiple
-      ></v-file-input>
+      >
+        <template v-slot:selection="{ fileNames }">
+          <template v-for="(fileName, index) in fileNames" :key="fileName">
+            <v-chip v-if="index < 2" class="me-2" size="small" label>
+              {{ fileName }}
+            </v-chip>
+
+            <span
+              v-else-if="index === 2"
+              class="text-overline text-grey-darken-3 mx-2"
+            >
+              +{{ files.length - 2 }} File(s)
+            </span>
+          </template>
+        </template>
+      </v-file-input>
       <v-btn
         rounded="xl"
         class="text-white"
@@ -98,7 +118,7 @@ const items = ref([]);
 const post = ref({
   title: '',
   content: '',
-  image: '',
+  image: [],
   likeCount: 0,
   saveCount: 0,
   isSellable: true,
@@ -134,5 +154,17 @@ const selectMenu = (v) => {
     });
   });
   categoryIds.value = id;
+  console.log('Categories IDs: ,', categoryIds.value);
+};
+
+const imagesUploaded = () => {
+  // convert to formData
+  const formData = new FormData();
+  for (let i = 0; i < post.value.image.length; i++) {
+    formData.append('files', post.value.image[i]);
+  }
+  formData.forEach((value, key) => {
+    console.log('FORMDATA: ', key, value);
+  });
 };
 </script>
