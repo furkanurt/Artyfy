@@ -30,6 +30,8 @@ export const useUserStore = defineStore('user', {
     async userLogout() {
       this.user = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('reduxState');
+      localStorage.removeItem('userID');
     },
     fetchUserID(token) {
       let base64Url = token.split('.')[1];

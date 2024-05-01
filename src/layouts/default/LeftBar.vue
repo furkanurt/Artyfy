@@ -103,7 +103,11 @@ const userStore = useUserStore();
 
 onMounted(async () => {
   const res = await userStore.fetchUserDetail();
-  userDetail.value = res.data.data;
+  if (res.data.error) {
+    logout();
+  } else {
+    userDetail.value = res.data.data;
+  }
 });
 
 const clickMenuItem = (value) => {
