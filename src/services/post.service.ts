@@ -10,14 +10,9 @@ class PostService extends ArtyfyService {
   fetchPostDetail() {
     return this._axios.get('/api/Posts/postDetail');
   }
-  fetchPostLike() {
-    return this._axios.get('/api/Posts/like');
-  }
   fetchSellablePost() {
+    // for market
     return this._axios.get('/api/Posts/getSellableProducts');
-  }
-  fetchPostSave() {
-    return this._axios.get('/api/Posts/save');
   }
   fetchSavedPosts() {
     return this._axios.get('/api/Posts/listSavedPosts');
@@ -27,6 +22,16 @@ class PostService extends ArtyfyService {
   }
   fetchTrendPosts() {
     return this._axios.get('/api/Posts/trendPosts');
+  }
+  // for the user to interact with posts
+  sendPostSave() {
+    return this._axios.post('/api/Posts/save');
+  }
+  sendPostLike() {
+    return this._axios.post('/api/Posts/like');
+  }
+  sendPostComment() {
+    return this._axios.post('/api/Comments/add');
   }
 }
 
