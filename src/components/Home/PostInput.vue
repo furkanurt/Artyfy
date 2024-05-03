@@ -4,7 +4,6 @@
       class="flex justify-between items-center py-5 pl-7"
       v-if="!appStore.isMobile"
     >
-      <!-- <p class="font-extrabold text-xl">Home</p> -->
       <div v-if="appStore.breakpoint === 'md'" class="w-full pr-3">
         <v-text-field
           v-model="searchValue"
@@ -18,6 +17,11 @@
       </div>
     </div>
     <v-divider v-if="!appStore.isMobile"></v-divider>
+    <div class="absolute z-50" v-if="getErrorMessage">
+      <v-alert type="error" class="mb-10" transition="slide-y-transition">{{
+        $t('errorMessage.postSendErrorMessage')
+      }}</v-alert>
+    </div>
     <v-textarea
       v-model="post.content"
       color="#FFF"
@@ -37,7 +41,7 @@
           <v-expansion-panel-title>
             <v-row no-gutters>
               <v-col class="d-flex justify-start" cols="4">
-                Edit Post Detail
+                {{ $t('editPostDetail') }}
               </v-col>
             </v-row>
           </v-expansion-panel-title>
@@ -100,6 +104,7 @@
         rounded="xl"
         class="text-white"
         style="background-color: #fa9392"
+        @click="sendPost"
         >{{ $t('postCard.post') }}</v-btn
       >
     </div>
@@ -109,26 +114,29 @@
 import { useAppStore } from '@/store/app';
 import { computed, onMounted, ref } from 'vue';
 import { useSearchStore } from '@/store/search';
+import { useUserStore } from '@/store/user';
+import { usePostStore } from '@/store/post';
 import categoriesService from '@/services/categories.service';
 
 const appStore = useAppStore();
 const searchStore = useSearchStore();
+const userStore = useUserStore();
+const postStore = usePostStore();
+
+const getErrorMessage = ref(false);
 const searchValue = ref('');
 const items = ref([]);
-const post = ref({
-  title: '',
-  content: '',
-  image: [],
-  likeCount: 0,
-  saveCount: 0,
-  isSellable: true,
-  appUserId: '',
-  categoryId: 0,
-  postId: 0,
-});
 const categories = ref([]);
 const value = ref([]);
 const categoryIds = ref([]); // to be used in post create
+const post = ref({
+  title: '', // kaldırılabilir
+  content: '',
+  image: [],
+  isSellable: true,
+  appUserId: userStore.userDetail.id,
+  categoryId: 0,
+});
 
 const filteredPosts = computed(() => {
   return searchStore.fetchPost(searchValue.value);
@@ -154,6 +162,7 @@ const selectMenu = (v) => {
     });
   });
   categoryIds.value = id;
+  post.value.categoryId = categoryIds.value;
   console.log('Categories IDs: ,', categoryIds.value);
 };
 
@@ -165,6 +174,19 @@ const imagesUploaded = () => {
   }
   formData.forEach((value, key) => {
     console.log('FORMDATA: ', key, value);
+    post.value.image = [post.value.image, ...value];
   });
+};
+
+const sendPost = async () => {
+  const res = await postStore.sendPost(post.value);
+  console.log(res);
+
+  if (res.errors) {
+    getErrorMessage.value = true;
+    setTimeout(() => {
+      getErrorMessage.value = false;
+    }, 3000);
+  }
 };
 </script>

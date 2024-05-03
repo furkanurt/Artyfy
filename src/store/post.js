@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import postService from '@/services/post.service';
 
-export const usePostStore = defineStore('user', {
+export const usePostStore = defineStore('post', {
   state: () => ({}),
   actions: {
     async fetchAllPost() {
@@ -9,8 +9,17 @@ export const usePostStore = defineStore('user', {
         const res = await postService.fetchAllPost();
         return res.data;
       } catch (err) {
-        console.log('err:', err);
-        return err.response;
+        console.error('err:', err.response.data);
+        return err.response.data;
+      }
+    },
+    async sendPost(params) {
+      try {
+        const res = await postService.createPost(params);
+        return res.data;
+      } catch (err) {
+        console.error('err:', err.response.data);
+        return err.response.data;
       }
     },
   },

@@ -14,6 +14,7 @@
   "showMore": "Show More",
   "followSuggestion": "Who to Follow",
   "follow": "Follow",
+  "editPostDetail": "Edit post detail",
   "login": {
     "title": "Welcome back!",
     "email": "Email Address",
@@ -46,5 +47,13 @@
     "onSale": "On Sale",
     "notOnSale": "Not On Sale",
     "post": "Post"
+  },
+  "userMenu": {
+    "logout": "Logout",
+    "language": "TR"
+  },
+  "errorMessage": {
+    "postErrorMessage": "An error occurred while fetching posts.",
+    "postSendErrorMessage": "An error occurred while sending the post."
   }
 }

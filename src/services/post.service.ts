@@ -1,37 +1,59 @@
 import ArtyfyService from './artyfy.service';
 
 class PostService extends ArtyfyService {
-  fetchAllPost() {
-    return this._axios.get('/api/Posts/getAll');
+  async fetchAllPost() {
+    return await this._axios.get('/api/Posts/getAll').then((res) => {
+      return res;
+    });
   }
-  createPost() {
-    return this._axios.post('/api/Posts/create');
+  async createPost(params) {
+    return await this._axios.post('/api/Posts/create', params).then((res) => {
+      return res;
+    });
   }
-  fetchPostDetail() {
-    return this._axios.get('/api/Posts/postDetail');
+  async fetchPostDetail() {
+    return await this._axios.get('/api/Posts/postDetail').then((res) => {
+      return res;
+    });
   }
-  fetchSellablePost() {
+  async fetchSellablePost() {
     // for market
-    return this._axios.get('/api/Posts/getSellableProducts');
+    return await this._axios
+      .get('/api/Posts/getSellableProducts')
+      .then((res) => {
+        return res;
+      });
   }
-  fetchSavedPosts() {
-    return this._axios.get('/api/Posts/listSavedPosts');
+  async fetchSavedPosts() {
+    return await this._axios.get('/api/Posts/listSavedPosts').then((res) => {
+      return res;
+    });
   }
-  fetchLikedPosts() {
-    return this._axios.get('/api/Posts/listLikedPosts');
+  async fetchLikedPosts() {
+    return await this._axios.get('/api/Posts/listLikedPosts').then((res) => {
+      return res;
+    });
   }
-  fetchTrendPosts() {
-    return this._axios.get('/api/Posts/trendPosts');
+  async fetchTrendPosts() {
+    return await this._axios.get('/api/Posts/trendPosts').then((res) => {
+      return res;
+    });
   }
   // for the user to interact with posts
-  sendPostSave() {
-    return this._axios.post('/api/Posts/save');
+  async sendPostSave() {
+    return await this._axios.post('/api/Posts/save').then((res) => {
+      return res;
+    });
   }
-  sendPostLike() {
-    return this._axios.post('/api/Posts/like');
+  async sendPostLike() {
+    return await this._axios.post('/api/Posts/like').then((res) => {
+      return res;
+    });
   }
-  sendPostComment() {
-    return this._axios.post('/api/Comments/add');
+  async sendPostComment() {
+    return await this._axios.post('/api/Comments/add').then((res) => {
+      return res;
+    });
   }
 }
 

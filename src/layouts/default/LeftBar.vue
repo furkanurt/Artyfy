@@ -36,7 +36,7 @@
           cursor: pointer;
         "
       >
-        <div class="profile">
+        <div class="profile" v-if="userDetail">
           <div style="display: flex" @click="goToProfile()">
             <v-img
               :width="40"
@@ -45,7 +45,7 @@
               :src="
                 userDetail.imageUrl
                   ? userDetail.imageUrl
-                  : `https://randomuser.me/api/portraits/women/4.jpg`
+                  : 'https://i.pravatar.cc/40'
               "
               class="profile-img"
             ></v-img>
@@ -65,13 +65,10 @@
             </template>
 
             <v-list>
-              <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-                @click="logout"
-                class="cursor-pointer"
-              >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item @click="logout" class="cursor-pointer">
+                <v-list-item-title>{{
+                  $t('userMenu.logout')
+                }}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -81,14 +78,20 @@
   </v-layout>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import router from '@/router';
 import { useUserStore } from '@/store/user';
+// import { useAppStore } from '@/store/app';
 import { useRoute } from 'vue-router';
+// import i18n from '@/i18n';
+
+const userStore = useUserStore();
+// const appStore = useAppStore();
+const route = useRoute();
+// const { availableLocales } = i18n.global;
 
 const userDetail = ref([]);
-const route = useRoute();
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },
@@ -97,9 +100,6 @@ const value = [
   { text: 'shop', icon: 'mdi-cart-minus' },
   { text: 'profile', icon: 'mdi-account' },
 ];
-
-const items = [{ title: 'Logout' }];
-const userStore = useUserStore();
 
 onMounted(async () => {
   const res = await userStore.fetchUserDetail();
@@ -120,12 +120,18 @@ const clickMenuItem = (value) => {
 
 const goToProfile = () => {
   console.log('clicked profile');
+  router.push('/profile');
 };
 
 const logout = async () => {
   await userStore.userLogout();
   router.push('/login');
 };
+
+// const changeLanguage = (e) => {
+//   localStorage.setItem('portalLang', e);
+//   appStore.setLocale(e);
+// };
 </script>
 
 <style lang="scss" scoped>

@@ -14,6 +14,7 @@
   "showMore": "Daha Fazla Göster",
   "followSuggestion": "Kimleri Takip Etmelisin",
   "follow": "Takip Et",
+  "editPostDetail": "Post detay",
   "login": {
     "title": "Tekrar Hoş Geldiniz!",
     "email": "E-posta Adresi",
@@ -46,5 +47,13 @@
     "onSale": "Satışta",
     "notOnSale": "Satışta Değil",
     "post": "Gönder"
+  },
+  "userMenu": {
+    "logout": "Çıkış Yap",
+    "language": "EN"
+  },
+  "errorMessage": {
+    "postErrorMessage": "Postlar getirilirken bir hata oluştu.",
+    "postSendErrorMessage": "Post gönderilirken bir hata oluştu."
   }
 }

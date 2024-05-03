@@ -1,36 +1,38 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div v-if="appStore.isMobile">
-    <AppBar />
-    <HomeView />
-  </div>
-  <v-app v-if="!appStore.isMobile">
-    <v-row no-gutters v-if="appStore.breakpoint === 'md'">
-      <v-col cols="4">
-        <v-sheet>
-          <left-bar />
-        </v-sheet>
-      </v-col>
+  <div>
+    <div v-if="appStore.isMobile">
+      <AppBar />
+      <HomeView />
+    </div>
+    <v-app v-if="!appStore.isMobile">
+      <v-row no-gutters v-if="appStore.breakpoint === 'md'">
+        <v-col cols="4">
+          <v-sheet>
+            <left-bar />
+          </v-sheet>
+        </v-col>
 
-      <v-col cols="8">
-        <v-sheet>
+        <v-col cols="8">
+          <v-sheet>
+            <HomeView />
+          </v-sheet>
+        </v-col>
+      </v-row>
+      <v-row no-gutters v-else>
+        <v-col cols="12" sm="3" style="max-width: 23%" class="mobile-left">
+          <left-bar />
+        </v-col>
+        <v-col cols="12" sm="6" class="w-full h-full">
           <HomeView />
-        </v-sheet>
-      </v-col>
-    </v-row>
-    <v-row no-gutters v-else>
-      <v-col cols="12" sm="3" style="max-width: 23%" class="mobile-left">
-        <left-bar />
-      </v-col>
-      <v-col cols="12" sm="6">
-        <HomeView />
-      </v-col>
-      <v-col cols="12" sm="3" class="mobile-right">
-        <v-divider vertical></v-divider>
-        <right-bar style="padding: 20px" />
-      </v-col>
-    </v-row>
-  </v-app>
+        </v-col>
+        <v-col cols="12" sm="3" class="mobile-right">
+          <v-divider vertical></v-divider>
+          <right-bar style="padding: 20px" />
+        </v-col>
+      </v-row>
+    </v-app>
+  </div>
 </template>
 
 <script setup>

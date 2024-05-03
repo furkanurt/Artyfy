@@ -13,15 +13,23 @@
               <div class="flex justify-between">
                 <div class="flex align-middle my-2">
                   <v-avatar :size="appStore.isMobile ? '32' : '48'">
-                    <img :src="post.avatar" alt="avatar" />
+                    <img
+                      :src="
+                        post.avatar ? post.avatar : `https://i.pravatar.cc/100`
+                      "
+                      alt="avatar"
+                    />
                   </v-avatar>
                   <div class="mobile-user-info">
                     <div class="flex ml-5 align-middle div-1">
-                      <div class="font-bold mr-2 div1-1">{{ post.name }}</div>
-                      <div class="mr-2 div1-2">@{{ post.userName }}</div>
-                      <div>• {{ post.time }}</div>
+                      <div class="font-bold mr-2 div1-1">
+                        {{ post.userFullName }}
+                      </div>
+                      <div class="mr-2 div1-2">
+                        @{{ post.userName ? post.userName : 'deneme' }}
+                      </div>
                     </div>
-                    <div class="ml-5 div-2">{{ post.postDescription }}</div>
+                    <div class="ml-5 div-2">{{ post.content }}</div>
                   </div>
                 </div>
                 <div>
@@ -31,7 +39,7 @@
                         icon
                         v-bind="props"
                         :style="
-                          post.isOnSale
+                          post.isSellable
                             ? `background-color: #65B741`
                             : `background-color: #FFB534`
                         "
@@ -42,7 +50,7 @@
                         <v-icon color="white"> mdi-shopping-outline </v-icon>
                       </v-btn>
                     </template>
-                    <span v-if="post.isOnSale">{{
+                    <span v-if="post.isSellable">{{
                       $t('postCard.onSale')
                     }}</span>
                     <span v-else>{{ $t('postCard.notOnSale') }}</span>
@@ -54,7 +62,7 @@
               <div class="w-full mobile-carousel">
                 <v-carousel hide-delimiter-background show-arrows="hover">
                   <v-carousel-item
-                    v-for="(image, i) in post.postImage"
+                    v-for="(image, i) in post.image"
                     :key="i"
                     :src="image"
                     cover
@@ -79,16 +87,9 @@
                     class="ml-2"
                     @click="showComments = !showComments"
                   >
-                    <span class="align-middle">{{ post.commentCount }}</span>
+                    <span class="align-middle">{{ post.comments.length }}</span>
                   </v-btn>
                 </div>
-                <v-btn
-                  prepend-icon="mdi-export-variant"
-                  size="small"
-                  @click="console.log('cliked share')"
-                >
-                  <span class="align-middle">{{ post.shareCount }}</span>
-                </v-btn>
                 <v-btn
                   class="ml-0"
                   :prepend-icon="
@@ -128,11 +129,12 @@
                   </v-avatar>
                   <div class="mobile-user-info">
                     <div class="flex ml-5 align-middle div-1">
-                      <div class="font-bold mr-2 div1-1">{{ post.name }}</div>
+                      <div class="font-bold mr-2 div1-1">
+                        {{ post.userFullName }}
+                      </div>
                       <div class="mr-2 div1-2">@{{ post.userName }}</div>
-                      <div>• {{ post.time }}</div>
                     </div>
-                    <div class="ml-5 div-2">{{ post.postDescription }}</div>
+                    <div class="ml-5 div-2">{{ post.content }}</div>
                   </div>
                 </div>
                 <div>
@@ -142,7 +144,7 @@
                         icon
                         v-bind="props"
                         :style="
-                          post.isOnSale
+                          post.isSellable
                             ? `background-color: #65B741`
                             : `background-color: #FFB534`
                         "
@@ -153,7 +155,7 @@
                         <v-icon color="white"> mdi-shopping-outline </v-icon>
                       </v-btn>
                     </template>
-                    <span v-if="post.isOnSale">{{
+                    <span v-if="post.isSellable">{{
                       $t('postCard.onSale')
                     }}</span>
                     <span v-else>{{ $t('postCard.notOnSale') }}</span>
@@ -165,7 +167,7 @@
               <div class="w-full mobile-carousel">
                 <v-carousel hide-delimiter-background show-arrows="hover">
                   <v-carousel-item
-                    v-for="(image, i) in post.postImage"
+                    v-for="(image, i) in post.image"
                     :key="i"
                     :src="image"
                     cover
@@ -190,16 +192,9 @@
                     class="ml-2"
                     @click="showComments = !showComments"
                   >
-                    <span class="align-middle">{{ post.commentCount }}</span>
+                    <span class="align-middle">{{ post.comments.length }}</span>
                   </v-btn>
                 </div>
-                <v-btn
-                  prepend-icon="mdi-export-variant"
-                  size="small"
-                  @click="console.log('cliked share')"
-                >
-                  <span class="align-middle">{{ post.shareCount }}</span>
-                </v-btn>
                 <v-btn
                   class="ml-0"
                   :prepend-icon="
@@ -235,11 +230,12 @@
                   </v-avatar>
                   <div class="mobile-user-info">
                     <div class="flex ml-5 align-middle div-1">
-                      <div class="font-bold mr-2 div1-1">{{ post.name }}</div>
+                      <div class="font-bold mr-2 div1-1">
+                        {{ post.userFullName }}
+                      </div>
                       <div class="mr-2 div1-2">@{{ post.userName }}</div>
-                      <div>• {{ post.time }}</div>
                     </div>
-                    <div class="ml-5 div-2">{{ post.postDescription }}</div>
+                    <div class="ml-5 div-2">{{ post.content }}</div>
                   </div>
                 </div>
                 <div>
@@ -249,7 +245,7 @@
                         icon
                         v-bind="props"
                         :style="
-                          post.isOnSale
+                          post.isSellable
                             ? `background-color: #65B741`
                             : `background-color: #FFB534`
                         "
@@ -260,7 +256,7 @@
                         <v-icon color="white"> mdi-shopping-outline </v-icon>
                       </v-btn>
                     </template>
-                    <span v-if="post.isOnSale">{{
+                    <span v-if="post.isSellable">{{
                       $t('postCard.onSale')
                     }}</span>
                     <span v-else>{{ $t('postCard.notOnSale') }}</span>
@@ -272,7 +268,7 @@
               <div class="w-full mobile-carousel">
                 <v-carousel hide-delimiter-background show-arrows="hover">
                   <v-carousel-item
-                    v-for="(image, i) in post.postImage"
+                    v-for="(image, i) in post.image"
                     :key="i"
                     :src="image"
                     cover
@@ -297,16 +293,9 @@
                     class="ml-2"
                     @click="showComments = !showComments"
                   >
-                    <span class="align-middle">{{ post.commentCount }}</span>
+                    <span class="align-middle">{{ post.comments.length }}</span>
                   </v-btn>
                 </div>
-                <v-btn
-                  prepend-icon="mdi-export-variant"
-                  size="small"
-                  @click="console.log('cliked share')"
-                >
-                  <span class="align-middle">{{ post.shareCount }}</span>
-                </v-btn>
                 <v-btn
                   class="ml-0"
                   :prepend-icon="

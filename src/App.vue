@@ -1,5 +1,7 @@
 <template>
-  <router-view />
+  <v-locale-provider>
+    <router-view />
+  </v-locale-provider>
 </template>
 
 <script setup>
