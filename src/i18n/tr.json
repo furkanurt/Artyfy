@@ -53,7 +53,7 @@
     "language": "EN"
   },
   "errorMessage": {
-    "postErrorMessage": "Postlar getirilirken bir hata oluştu.",
+    "postErrorMessage": "Anasayfa yüklenirken bir hata oluştu.",
     "postSendErrorMessage": "Post gönderilirken bir hata oluştu."
   }
 }

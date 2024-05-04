@@ -53,7 +53,7 @@
     "language": "TR"
   },
   "errorMessage": {
-    "postErrorMessage": "An error occurred while fetching posts.",
+    "postErrorMessage": "An error occurred while loading the homepage.",
     "postSendErrorMessage": "An error occurred while sending the post."
   }
 }
