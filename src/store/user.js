@@ -64,5 +64,8 @@ export const useUserStore = defineStore('user', {
         }
       }
     },
+    // reset password
+    // update password
+    // update user profile
   },
 });

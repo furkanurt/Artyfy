@@ -1,8 +1,8 @@
 import ArtyfyService from './artyfy.service';
 
 class PostService extends ArtyfyService {
-  async fetchAllPost() {
-    return await this._axios.get('/api/Posts/getAll').then((res) => {
+  async fetchAllPost(id) {
+    return await this._axios.get('/api/Posts/getAll', id).then((res) => {
       return res;
     });
   }
@@ -11,8 +11,8 @@ class PostService extends ArtyfyService {
       return res;
     });
   }
-  async fetchPostDetail() {
-    return await this._axios.get('/api/Posts/postDetail').then((res) => {
+  async fetchPostDetail(id) {
+    return await this._axios.get('/api/Posts/postDetail', id).then((res) => {
       return res;
     });
   }
@@ -24,15 +24,19 @@ class PostService extends ArtyfyService {
         return res;
       });
   }
-  async fetchSavedPosts() {
-    return await this._axios.get('/api/Posts/listSavedPosts').then((res) => {
-      return res;
-    });
+  async fetchSavedPosts(id) {
+    return await this._axios
+      .get('/api/Posts/listSavedPosts', id)
+      .then((res) => {
+        return res;
+      });
   }
-  async fetchLikedPosts() {
-    return await this._axios.get('/api/Posts/listLikedPosts').then((res) => {
-      return res;
-    });
+  async fetchLikedPosts(id) {
+    return await this._axios
+      .get('/api/Posts/listLikedPosts', id)
+      .then((res) => {
+        return res;
+      });
   }
   async fetchTrendPosts() {
     return await this._axios.get('/api/Posts/trendPosts').then((res) => {
@@ -40,18 +44,25 @@ class PostService extends ArtyfyService {
     });
   }
   // for the user to interact with posts
-  async sendPostSave() {
-    return await this._axios.post('/api/Posts/save').then((res) => {
+  async sendPostSave(params) {
+    return await this._axios.post('/api/Posts/save', params).then((res) => {
       return res;
     });
   }
-  async sendPostLike() {
-    return await this._axios.post('/api/Posts/like').then((res) => {
+  async sendPostLike(params) {
+    return await this._axios.post('/api/Posts/like', params).then((res) => {
       return res;
     });
   }
-  async sendPostComment() {
-    return await this._axios.post('/api/Comments/add').then((res) => {
+  async sendPostComment(params) {
+    return await this._axios.post('/api/Comments/add', params).then((res) => {
+      return res;
+    });
+  }
+
+  // NOTIFICATIONS
+  async fetchNotifications(id) {
+    return await this._axios.get('/api/Notifications', id).then((res) => {
       return res;
     });
   }

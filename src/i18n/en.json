@@ -31,6 +31,7 @@
   "register": {
     "title": "Register",
     "name": "Name",
+    "phoneNumber": "Phone Number",
     "surname": "Surname",
     "username": "Username",
     "email": "Email",
@@ -38,7 +39,8 @@
     "confirmPassword": "Confirm Password",
     "haveAccount": "Have an account?",
     "login": "Login",
-    "checkInfo": "Check your information"
+    "checkInfo": "Check your information",
+    "profilePhoto": "Profile Photo"
   },
   "shop": {
     "review": "Review"

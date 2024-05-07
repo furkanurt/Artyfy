@@ -4,9 +4,9 @@ import postService from '@/services/post.service';
 export const usePostStore = defineStore('post', {
   state: () => ({}),
   actions: {
-    async fetchAllPost() {
+    async fetchAllPost(id) {
       try {
-        const res = await postService.fetchAllPost();
+        const res = await postService.fetchAllPost(id);
         return res.data;
       } catch (err) {
         console.error('err:', err.response.data);

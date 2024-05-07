@@ -28,16 +28,18 @@ import { useSearchStore } from '@/store/search';
 import { usePostStore } from '@/store/post';
 import PostCard from '@/layouts/default/PostCard.vue';
 import PostInput from '@/components/Home/PostInput.vue';
+import { useUserStore } from '@/store/user';
 
 const postIsLoading = ref(false);
 const getErrorMessage = ref(false);
 const searchStore = useSearchStore();
+const userStore = useUserStore();
 const postStore = usePostStore();
 const posts = ref([]);
 searchStore.fetchPost('');
 
 const fetchHomePost = async () => {
-  const res = await postStore.fetchAllPost();
+  const res = await postStore.fetchAllPost(userStore.userDetail.id);
   if (res.error) {
     getErrorMessage.value = true;
     setTimeout(() => {

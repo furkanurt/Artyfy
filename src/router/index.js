@@ -63,16 +63,25 @@ const routes = [
     path: '/trends',
     name: 'Trends',
     component: Trends,
+    meta: {
+      public: false,
+    },
   },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
+    meta: {
+      public: false,
+    },
   },
   {
     path: '/notifications',
     name: 'Notifications',
     component: Notifications,
+    meta: {
+      public: false,
+    },
   },
 ];
 

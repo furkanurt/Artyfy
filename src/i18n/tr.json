@@ -31,6 +31,7 @@
   "register": {
     "title": "Kayıt Ol",
     "name": "Ad",
+    "phoneNumber": "Telefon Numarası",
     "surname": "Soyad",
     "username": "Kullanıcı Adı",
     "email": "E-posta",
@@ -38,7 +39,8 @@
     "confirmPassword": "Şifreyi Onayla",
     "haveAccount": "Hesabınız var mı?",
     "login": "Giriş",
-    "checkInfo": "Bilgilerinizi kontrol edin"
+    "checkInfo": "Bilgilerinizi kontrol edin",
+    "profilePhoto": "Profil Fotoğrafı"
   },
   "shop": {
     "review": "İncele"
