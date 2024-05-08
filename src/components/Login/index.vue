@@ -149,7 +149,11 @@ const login = async () => {
         showAlert.value = false;
       }, 3000);
     } else {
-      router.push('/');
+      await userStore.fetchUserDetail();
+
+      setTimeout(() => {
+        router.push('/');
+      }, 300);
     }
   }
 };

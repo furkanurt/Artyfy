@@ -91,7 +91,7 @@ const userStore = useUserStore();
 const route = useRoute();
 // const { availableLocales } = i18n.global;
 
-const userDetail = ref([]);
+const userDetail = ref();
 const value = [
   { text: 'home', icon: 'mdi-home-outline' },
   { text: 'trends', icon: 'mdi-pound' },
