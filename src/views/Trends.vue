@@ -1,5 +1,5 @@
 <template>
-  <TrendsNavbar />
+  
 <div v-if="appStore.isMobile">
     <AppBar />
     <HomeView />
@@ -35,7 +35,6 @@
 <script setup>
 import LeftBar from '@/layouts/default/LeftBar.vue';
 import Trendsview from '@/components/Trends/Trendsview.vue';
-import TrendsNavbar from '@/components/Trends/TrendsNavbar.vue';
 import AppBar from '@/layouts/default/AppBar.vue';
 import { useAppStore } from '@/store/app';
 ;

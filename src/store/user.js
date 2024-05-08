@@ -64,8 +64,32 @@ export const useUserStore = defineStore('user', {
         }
       }
     },
-    // reset password
-    // update password
-    // update user profile
+    async resetPassword(params) {
+      try {
+        const response = await authService.resetPassword(params);
+        return response;
+      } catch (err) {
+        console.error(err);
+        return err.response;
+      }
+    },
+    async updatePassword(params) {
+      try {
+        const response = await authService.updatePassword(params);
+        return response;
+      } catch (err) {
+        console.error(err);
+        return err.response;
+      }
+    },
+    async updateUserProfile(params) {
+      try {
+        const response = await authService.updateUserProfile(params); 
+        return response;
+      } catch (err) {
+        console.error(err);
+        return err.response;
+      }
+    },
   },
 });

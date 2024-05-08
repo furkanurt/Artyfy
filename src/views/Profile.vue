@@ -34,11 +34,13 @@
   </template>
   
   <script setup>
+  
   import LeftBar from '@/layouts/default/LeftBar.vue';
   import RightBar from '@/layouts/default/RightBar.vue';
   import AppBar from '@/layouts/default/AppBar.vue';
   import { useAppStore } from '@/store/app';
   import Profileview from '@/components/Profile/Profileview.vue';
+  import router from '@/router';
 
   
   const appStore = useAppStore();
@@ -48,7 +50,7 @@
   <style lang="scss" scoped>
   .v-divider {
     height: 100vh !important;
-    z-index: 10000;
+    z-index: 1000;
     position: fixed !important;
   }
   
