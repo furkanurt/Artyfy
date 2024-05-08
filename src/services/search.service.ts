@@ -13,8 +13,8 @@ class SearchService extends ArtyfyService {
   }
 
   fetchSearchPosts(searchValue) {
-    return posts.filter(({ name, userName, postDescription }) =>
-      [name, userName, postDescription].some((val) =>
+    return posts.filter(({ name, userName, content }) =>
+      [name, userName, content].some((val) =>
         val.toLowerCase().includes(searchValue),
       ),
     );
@@ -22,8 +22,8 @@ class SearchService extends ArtyfyService {
 
   fetchSearchMarketPosts(searchValue) {
     const marketPost = this.fetchShopPost();
-    return marketPost.filter(({ name, userName, postDescription }) =>
-      [name, userName, postDescription].some((val) =>
+    return marketPost.filter(({ name, userName, content }) =>
+      [name, userName, content].some((val) =>
         val.toLowerCase().includes(searchValue),
       ),
     );

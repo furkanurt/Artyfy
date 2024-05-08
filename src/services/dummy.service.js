@@ -49,9 +49,9 @@ class DummyService extends ArtyfyService {
         time: '5h',
         isOnSale: true,
         productPrice: 800,
-        postDescription:
+        content:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
-        postImage: [
+        image: [
           'https://source.unsplash.com/random?sig=6',
           'https://source.unsplash.com/random?sig=24',
           'https://source.unsplash.com/random?sig=19',
@@ -91,9 +91,9 @@ class DummyService extends ArtyfyService {
         time: '10h',
         isOnSale: false,
         productPrice: null,
-        postDescription:
+        content:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
-        postImage: [
+        image: [
           'https://source.unsplash.com/random?sig=1',
           'https://source.unsplash.com/random?sig=2',
         ],
@@ -131,9 +131,9 @@ class DummyService extends ArtyfyService {
         time: '32m',
         isOnSale: true,
         productPrice: 400,
-        postDescription:
+        content:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
-        postImage: [
+        image: [
           'https://source.unsplash.com/random?sig=36',
           'https://source.unsplash.com/random?sig=9',
           'https://source.unsplash.com/random?sig=62',
@@ -172,9 +172,9 @@ class DummyService extends ArtyfyService {
         time: '32m',
         isOnSale: false,
         productPrice: null,
-        postDescription:
+        content:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
-        postImage: [
+        image: [
           'https://source.unsplash.com/random?sig=36',
           'https://source.unsplash.com/random?sig=9',
         ],
@@ -206,9 +206,9 @@ class DummyService extends ArtyfyService {
         time: '32m',
         isOnSale: true,
         productPrice: 1000,
-        postDescription:
+        content:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
-        postImage: [
+        image: [
           'https://source.unsplash.com/random?sig=36',
           'https://source.unsplash.com/random?sig=9',
         ],
@@ -240,9 +240,9 @@ class DummyService extends ArtyfyService {
         time: '32m',
         isOnSale: false,
         productPrice: null,
-        postDescription:
+        content:
           'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, culpa.',
-        postImage: [
+        image: [
           'https://source.unsplash.com/random?sig=36',
           'https://source.unsplash.com/random?sig=9',
         ],

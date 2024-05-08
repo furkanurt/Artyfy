@@ -2,9 +2,11 @@ import ArtyfyService from './artyfy.service';
 
 class PostService extends ArtyfyService {
   async fetchAllPost(id) {
-    return await this._axios.get('/api/Posts/getAll', id).then((res) => {
-      return res;
-    });
+    return await this._axios
+      .get(`/api/Posts/getAll?userAppId=${id}`)
+      .then((res) => {
+        return res;
+      });
   }
   async createPost(params) {
     return await this._axios.post('/api/Posts/create', params).then((res) => {
@@ -44,10 +46,12 @@ class PostService extends ArtyfyService {
     });
   }
   // for the user to interact with posts
-  async sendPostSave(params) {
-    return await this._axios.post('/api/Posts/save', params).then((res) => {
-      return res;
-    });
+  async sendPostSave(postId, userId) {
+    return await this._axios
+      .post(`/api/Posts/save?postId=${postId}&userId=${userId}`)
+      .then((res) => {
+        return res;
+      });
   }
   async sendPostLike(params) {
     return await this._axios.post('/api/Posts/like', params).then((res) => {

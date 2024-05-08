@@ -109,7 +109,7 @@
             <v-card-title class="text-overline">{{ item.name }}</v-card-title>
 
             <v-card-subtitle
-              >{{ item.postDescription.substring(0, 30) }}...</v-card-subtitle
+              >{{ item.content.substring(0, 30) }}...</v-card-subtitle
             >
 
             <v-card-actions>
@@ -120,7 +120,7 @@
           </div>
 
           <v-avatar class="ma-3" rounded="0" size="120">
-            <v-img :src="item.postImage[0]" cover></v-img>
+            <v-img :src="item.image[0]" cover></v-img>
           </v-avatar>
         </div>
       </v-card>

@@ -36,7 +36,7 @@
 import { ref } from 'vue';
 
 const user = ref({
-  avatar: 'https://randomuser.me/api/portraits/women/4.jpg',
+  avatar: 'https://i.pravatar.cc/400',
   username: '@glsmvrl',
   name: 'Gülsüm Vural',
   followers: 45,

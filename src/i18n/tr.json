@@ -46,8 +46,8 @@
     "review": "İncele"
   },
   "postCard": {
-    "onSale": "Satışta",
-    "notOnSale": "Satışta Değil",
+    "onSale": "Satın Alınabilir",
+    "notOnSale": "Satın Alınamaz",
     "post": "Gönder"
   },
   "userMenu": {

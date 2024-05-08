@@ -4,7 +4,7 @@
       <v-col v-if="posts">
         <v-skeleton-loader :loading="loading" type="list-item-two-line,image">
           <v-card
-            v-for="(post, i) in posts"
+            v-for="(post, i) in userEffects.posts"
             :key="i"
             class="mx-auto mb-5 w-full"
             variant="flat"

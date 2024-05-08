@@ -10,7 +10,7 @@
       >
         <v-carousel height="300">
           <v-carousel-item
-            v-for="(img, i) in bookmark.postImage"
+            v-for="(img, i) in bookmark.image"
             :key="i"
             :src="img"
             cover
@@ -22,7 +22,7 @@
             bookmark.userName
           }}</v-card-title>
           <v-card-subtitle class="card-subtitle">{{
-            bookmark.postDescription
+            bookmark.content
           }}</v-card-subtitle>
         </div>
 

@@ -39,7 +39,7 @@ const posts = ref([]);
 searchStore.fetchPost('');
 
 const fetchHomePost = async () => {
-  const res = await postStore.fetchAllPost(userStore.userDetail.id);
+  const res = await postStore.fetchAllPost(userStore.userDetail?.id);
   if (res.error) {
     getErrorMessage.value = true;
     setTimeout(() => {

@@ -20,7 +20,7 @@
       >
         <v-carousel height="300">
           <v-carousel-item
-            v-for="(img, i) in item.postImage"
+            v-for="(img, i) in item.image"
             :key="i"
             :src="img"
             cover
@@ -30,7 +30,7 @@
         <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
 
         <v-card-text>
-          <div>{{ item.postDescription.substring(0, 130) }}...</div>
+          <div>{{ item.content.substring(0, 130) }}...</div>
           <div class="mt-4">
             <span class="font-bold text-xl">{{ item.productPrice }} ₺</span>
           </div>
@@ -52,7 +52,7 @@
       >
         <v-carousel height="300">
           <v-carousel-item
-            v-for="(img, i) in item.postImage"
+            v-for="(img, i) in item.image"
             :key="i"
             :src="img"
             cover
@@ -62,7 +62,7 @@
         <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
 
         <v-card-text>
-          <div>{{ item.postDescription.substring(0, 130) }}...</div>
+          <div>{{ item.content.substring(0, 130) }}...</div>
           <div class="mt-4">
             <span class="font-bold text-xl">{{ item.productPrice }} ₺</span>
           </div>

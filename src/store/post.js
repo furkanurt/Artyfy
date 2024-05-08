@@ -22,5 +22,14 @@ export const usePostStore = defineStore('post', {
         return err.response.data;
       }
     },
+    async sendSave(postId, userId) {
+      try {
+        const res = await postService.sendPostSave(postId, userId);
+        return res.data;
+      } catch (err) {
+        console.error('err:', err.response.data);
+        return err.response.data;
+      }
+    },
   },
 });

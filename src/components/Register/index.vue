@@ -67,7 +67,7 @@
               :error-messages="v$.email.$errors.map((e) => e.$message)"
             ></v-text-field>
 
-            <div
+            <!-- <div
               class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
             >
               {{ $t('register.profilePhoto') }}
@@ -80,7 +80,7 @@
               density="compact"
               @change="imagesUploaded"
             >
-            </v-file-input>
+            </v-file-input> -->
 
             <div
               class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
@@ -178,7 +178,7 @@ import {
   helpers,
 } from '@vuelidate/validators';
 import { useUserStore } from '@/store/user';
-import axios from 'axios';
+// import axios from 'axios';
 
 const user = reactive({
   name: '',
@@ -190,7 +190,7 @@ const user = reactive({
   confirmPassword: '',
 });
 const userStore = useUserStore();
-const userImage = ref({});
+// const userImage = ref({});
 const showPassword = ref(false);
 const showAlert = ref(false);
 const resgisterErr = ref('');
@@ -272,25 +272,28 @@ const register = async () => {
   }
 };
 
-const imagesUploaded = async () => {
-  // convert to formData
-  const formData = new FormData();
-  for (let i = 0; i < userImage.value.length; i++) {
-    formData.append('files', userImage.value[i]);
-  }
-  formData.forEach((value, key) => {
-    console.log('FORMDATA: ', key, value);
-    user.userProfileImage = value;
-  });
+// const imagesUploaded = async () => {
+//   // convert to formData
+//   const formData = new FormData();
+//   for (let i = 0; i < userImage.value.length; i++) {
+//     formData.append('files', userImage.value[i]);
+//   }
+//   formData.forEach((value, key) => {
+//     console.log('FORMDATA: ', key, value);
+//     user.userProfileImage = value;
+//   });
 
-  // FIXME
-  const res = await axios.post(
-    `http://mst-images.com.tr/_upload/?fileName=${user.username}&fileDir=artyfy`,
-    formData,
-  );
-  console.log('RESPONSE: ', res);
-  console.log('USER INFORMATION: ', user);
-};
+//   // FIXME
+//   if (user.username) {
+//     const res = await axios.post(
+//       `http://mst-images.com.tr/_upload/?fileName=${user.username}&fileDir=artyfy`,
+//       formData,
+//     );
+//     console.log('RESPONSE: ', res);
+//   }
+
+//   console.log('USER INFORMATION: ', user);
+// };
 </script>
 
 <style lang="scss" scoped>
