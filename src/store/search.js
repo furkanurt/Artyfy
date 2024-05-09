@@ -21,14 +21,14 @@ export const useSearchStore = defineStore('search', {
         console.log(err);
       }
     },
-    fetchShopPost() {
-      this.marketPost = [];
-
+    async fetchShopPost() {
       try {
-        const res = SearchService.fetchShopPost();
-        this.marketPost = res;
+        const res = await SearchService.fetchShopPost();
+        this.marketPost = res.data.data;
+        return res.data.data;
       } catch (err) {
         console.log(err);
+        return err;
       }
     },
     fetchPostForRightPanel(params) {

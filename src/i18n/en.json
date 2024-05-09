@@ -8,6 +8,9 @@
     "shop": "Shop"
   },
   "whatsTrend": "What’s Trend On ARTFY",
+  "price": "Price",
+  "isSellable": "Is Sellable",
+  "selectCategory": "Select Category",
   "search": "Search",
   "whatsHappenin": "What's Happening?",
   "trendingWith": "Trending With",

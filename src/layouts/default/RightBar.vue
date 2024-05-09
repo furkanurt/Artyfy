@@ -5,7 +5,6 @@
       :label="$t('search')"
       variant="solo-filled"
       prepend-inner-icon="mdi-magnify"
-      @input="filteredPosts"
       hide-details
       solo
       rounded
@@ -52,57 +51,15 @@
           </v-btn>
         </v-card-item>
       </v-card>
-
-      <v-card>
-        <v-card-item>
-          <div>
-            <div class="text-overline mb-1">{{ $t('followSuggestion') }}</div>
-            <v-divider horizontal></v-divider>
-          </div>
-        </v-card-item>
-
-        <v-list-item
-          v-for="(item, index) in userSuggestions"
-          :key="index"
-          :title="item.title"
-          :subtitle="`@${item.subtitle}`"
-          style="width: 100%"
-        >
-          <template v-slot:prepend>
-            <v-avatar>
-              <v-img :src="item.prependAvatar" alt="John"></v-img>
-            </v-avatar>
-          </template>
-
-          <template v-slot:append>
-            <v-btn
-              color="grey-lighten-1"
-              variant="text"
-              style="
-                border: 1px solid #fa9392;
-                border-radius: 100px;
-                color: #fa9392 !important;
-              "
-              >{{ $t('follow') }}</v-btn
-            >
-          </template>
-        </v-list-item>
-
-        <v-card-item>
-          <v-btn variant="text" style="color: #fa9392; padding: 0px">
-            {{ $t('showMore') }}
-          </v-btn>
-        </v-card-item>
-      </v-card>
     </div>
 
     <div v-else>
       <v-card
         color="#EDEDED"
         theme="dark"
-        v-for="(item, i) in searchStore.searchPostRightPanel"
+        v-for="(item, i) in searchPostRes"
         :key="i"
-        @click="goPostDetail(item.id)"
+        @click="goPostDetail(item.postId)"
       >
         <div class="d-flex flex-no-wrap justify-space-between">
           <div class="search-card-info">
@@ -112,15 +69,19 @@
               >{{ item.content.substring(0, 30) }}...</v-card-subtitle
             >
 
-            <v-card-actions>
-              <v-btn class="mt-3" color="orange" @click="goPostDetail(item.id)">
+            <v-card-actions class="absolute bottom-0">
+              <v-btn
+                class="mt-3"
+                color="orange"
+                @click="goPostDetail(item.postId)"
+              >
                 {{ $t('shop.review') }}
               </v-btn>
             </v-card-actions>
           </div>
 
           <v-avatar class="ma-3" rounded="0" size="120">
-            <v-img :src="item.image[0]" cover></v-img>
+            <v-img :src="item.images[0]" cover></v-img>
           </v-avatar>
         </div>
       </v-card>
@@ -136,29 +97,32 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue';
 import router from '@/router';
 import DummyService from '@/services/dummy.service';
-import { useSearchStore } from '@/store/search';
+import { usePostStore } from '@/store/post';
 import dayjs from 'dayjs';
-import { ref, computed } from 'vue';
 
 const searchValue = ref('');
-const searchStore = useSearchStore();
+const postStore = usePostStore();
+const searchPostRes = ref([]);
 const trendSuggestion = DummyService.fetchTrendSuggestions();
-const userSuggestions = DummyService.fetchUserSuggestions();
 const year = dayjs().year();
 
-const filteredPosts = computed(() => {
-  return searchStore.fetchPostForRightPanel(searchValue.value);
-});
-
 const goPostDetail = (id) => {
-  searchStore.fetchResultPost(id);
-
   setTimeout(() => {
     router.push(`/post-detail/${id}`);
   }, 600);
 };
+
+watch(searchValue, () => {
+  searchPostRes.value = [];
+  postStore.postsForUser.some((item) => {
+    if (item.userName === searchValue.value) {
+      searchPostRes.value = [item, ...searchPostRes.value];
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -187,6 +151,7 @@ const goPostDetail = (id) => {
 
   .v-footer {
     bottom: 0px;
+    top: 10px;
   }
 
   .search-card-info {

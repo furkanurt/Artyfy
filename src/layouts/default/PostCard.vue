@@ -1,347 +1,171 @@
 <template>
   <v-container>
+    <v-skeleton-loader
+      v-if="!postIsLoading"
+      :elevation="6"
+      type="card"
+    ></v-skeleton-loader>
+    <div class="z-[10000]" v-if="getErrorMessage">
+      <v-alert type="error" class="mb-10" transition="slide-y-transition">{{
+        $t('errorMessage.postErrorMessage')
+      }}</v-alert>
+    </div>
     <v-row>
       <v-col v-if="posts">
-        <v-skeleton-loader :loading="loading" type="list-item-two-line,image">
-          <v-card
-            v-for="(post, i) in userEffects.posts"
-            :key="i"
-            class="mx-auto mb-5 w-full"
-            variant="flat"
-          >
-            <v-card-item>
-              <div class="flex justify-between">
-                <div class="flex align-middle my-2">
-                  <v-avatar :size="appStore.isMobile ? '32' : '48'">
-                    <img
-                      :src="
-                        post.avatar ? post.avatar : `https://i.pravatar.cc/100`
+        <v-card
+          v-for="(post, i) in posts"
+          :key="i"
+          class="mx-auto mb-5 w-full"
+          variant="flat"
+        >
+          <v-card-item>
+            <div class="flex justify-between">
+              <div class="flex align-middle my-2">
+                <v-avatar :size="appStore.isMobile ? '32' : '48'">
+                  <img
+                    :src="
+                      post.avatar ? post.avatar : `https://i.pravatar.cc/100`
+                    "
+                    alt="avatar"
+                  />
+                </v-avatar>
+                <div class="mobile-user-info">
+                  <div class="flex ml-5 align-middle div-1">
+                    <div class="font-bold mr-2 div1-1">
+                      {{ post.userFullName ? post.userFullName : 'deneme' }}
+                    </div>
+                    <div class="mr-2 div1-2">
+                      @{{ post.userName ? post.userName : 'deneme' }}
+                    </div>
+                  </div>
+                  <div class="ml-5 div-2">{{ post.content }}</div>
+                </div>
+              </div>
+              <div>
+                <v-tooltip location="top">
+                  <template v-slot:activator="{ props }">
+                    <v-btn
+                      icon
+                      v-bind="props"
+                      :style="
+                        post.isSellable
+                          ? `background-color: #65B741`
+                          : `background-color: #FFB534`
                       "
-                      alt="avatar"
-                    />
-                  </v-avatar>
-                  <div class="mobile-user-info">
-                    <div class="flex ml-5 align-middle div-1">
-                      <div class="font-bold mr-2 div1-1">
-                        {{ post.userFullName }}
-                      </div>
-                      <div class="mr-2 div1-2">
-                        @{{ post.userName ? post.userName : 'deneme' }}
-                      </div>
-                    </div>
-                    <div class="ml-5 div-2">{{ post.content }}</div>
-                  </div>
-                </div>
-                <div>
-                  <v-tooltip location="top">
-                    <template v-slot:activator="{ props }">
-                      <v-btn
-                        icon
-                        v-bind="props"
-                        :style="
-                          post.isSellable
-                            ? `background-color: #65B741`
-                            : `background-color: #FFB534`
-                        "
-                        class="text-white w-4 h-4 mx-2 my-2"
-                        rounded="xl"
-                        :size="appStore.isMobile ? 'x-small' : 'small'"
-                      >
-                        <v-icon color="white"> mdi-shopping-outline </v-icon>
-                      </v-btn>
-                    </template>
-                    <span v-if="post.isSellable">{{
-                      $t('postCard.onSale')
-                    }}</span>
-                    <span v-else>{{ $t('postCard.notOnSale') }}</span>
-                  </v-tooltip>
-                </div>
+                      class="text-white w-4 h-4 mx-2 my-2"
+                      rounded="xl"
+                      :size="appStore.isMobile ? 'x-small' : 'small'"
+                    >
+                      <v-icon color="white"> mdi-shopping-outline </v-icon>
+                    </v-btn>
+                  </template>
+                  <span v-if="post.isSellable">{{
+                    $t('postCard.onSale')
+                  }}</span>
+                  <span v-else>{{ $t('postCard.notOnSale') }}</span>
+                </v-tooltip>
               </div>
-            </v-card-item>
-            <v-card-text>
-              <div class="w-full mobile-carousel">
-                <v-carousel hide-delimiter-background show-arrows="hover">
-                  <v-carousel-item
-                    v-for="(image, i) in post.image"
-                    :key="i"
-                    :src="image"
-                    cover
-                  ></v-carousel-item>
-                </v-carousel>
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <div class="w-full flex items-center">
-                <div class="flex justify-start">
-                  <v-btn
-                    prepend-icon="mdi-heart"
-                    size="small"
-                    :color="post.isLikeIt ? 'red' : 'black'"
-                    @click="post.isLikeIt = !post.isLikeIt"
-                  >
-                    <span class="align-middle">{{ post.likeCount }}</span>
-                  </v-btn>
-                  <v-btn
-                    prepend-icon="mdi-comment"
-                    size="small"
-                    class="ml-2"
-                    @click="showComments = !showComments"
-                  >
-                    <span class="align-middle">{{ post.comments.length }}</span>
-                  </v-btn>
-                </div>
+            </div>
+          </v-card-item>
+          <v-card-text>
+            <div class="w-full mobile-carousel">
+              <v-carousel hide-delimiter-background show-arrows="hover">
+                <v-carousel-item
+                  v-for="(image, i) in post.images"
+                  :key="i"
+                  :src="image"
+                  cover
+                ></v-carousel-item>
+              </v-carousel>
+            </div>
+          </v-card-text>
+          <v-card-actions>
+            <div class="w-full flex items-center">
+              <div class="flex justify-start">
                 <v-btn
-                  class="ml-0"
-                  :prepend-icon="
-                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
-                  "
+                  prepend-icon="mdi-heart"
                   size="small"
-                  @click="post.isBookmarked = !post.isBookmarked"
+                  :color="post.isLikeIt ? 'red' : 'black'"
+                  @click="post.isLikeIt = !post.isLikeIt"
                 >
+                  <span class="align-middle">{{ post.likeCount }}</span>
+                </v-btn>
+                <v-btn
+                  prepend-icon="mdi-comment"
+                  size="small"
+                  class="ml-2"
+                  @click="showComments = !showComments"
+                >
+                  <span class="align-middle">{{ post.comments.length }}</span>
                 </v-btn>
               </div>
-            </v-card-actions>
-            <div v-if="showComments">
-              <v-list :items="post.comments" lines="three" item-props>
-                <template v-slot:subtitle="{ subtitle }">
-                  <div v-html="subtitle"></div>
-                </template>
-              </v-list>
+              <v-btn
+                class="ml-0"
+                :prepend-icon="
+                  post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                "
+                size="small"
+                @click="post.isBookmarked = !post.isBookmarked"
+              >
+              </v-btn>
             </div>
-            <v-divider></v-divider>
-          </v-card>
-        </v-skeleton-loader>
-      </v-col>
-      <v-col v-else>
-        <v-skeleton-loader :loading="loading" type="list-item-two-line,image">
-          <v-card
-            v-show="searchResultPost"
-            v-for="(post, i) in searchResultPost"
-            :key="i"
-            class="mx-auto mb-5 w-full"
-            variant="flat"
-          >
-            <v-card-item>
-              <div class="flex justify-between">
-                <div class="flex align-middle my-2">
-                  <v-avatar :size="appStore.isMobile ? '32' : '48'">
-                    <img :src="post.avatar" alt="avatar" />
-                  </v-avatar>
-                  <div class="mobile-user-info">
-                    <div class="flex ml-5 align-middle div-1">
-                      <div class="font-bold mr-2 div1-1">
-                        {{ post.userFullName }}
-                      </div>
-                      <div class="mr-2 div1-2">@{{ post.userName }}</div>
-                    </div>
-                    <div class="ml-5 div-2">{{ post.content }}</div>
-                  </div>
-                </div>
-                <div>
-                  <v-tooltip location="top">
-                    <template v-slot:activator="{ props }">
-                      <v-btn
-                        icon
-                        v-bind="props"
-                        :style="
-                          post.isSellable
-                            ? `background-color: #65B741`
-                            : `background-color: #FFB534`
-                        "
-                        class="text-white w-4 h-4 mx-2 my-2"
-                        rounded="xl"
-                        :size="appStore.isMobile ? 'x-small' : 'small'"
-                      >
-                        <v-icon color="white"> mdi-shopping-outline </v-icon>
-                      </v-btn>
-                    </template>
-                    <span v-if="post.isSellable">{{
-                      $t('postCard.onSale')
-                    }}</span>
-                    <span v-else>{{ $t('postCard.notOnSale') }}</span>
-                  </v-tooltip>
-                </div>
-              </div>
-            </v-card-item>
-            <v-card-text>
-              <div class="w-full mobile-carousel">
-                <v-carousel hide-delimiter-background show-arrows="hover">
-                  <v-carousel-item
-                    v-for="(image, i) in post.image"
-                    :key="i"
-                    :src="image"
-                    cover
-                  ></v-carousel-item>
-                </v-carousel>
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <div class="w-full flex">
-                <div class="flex justify-start">
-                  <v-btn
-                    prepend-icon="mdi-heart"
-                    size="small"
-                    :color="post.isLikeIt ? `red` : `black`"
-                    @click="post.isLikeIt = !post.isLikeIt"
-                  >
-                    <span class="align-middle">{{ post.likeCount }}</span>
-                  </v-btn>
-                  <v-btn
-                    prepend-icon="mdi-comment"
-                    size="small"
-                    class="ml-2"
-                    @click="showComments = !showComments"
-                  >
-                    <span class="align-middle">{{ post.comments.length }}</span>
-                  </v-btn>
-                </div>
-                <v-btn
-                  class="ml-0"
-                  :prepend-icon="
-                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
-                  "
-                  size="small"
-                  @click="post.isBookmarked = !post.isBookmarked"
-                >
-                </v-btn>
-              </div>
-            </v-card-actions>
-            <div v-if="showComments">
-              <v-list :items="post.comments" lines="three" item-props>
-                <template v-slot:subtitle="{ subtitle }">
-                  <div v-html="subtitle"></div>
-                </template>
-              </v-list>
-            </div>
-            <v-divider></v-divider>
-          </v-card>
-          <v-card
-            v-show="searchMarketResultPost"
-            v-for="(post, i) in searchMarketResultPost"
-            :key="i"
-            class="mx-auto mb-5 w-full"
-            variant="flat"
-          >
-            <v-card-item>
-              <div class="flex justify-between">
-                <div class="flex align-middle my-2">
-                  <v-avatar :size="appStore.isMobile ? '32' : '48'">
-                    <img :src="post.avatar" alt="avatar" />
-                  </v-avatar>
-                  <div class="mobile-user-info">
-                    <div class="flex ml-5 align-middle div-1">
-                      <div class="font-bold mr-2 div1-1">
-                        {{ post.userFullName }}
-                      </div>
-                      <div class="mr-2 div1-2">@{{ post.userName }}</div>
-                    </div>
-                    <div class="ml-5 div-2">{{ post.content }}</div>
-                  </div>
-                </div>
-                <div>
-                  <v-tooltip location="top">
-                    <template v-slot:activator="{ props }">
-                      <v-btn
-                        icon
-                        v-bind="props"
-                        :style="
-                          post.isSellable
-                            ? `background-color: #65B741`
-                            : `background-color: #FFB534`
-                        "
-                        class="text-white w-4 h-4 mx-2 my-2"
-                        rounded="xl"
-                        :size="appStore.isMobile ? 'x-small' : 'small'"
-                      >
-                        <v-icon color="white"> mdi-shopping-outline </v-icon>
-                      </v-btn>
-                    </template>
-                    <span v-if="post.isSellable">{{
-                      $t('postCard.onSale')
-                    }}</span>
-                    <span v-else>{{ $t('postCard.notOnSale') }}</span>
-                  </v-tooltip>
-                </div>
-              </div>
-            </v-card-item>
-            <v-card-text>
-              <div class="w-full mobile-carousel">
-                <v-carousel hide-delimiter-background show-arrows="hover">
-                  <v-carousel-item
-                    v-for="(image, i) in post.image"
-                    :key="i"
-                    :src="image"
-                    cover
-                  ></v-carousel-item>
-                </v-carousel>
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <div class="w-full flex">
-                <div class="flex justify-start">
-                  <v-btn
-                    prepend-icon="mdi-heart"
-                    size="small"
-                    :color="post.isLikeIt ? `red` : `black`"
-                    @click="post.isLikeIt = !post.isLikeIt"
-                  >
-                    <span class="align-middle">{{ post.likeCount }}</span>
-                  </v-btn>
-                  <v-btn
-                    prepend-icon="mdi-comment"
-                    size="small"
-                    class="ml-2"
-                    @click="showComments = !showComments"
-                  >
-                    <span class="align-middle">{{ post.comments.length }}</span>
-                  </v-btn>
-                </div>
-                <v-btn
-                  class="ml-0"
-                  :prepend-icon="
-                    post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
-                  "
-                  size="small"
-                  @click="post.isBookmarked = !post.isBookmarked"
-                >
-                </v-btn>
-              </div>
-            </v-card-actions>
-            <div v-if="showComments">
-              <v-list :items="post.comments" lines="three" item-props>
-                <template v-slot:subtitle="{ subtitle }">
-                  <div v-html="subtitle"></div>
-                </template>
-              </v-list>
-            </div>
-            <v-divider></v-divider>
-          </v-card>
-        </v-skeleton-loader>
+          </v-card-actions>
+          <div v-if="showComments">
+            <v-list :items="post.comments" lines="three" item-props>
+              <template v-slot:subtitle="{ subtitle }">
+                <div v-html="subtitle"></div>
+              </template>
+            </v-list>
+          </div>
+          <v-divider></v-divider>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useAppStore } from '@/store/app';
+import { usePostStore } from '@/store/post';
+import { useRoute } from 'vue-router';
+import { useUserStore } from '@/store/user';
 
-const userEffects = ref({});
-const props = defineProps({
-  posts: Array,
-  searchResultPost: Array,
-  showComments: Boolean,
-});
-
-onMounted(() => {
-  userEffects.value = { ...props };
-});
-
+const route = useRoute();
 const appStore = useAppStore();
-const showComments = ref(props.showComments);
+const userStore = useUserStore();
+const postStore = usePostStore();
+const getErrorMessage = ref(false);
+const postIsLoading = ref(false);
+const showComments = ref(false);
+const posts = ref([]);
 
-const loading = computed(() => {
-  if (props.posts || props.searchResultPost) return false;
-  return true;
+onBeforeMount(async () => {
+  posts.value = [];
+
+  if (route.name === 'Home') {
+    const res = await postStore.fetchAllPost(userStore.userDetail?.id);
+    if (res.error) {
+      getErrorMessage.value = true;
+      setTimeout(() => {
+        getErrorMessage.value = false;
+      }, 3000);
+    } else {
+      posts.value = res;
+      postIsLoading.value = true;
+    }
+  }
+  if (route.params.id) {
+    const res = await postStore.fetchPostDetail(route.params.id);
+    if (res.error) {
+      getErrorMessage.value = true;
+      setTimeout(() => {
+        getErrorMessage.value = false;
+      }, 3000);
+    } else {
+      posts.value = [...posts.value, postStore.postDetail];
+      postIsLoading.value = true;
+    }
+  }
 });
 </script>
 <style lang="scss" scoped>

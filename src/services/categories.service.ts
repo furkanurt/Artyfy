@@ -1,8 +1,8 @@
 import ArtyfyService from './artyfy.service';
 
 class CategoriesService extends ArtyfyService {
-  fetchCategories() {
-    return this._axios.get('/api/Categories/list');
+  async fetchCategories() {
+    return await this._axios.get('/api/Categories/list');
   }
 }
 

@@ -17,10 +17,15 @@
       </div>
     </div>
     <v-divider v-if="!appStore.isMobile"></v-divider>
-    <div class="absolute z-50" v-if="getErrorMessage">
+    <div class="absolute flex justify-center z-50" v-if="getErrorMessage">
       <v-alert type="error" class="mb-10" transition="slide-y-transition">{{
         $t('errorMessage.postSendErrorMessage')
       }}</v-alert>
+    </div>
+    <div class="absolute flex justify-center z-50" v-if="getSuccessMessage">
+      <v-alert type="success" class="mb-10" transition="slide-y-transition"
+        >Yeni gönderi oluşturuldu.</v-alert
+      >
     </div>
     <v-textarea
       v-model="post.content"
@@ -46,16 +51,15 @@
             </v-row>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <v-row justify="space-between" no-gutters>
-              <v-col cols="9" class="mr-3">
+            <v-row class="fjustify-between responsive-row" no-gutters>
+              <v-col>
                 <v-select
                   v-model="value"
                   :items="items"
-                  label="Select Categories"
+                  :label="$t('selectCategory')"
+                  density="comfortable"
                   variant="solo"
                   @update:modelValue="selectMenu"
-                  chips
-                  multiple
                 ></v-select>
               </v-col>
 
@@ -63,9 +67,18 @@
                 <v-switch
                   v-model="post.isSellable"
                   color="primary"
-                  label="Is Sellable"
+                  :label="$t('isSellable')"
                   hide-details
                 ></v-switch>
+              </v-col>
+
+              <v-col>
+                <v-text-field
+                  :label="$t('price')"
+                  :model-value="post.price"
+                  variant="solo"
+                  density="comfortable"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-expansion-panel-text>
@@ -112,7 +125,7 @@
 </template>
 <script setup>
 import { useAppStore } from '@/store/app';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useSearchStore } from '@/store/search';
 import { useUserStore } from '@/store/user';
 import { usePostStore } from '@/store/post';
@@ -124,32 +137,34 @@ const userStore = useUserStore();
 const postStore = usePostStore();
 
 const getErrorMessage = ref(false);
+const getSuccessMessage = ref(false);
 const searchValue = ref('');
 const items = ref([]);
 const categories = ref([]);
 const value = ref([]);
 const categoryIds = ref([]); // to be used in post create
 const post = ref({
+  price: null,
   title: '', // kaldırılabilir
   content: '',
   image: [],
   isSellable: true,
-  appUserId: userStore.userDetail.id,
-  categoryId: 0,
+  appUserId: '',
+  categoryId: null,
 });
 
 const filteredPosts = computed(() => {
   return searchStore.fetchPost(searchValue.value);
 });
 
-onMounted(async () => {
+onBeforeMount(async () => {
   const res = await categoriesService.fetchCategories();
   categories.value = res.data.data;
-  Object.values(res).map((x) => {
-    x.data.map((y) => {
-      items.value = [...items.value, y.name];
-    });
-  });
+  for (const value of categories.value) {
+    items.value = [...items.value, value.name];
+  }
+
+  post.value.appUserId = userStore.userDetail.id;
 });
 
 const selectMenu = (v) => {
@@ -163,7 +178,7 @@ const selectMenu = (v) => {
   });
   categoryIds.value = id;
   post.value.categoryId = categoryIds.value;
-  console.log('Categories IDs: ,', categoryIds.value);
+  console.log('Categories IDs: ,', post.value.categoryId);
 };
 
 const imagesUploaded = () => {
@@ -176,9 +191,12 @@ const imagesUploaded = () => {
     console.log('FORMDATA: ', key, value);
     post.value.image = [post.value.image, ...value];
   });
+
+  console.log('uploaded image: ', post.value.image);
 };
 
 const sendPost = async () => {
+  console.log('sending for post value is : ', post.value);
   const res = await postStore.sendPost(post.value);
   console.log(res);
 
@@ -187,6 +205,24 @@ const sendPost = async () => {
     setTimeout(() => {
       getErrorMessage.value = false;
     }, 3000);
+  } else if (res.message) {
+    getSuccessMessage.value = true;
+    setTimeout(() => {
+      getSuccessMessage.value = false;
+    }, 3000);
   }
+
+  post.value = {};
 };
 </script>
+<style lang="scss" scoped>
+.v-switch {
+  display: flex !important;
+  justify-content: center !important;
+}
+@media screen and (max-width: 663px) {
+  .responsive-row {
+    display: block;
+  }
+}
+</style>

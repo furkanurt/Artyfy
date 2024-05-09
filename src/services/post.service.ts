@@ -14,9 +14,11 @@ class PostService extends ArtyfyService {
     });
   }
   async fetchPostDetail(id) {
-    return await this._axios.get('/api/Posts/postDetail', id).then((res) => {
-      return res;
-    });
+    return await this._axios
+      .get(`/api/Posts/postDetail?postId=${id}`)
+      .then((res) => {
+        return res;
+      });
   }
   async fetchSellablePost() {
     // for market
