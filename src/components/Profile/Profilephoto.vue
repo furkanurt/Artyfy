@@ -1,7 +1,7 @@
 <template>
   <div
-    class="flex justify-center w-screen h-screen items-center"
-    v-if="!editedUser"
+    class="flex justify-center h-screen items-center"
+    v-if="editedUser.userName === '' || userInfo.userName === ''"
   >
     <img src="@/assets/images/tube-spinner.svg" class="w-20 h-20" />
   </div>

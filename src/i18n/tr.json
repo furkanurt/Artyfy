@@ -8,6 +8,9 @@
     "shop": "Mağaza"
   },
   "whatsTrend": "ARTFY'de Trend Olanlar",
+  "price": "Fiyat",
+  "isSellable": "Satılabilir",
+  "selectCategory": "Kategori Seç",
   "search": "Ara",
   "whatsHappenin": "Neler Oluyor?",
   "trendingWith": "Trending With",

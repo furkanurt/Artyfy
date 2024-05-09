@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div
+    class="flex justify-center h-screen items-center"
+    v-if="posts.length === 0"
+  >
+    <img src="@/assets/images/tube-spinner.svg" class="w-20 h-20" />
+  </div>
+  <div v-else>
     <div class="w-full p-6 items-center" v-if="!appStore.isMobile">
       <v-text-field
         v-model="searchValue"
@@ -8,7 +14,6 @@
         variant="solo"
         hide-details="auto"
         append-inner-icon="mdi-magnify"
-        @input="filteredPosts"
       ></v-text-field>
     </div>
     <v-container v-if="mobileFilteredPost.length === 0">
@@ -16,7 +21,7 @@
         v-for="(item, i) in posts"
         :key="i"
         class="mx-auto"
-        max-width="400"
+        max-width="300"
       >
         <v-carousel height="300">
           <v-carousel-item
@@ -37,7 +42,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="orange" @click="goPostDetail(item.id)">{{
+          <v-btn color="orange" @click="goPostDetail(item.postId)">{{
             $t('shop.review')
           }}</v-btn>
         </v-card-actions>
@@ -69,7 +74,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="orange" @click="goPostDetail(item.id)">{{
+          <v-btn color="orange" @click="goPostDetail(item.postId)">{{
             $t('shop.review')
           }}</v-btn>
         </v-card-actions>
@@ -78,24 +83,21 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { useSearchStore } from '@/store/search';
+import { computed, onBeforeMount, ref, watch } from 'vue';
+import { usePostStore } from '@/store/post';
 import { useAppStore } from '@/store/app';
+import { useSearchStore } from '@/store/search';
 import router from '@/router';
 
 const searchValue = ref('');
+const postStore = usePostStore();
 const searchStore = useSearchStore();
 const appStore = useAppStore();
 const posts = ref([]);
 
-onMounted(() => {
-  searchStore.fetchMarketPost('');
-  searchStore.fetchShopPost();
-  posts.value = searchStore.marketPost;
-});
-
-const filteredPosts = computed(() => {
-  return searchStore.fetchMarketPost(searchValue.value);
+onBeforeMount(async () => {
+  const res = await postStore.fetchSellablePost();
+  posts.value = res;
 });
 
 const mobileFilteredPost = computed(() => {
@@ -103,12 +105,26 @@ const mobileFilteredPost = computed(() => {
 });
 
 const goPostDetail = (id) => {
-  searchStore.fetchMarketResultPost(id);
+  // searchStore.fetchMarketResultPost(id);
 
   setTimeout(() => {
     router.push(`/post-detail/${id}`);
   }, 600);
 };
+
+watch(searchValue, async () => {
+  if (searchValue.value) {
+    posts.value.some((item) => {
+      if (item.content === searchValue.value) {
+        posts.value = [];
+        posts.value = [...posts.value, item];
+      }
+    });
+  } else {
+    const res = await postStore.fetchSellablePost();
+    posts.value = res;
+  }
+});
 </script>
 <style lang="scss" scoped>
 .v-container {

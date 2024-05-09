@@ -4,19 +4,17 @@ import DummyService from './dummy.service';
 const posts = DummyService.fetchPost();
 
 class SearchService extends ArtyfyService {
-  fetchShopPost() {
-    return posts.filter((item) => {
-      if (item.isOnSale === true) {
-        return item;
-      }
-    });
+  async fetchShopPost() {
+    return await this._axios
+      .get('/api/Posts/getSellableProducts')
+      .then((res) => {
+        return res;
+      });
   }
 
   fetchSearchPosts(searchValue) {
-    return posts.filter(({ name, userName, content }) =>
-      [name, userName, content].some((val) =>
-        val.toLowerCase().includes(searchValue),
-      ),
+    return posts.filter(({ name, userName }) =>
+      [name, userName].some((val) => val.toLowerCase().includes(searchValue)),
     );
   }
 
@@ -35,8 +33,8 @@ class SearchService extends ArtyfyService {
     });
   }
 
-  fetchSearchMarketResultPost(params) {
-    const marketPost = this.fetchShopPost();
+  async fetchSearchMarketResultPost(params) {
+    const marketPost = await this.fetchShopPost();
     return marketPost.filter((item) => {
       if (item.id == params) return item;
     });
