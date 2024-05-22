@@ -9,11 +9,12 @@ import Trends from '@/views/Trends.vue';
 import Profile from '@/views/Profile.vue';
 import Notifications from '@/views/Notifications.vue';
 import Bookmark from '@/views/Bookmarks.vue';
+import Basket from '@/views/Basket.vue';
 
 const routes = [
   {
     path: '',
-    name: 'Home',
+    name: 'home',
     component: Home,
     meta: {
       public: false,
@@ -21,7 +22,7 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login,
     meta: {
       public: true,
@@ -29,7 +30,7 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'Register',
+    name: 'register',
     component: Register,
     meta: {
       public: true,
@@ -37,15 +38,23 @@ const routes = [
   },
   {
     path: '/shop',
-    name: 'Shop',
+    name: 'shop',
     component: Shop,
     meta: {
       public: false,
     },
   },
   {
+    path: '/shop/basket',
+    name: 'basket',
+    component: Basket,
+    meta: {
+      public: false,
+    },
+  },
+  {
     path: '/post-detail/:id',
-    name: 'PostDetail',
+    name: 'postDetail',
     component: PostDetail,
     meta: {
       public: false,
@@ -53,7 +62,7 @@ const routes = [
   },
   {
     path: '/bookmarks',
-    name: 'Bookmarks',
+    name: 'bookmarks',
     component: Bookmark,
     meta: {
       public: false,
@@ -61,7 +70,7 @@ const routes = [
   },
   {
     path: '/trends',
-    name: 'Trends',
+    name: 'trends',
     component: Trends,
     meta: {
       public: false,
@@ -69,7 +78,7 @@ const routes = [
   },
   {
     path: '/profile',
-    name: 'Profile',
+    name: 'profile',
     component: Profile,
     meta: {
       public: false,
@@ -77,7 +86,7 @@ const routes = [
   },
   {
     path: '/notifications',
-    name: 'Notifications',
+    name: 'notifications',
     component: Notifications,
     meta: {
       public: false,

@@ -142,7 +142,8 @@ const posts = ref([]);
 onBeforeMount(async () => {
   posts.value = [];
 
-  if (route.name === 'Home') {
+  console.log('posts res: ', route);
+  if (route.name === 'home') {
     const res = await postStore.fetchAllPost(userStore.userDetail?.id);
     if (res.error) {
       getErrorMessage.value = true;

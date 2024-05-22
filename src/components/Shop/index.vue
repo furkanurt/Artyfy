@@ -6,7 +6,10 @@
     <img src="@/assets/images/tube-spinner.svg" class="w-20 h-20" />
   </div>
   <div v-else>
-    <div class="w-full p-6 items-center" v-if="!appStore.isMobile">
+    <div
+      class="w-full p-6 items-center flex justify-between"
+      v-if="!appStore.isMobile"
+    >
       <v-text-field
         v-model="searchValue"
         :label="$t('search')"
@@ -15,6 +18,13 @@
         hide-details="auto"
         append-inner-icon="mdi-magnify"
       ></v-text-field>
+      <v-btn
+        class="mx-10"
+        color="#fbf5e6"
+        icon="mdi-basket"
+        @click="router.push('/shop/basket')"
+      >
+      </v-btn>
     </div>
     <v-container v-if="mobileFilteredPost.length === 0">
       <v-card

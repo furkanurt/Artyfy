@@ -13,9 +13,7 @@
             :value="item.text"
             :title="$t(`menu.${item.text}`)"
             :style="
-              route.name.toLowerCase() === item.text
-                ? 'color: #fa9392'
-                : 'color: #00000'
+              route.name === item.text ? 'color: #fa9392' : 'color: #00000'
             "
             @click="clickMenuItem(item.text)"
           >
