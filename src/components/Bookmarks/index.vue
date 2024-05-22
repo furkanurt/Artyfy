@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <v-container>
@@ -40,12 +41,26 @@
 </template>
 
 <script setup>
-import DummyService from '@/services/dummy.service';
+import { onMounted, ref } from 'vue';
+import { usePostStore } from '@/store/post';
 import { useSearchStore } from '@/store/search';
 import router from '@/router';
 
+const postStore = usePostStore();
 const searchStore = useSearchStore();
-const posts = DummyService.fetchPost();
+const posts = ref([]);
+
+onMounted(async () => {
+  try {
+    const response = await postStore.fetchSavedPost(
+      localStorage.getItem('reduxState'),
+    );
+    posts.value = response;
+    console.log(response);
+  } catch (error) {
+    console.error('Error fetching saved posts:', error);
+  }
+});
 
 const goPostDetail = (id) => {
   searchStore.fetchMarketResultPost(id);

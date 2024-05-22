@@ -56,5 +56,14 @@ export const usePostStore = defineStore('post', {
         return err;
       }
     },
+    async fetchSavedPost(id) {
+      try {
+        const res = await postService.fetchSavedPosts(id);
+        return res.data.data;
+      } catch (err) {
+        console.log(err);
+        return err;
+      }
+    },
   },
 });

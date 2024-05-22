@@ -30,7 +30,7 @@ class PostService extends ArtyfyService {
   }
   async fetchSavedPosts(id) {
     return await this._axios
-      .get('/api/Posts/listSavedPosts', id)
+      .get(`/api/Posts/listSavedPosts?userId=${id}`)
       .then((res) => {
         return res;
       });
