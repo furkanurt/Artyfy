@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <v-layout>
     <v-list class="w-full">
@@ -45,36 +46,17 @@
 <script setup>
 import { ref } from 'vue';
 
-const productsOnBasket = ref([
-  {
-    id: 1,
-    price: 100,
-    userName: 'gulsumvural',
-    userFullName: 'Gülsüm Vural',
-    image: 'https://picsum.photos/200',
-    content: 'Lorem ipsum dolor',
-  },
-  {
-    id: 2,
-    price: 200,
-    userName: 'gulsumv',
-    userFullName: 'Gülsüm Vural 2',
-    image: 'https://picsum.photos/200',
-    content: 'Lorem ipsum dolor',
-  },
-  {
-    id: 3,
-    price: 300,
-    userName: 'glsmvrl',
-    userFullName: 'Gülsüm Vural 3',
-    image: 'https://picsum.photos/200',
-    content: 'Lorem ipsum dolor',
-  },
-]);
+const productsOnBasket = ref(
+  JSON.parse(localStorage.getItem('userBasketPost')),
+);
 
 const deleteProduct = (key) => {
   productsOnBasket.value.splice(key, 1);
-  console.log(productsOnBasket.value);
+  localStorage.setItem(
+    'userBasketPost',
+    JSON.stringify(productsOnBasket.value),
+  );
+  console.log(JSON.parse(localStorage.getItem('userBasketPost')));
 };
 </script>
 

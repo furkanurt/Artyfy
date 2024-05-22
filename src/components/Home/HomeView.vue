@@ -32,11 +32,11 @@ onMounted(() => {
   width: 50%;
 }
 
-@media screen and (max-width: 1264px) {
+@media screen and (min-width: 768px) and (max-width: 1264px) {
   .v-layout {
     display: block;
     position: absolute !important;
-    width: auto;
+    width: 66%;
   }
 }
 

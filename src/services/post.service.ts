@@ -20,10 +20,10 @@ class PostService extends ArtyfyService {
         return res;
       });
   }
-  async fetchSellablePost() {
+  async fetchSellablePost(id) {
     // for market
     return await this._axios
-      .get('/api/Posts/getSellableProducts')
+      .get(`/api/Posts/getSellableProducts?userAppId=${id}`)
       .then((res) => {
         return res;
       });

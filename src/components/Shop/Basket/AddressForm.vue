@@ -5,57 +5,51 @@
         <v-card-text>
           <v-text-field
             ref="name"
-            v-model="name"
-            :error-messages="errorMessages"
-            :rules="[() => !!name || 'This field is required']"
-            label="Full Name"
-            placeholder="John Doe"
+            v-model="addressForm.name"
+            :error-messages="v$.name.$errors.map((e) => e.$message)"
+            label="İsim Soyisim"
             required
           ></v-text-field>
           <v-text-field
             ref="address"
-            v-model="address"
-            :rules="[
-              () => !!address || 'This field is required',
-              () =>
-                (!!address && address.length <= 25) ||
-                'Address must be less than 25 characters',
-              addressCheck,
-            ]"
+            v-model="addressForm.address"
+            :error-messages="v$.address.$errors.map((e) => e.$message)"
             counter="25"
-            label="Address Line"
-            placeholder="Snowy Rock Pl"
+            label="Adres"
             required
           ></v-text-field>
           <v-autocomplete
             ref="country"
-            v-model="country"
+            v-model="addressForm.city"
             :items="cities"
-            :rules="[() => !!country || 'This field is required']"
-            label="Country"
-            placeholder="Select..."
+            :error-messages="v$.city.$errors.map((e) => e.$message)"
+            label="Şehir"
             required
           ></v-autocomplete>
           <v-text-field
             ref="state"
-            v-model="state"
-            :rules="[() => !!state || 'This field is required']"
-            label="State/Province/Region"
-            placeholder="TX"
+            v-model="addressForm.state"
+            :error-messages="v$.state.$errors.map((e) => e.$message)"
+            label="İlçe"
             required
           ></v-text-field>
           <v-text-field
             ref="zip"
-            v-model="zip"
-            :rules="[() => !!zip || 'This field is required']"
-            label="ZIP / Postal Code"
-            placeholder="79938"
+            v-model="addressForm.zip"
+            :error-messages="v$.zip.$errors.map((e) => e.$message)"
+            label="ZIP Kodu"
             required
+          ></v-text-field>
+          <v-text-field
+            disabled
+            ref="country"
+            v-model="addressForm.country"
+            label="Ülke"
           ></v-text-field>
         </v-card-text>
         <v-divider class="mt-12"></v-divider>
         <v-card-actions>
-          <v-btn variant="text"> Cancel </v-btn>
+          <v-btn variant="text"> Sil </v-btn>
           <v-spacer></v-spacer>
           <v-slide-x-reverse-transition>
             <v-tooltip v-if="formHasErrors" location="left">
@@ -70,156 +64,136 @@
                   <v-icon>mdi-refresh</v-icon>
                 </v-btn>
               </template>
-              <span>Refresh form</span>
+              <span>Formu Yenile</span>
             </v-tooltip>
           </v-slide-x-reverse-transition>
-          <v-btn color="primary" variant="text" @click="submit"> Submit </v-btn>
+          <v-btn color="primary" variant="text" @click="submit"> Kaydet </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    cities: [
-      'Adana',
-      'Adıyaman',
-      'Afyonkarahisar',
-      'Ağrı',
-      'Amasya',
-      'Ankara',
-      'Antalya',
-      'Artvin',
-      'Aydın',
-      'Balıkesir',
-      'Bilecik',
-      'Bingöl',
-      'Bitlis',
-      'Bolu',
-      'Burdur',
-      'Bursa',
-      'Çanakkale',
-      'Çankırı',
-      'Çorum',
-      'Denizli',
-      'Diyarbakır',
-      'Edirne',
-      'Elazığ',
-      'Erzincan',
-      'Erzurum',
-      'Eskişehir',
-      'Gaziantep',
-      'Giresun',
-      'Gümüşhane',
-      'Hakkari',
-      'Hatay',
-      'Isparta',
-      'Mersin',
-      'İstanbul',
-      'İzmir',
-      'Kars',
-      'Kastamonu',
-      'Kayseri',
-      'Kırklareli',
-      'Kırşehir',
-      'Kocaeli',
-      'Konya',
-      'Kütahya',
-      'Malatya',
-      'Manisa',
-      'Kahramanmaraş',
-      'Mardin',
-      'Muğla',
-      'Muş',
-      'Nevşehir',
-      'Niğde',
-      'Ordu',
-      'Rize',
-      'Sakarya',
-      'Samsun',
-      'Siirt',
-      'Sinop',
-      'Sivas',
-      'Tekirdağ',
-      'Tokat',
-      'Trabzon',
-      'Tunceli',
-      'Şanlıurfa',
-      'Uşak',
-      'Van',
-      'Yozgat',
-      'Zonguldak',
-      'Aksaray',
-      'Bayburt',
-      'Karaman',
-      'Kırıkkale',
-      'Batman',
-      'Şırnak',
-      'Bartın',
-      'Ardahan',
-      'Iğdır',
-      'Yalova',
-      'Karabük',
-      'Kilis',
-      'Osmaniye',
-      'Düzce',
-    ],
-    errorMessages: '',
-    name: null,
-    address: null,
-    city: null,
-    state: null,
-    zip: null,
-    country: null,
-    formHasErrors: false,
-  }),
+<script setup>
+import { ref, computed } from 'vue';
+import { useVuelidate } from '@vuelidate/core';
+import { minLength, required } from '@vuelidate/validators';
+import { useAddressStore } from '@/store/address';
 
-  computed: {
-    form() {
-      return {
-        name: this.name,
-        address: this.address,
-        city: this.city,
-        state: this.state,
-        zip: this.zip,
-        country: this.country,
-      };
-    },
-  },
+const addressStore = useAddressStore();
 
-  watch: {
-    name() {
-      this.errorMessages = '';
-    },
-  },
+const cities = [
+  'Adana',
+  'Adıyaman',
+  'Afyonkarahisar',
+  'Ağrı',
+  'Amasya',
+  'Ankara',
+  'Antalya',
+  'Artvin',
+  'Aydın',
+  'Balıkesir',
+  'Bilecik',
+  'Bingöl',
+  'Bitlis',
+  'Bolu',
+  'Burdur',
+  'Bursa',
+  'Çanakkale',
+  'Çankırı',
+  'Çorum',
+  'Denizli',
+  'Diyarbakır',
+  'Edirne',
+  'Elazığ',
+  'Erzincan',
+  'Erzurum',
+  'Eskişehir',
+  'Gaziantep',
+  'Giresun',
+  'Gümüşhane',
+  'Hakkari',
+  'Hatay',
+  'Isparta',
+  'Mersin',
+  'İstanbul',
+  'İzmir',
+  'Kars',
+  'Kastamonu',
+  'Kayseri',
+  'Kırklareli',
+  'Kırşehir',
+  'Kocaeli',
+  'Konya',
+  'Kütahya',
+  'Malatya',
+  'Manisa',
+  'Kahramanmaraş',
+  'Mardin',
+  'Muğla',
+  'Muş',
+  'Nevşehir',
+  'Niğde',
+  'Ordu',
+  'Rize',
+  'Sakarya',
+  'Samsun',
+  'Siirt',
+  'Sinop',
+  'Sivas',
+  'Tekirdağ',
+  'Tokat',
+  'Trabzon',
+  'Tunceli',
+  'Şanlıurfa',
+  'Uşak',
+  'Van',
+  'Yozgat',
+  'Zonguldak',
+  'Aksaray',
+  'Bayburt',
+  'Karaman',
+  'Kırıkkale',
+  'Batman',
+  'Şırnak',
+  'Bartın',
+  'Ardahan',
+  'Iğdır',
+  'Yalova',
+  'Karabük',
+  'Kilis',
+  'Osmaniye',
+  'Düzce',
+];
+const addressForm = ref({
+  errorMessages: '',
+  name: null,
+  address: null,
+  city: null,
+  state: null,
+  zip: null,
+  country: 'Türkiye',
+});
+const formHasErrors = ref(false);
 
-  methods: {
-    addressCheck() {
-      this.errorMessages =
-        this.address && !this.name ? "Hey! I'm required" : '';
+const rules = computed(() => {
+  return {
+    name: { required },
+    address: { required, minLength: minLength(25) },
+    city: { required },
+    state: { required },
+    zip: { required },
+  };
+});
 
-      return true;
-    },
-    resetForm() {
-      this.errorMessages = [];
-      this.formHasErrors = false;
+const v$ = useVuelidate(rules, addressForm);
 
-      Object.keys(this.form).forEach((f) => {
-        this.$refs[f].reset();
-      });
-    },
-    submit() {
-      this.formHasErrors = false;
+const submit = async () => {
+  const result = await v$.value.$validate();
 
-      Object.keys(this.form).forEach((f) => {
-        if (!this.form[f]) this.formHasErrors = true;
-
-        this.$refs[f].validate(true);
-      });
-    },
-  },
+  if (result) {
+    addressStore.saveUserAddressInfo(addressForm.value);
+  }
 };
 </script>
 

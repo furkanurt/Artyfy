@@ -55,6 +55,8 @@
                       class="text-white w-4 h-4 mx-2 my-2"
                       rounded="xl"
                       :size="appStore.isMobile ? 'x-small' : 'small'"
+                      :disabled="post.isSellable === false"
+                      @click="addBasket(post)"
                     >
                       <v-icon color="white"> mdi-shopping-outline </v-icon>
                     </v-btn>
@@ -129,7 +131,9 @@ import { useAppStore } from '@/store/app';
 import { usePostStore } from '@/store/post';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '@/store/user';
+import { useAddressStore } from '@/store/address';
 
+const addressStore = useAddressStore();
 const route = useRoute();
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -168,6 +172,10 @@ onBeforeMount(async () => {
     }
   }
 });
+
+const addBasket = (post) => {
+  addressStore.saveUserSelectPost(post);
+};
 </script>
 <style lang="scss" scoped>
 @media screen and (max-width: 425px) {

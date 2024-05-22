@@ -106,7 +106,9 @@ const appStore = useAppStore();
 const posts = ref([]);
 
 onBeforeMount(async () => {
-  const res = await postStore.fetchSellablePost();
+  const res = await postStore.fetchSellablePost(
+    localStorage.getItem('reduxState'),
+  );
   posts.value = res;
 });
 
@@ -131,7 +133,9 @@ watch(searchValue, async () => {
       }
     });
   } else {
-    const res = await postStore.fetchSellablePost();
+    const res = await postStore.fetchSellablePost(
+      localStorage.getItem('reduxState'),
+    );
     posts.value = res;
   }
 });
