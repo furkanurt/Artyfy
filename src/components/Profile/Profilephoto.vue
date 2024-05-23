@@ -35,9 +35,9 @@
       </div>
       <div class="right-container">
         <v-btn @click="dialog = true" append-icon="mdi-account"
-          >Edit Profile</v-btn
+          >Profili Düzenle</v-btn
         >
-        <v-dialog v-model="dialog" max-width="50%">
+        <v-dialog v-model="dialog" max-width="700px">
   <v-card>
     <v-img src="https://picjj.com/images/2024/05/09/s0irz.png" width="140px"></v-img>
     <div class="input-box">
@@ -47,31 +47,31 @@
         </v-avatar>
       </div>
       <div class="input-item">
-        <h1>Profile Picture</h1>
+        <h1>Profil Resmi</h1>
         <v-file-input v-model="editedUser.image" density="compact" variant="outlined" placeholder="Change Your Profile Picture"></v-file-input>
       </div>
       <div class="input-item">
-        <h1>Username</h1>
+        <h1>Kullanıcı Adı</h1>
         <v-text-field v-model="editedUser.userName" density="compact" variant="outlined" placeholder="You cant change your username" disabled></v-text-field>
       </div>
       <div class="input-item">
-        <h1>Name</h1>
+        <h1>İsim</h1>
         <v-text-field v-model="editedUser.fullName" density="compact" variant="outlined" placeholder="Change Name"></v-text-field>
       </div>
       <div class="input-item">
-        <h1>Email</h1>
+        <h1>Mail</h1>
         <v-text-field v-model="editedUser.email" density="compact" placeholder="Edit Mail" prepend-inner-icon="mdi-email-outline" variant="outlined" type="email"></v-text-field>
       </div>
       <div class="input-item">
-        <h1>Phone Number</h1>
+        <h1>Telefon Numarası</h1>
         <v-text-field v-model="editedUser.phoneNumber" density="compact" variant="outlined" placeholder="Change Phone Number"></v-text-field>
       </div>
       <div class="input-item">
-        <h1>City</h1>
+        <h1>Şehir</h1>
         <v-text-field v-model="editedUser.city" density="compact" variant="outlined" placeholder="Change City"></v-text-field>
       </div>
       <div class="input-item">
-      <v-btn @click="updateUserProfile" append-icon="mdi-account">Save Changes</v-btn>
+      <v-btn @click="updateUserProfile" append-icon="mdi-account">Kaydet</v-btn>
       </div>
     </div>
   </v-card>
@@ -150,8 +150,8 @@ const updateUserProfile = async () => {
 .v-card {
   background-color: white;
   align-items: center;
-  width: 500px;
 }
+
 h4 {
   font-size: large;
   font-weight: 500;
@@ -163,4 +163,5 @@ h4 {
 .right-container {
   width: auto;
 }
+
 </style>

@@ -3,10 +3,10 @@
     <v-container fluid>
       <nav class="navbar">
         <div class="logo">
-          <h1>WHAT IS TRENDS ON ARTFY</h1>
+          <h1>ARTFY'DA TREND OLANLAR</h1>
         </div>
         <div class="search-box">
-          <input type="text" v-model="searchQuery" placeholder="Search..." @input="search">
+          <input type="text" v-model="searchQuery" placeholder="Ara..." @input="search">
         </div>
       </nav>
       <v-row>
@@ -23,19 +23,19 @@
               :src="getRandomImage()"
               cover
             ></v-img>
-            <v-card-title>Post Title</v-card-title>
-            <v-card-subtitle>1,000 miles of wonder</v-card-subtitle>
+            <v-card-title>Post</v-card-title>
+            <v-card-subtitle style="color: #f99292;">#trendsonartfy</v-card-subtitle>
             <div class="text-center pa-4">
-              <v-btn style="color: #f99292;" @click="dialog = true">Look At the Post</v-btn>
+              <v-btn style="color: #f99292;" @click="dialog = true">İncele</v-btn>
               <v-dialog v-model="dialog" width="500px" style="background: whitesmoke;">
                 <v-card>
                   <v-img src="https://source.unsplash.com/random/900x600" aspect-ratio="2.5" style="margin: 10%; border-radius: 5px; padding: 10%;"></v-img>
                   <v-card-subtitle>
-                    <v-btn prepend-icon="mdi-heart" size="small" class="ml-1" style="box-shadow: none;">Like</v-btn>
-                    <v-btn prepend-icon="mdi-comment" size="small" class="ml-1" style="box-shadow: none;">Comment</v-btn>
+                    <v-btn prepend-icon="mdi-heart" size="small" class="ml-1" style="box-shadow: none;"></v-btn>
+                    <v-btn prepend-icon="mdi-comment" size="small" class="ml-1" style="box-shadow: none;"></v-btn>
                   </v-card-subtitle>
                   <template v-slot:actions>
-                    <v-btn text @click="dialog = false">Ok</v-btn>
+                    <v-btn text @click="dialog = false">Geri Dön</v-btn>
                   </template>
                 </v-card>
               </v-dialog>
