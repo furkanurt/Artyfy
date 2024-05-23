@@ -88,7 +88,7 @@
                   prepend-icon="mdi-heart"
                   size="small"
                   :color="post.isLikeIt ? 'red' : 'black'"
-                  @click="post.isLikeIt = !post.isLikeIt"
+                  @click="postLike(post.postId)"
                 >
                   <span class="align-middle">{{ post.likeCount }}</span>
                 </v-btn>
@@ -96,7 +96,7 @@
                   prepend-icon="mdi-comment"
                   size="small"
                   class="ml-2"
-                  @click="showComments = !showComments"
+                  @click="post.showComments = !post.showComments"
                 >
                   <span class="align-middle">{{ post.comments.length }}</span>
                 </v-btn>
@@ -107,17 +107,25 @@
                   post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                 "
                 size="small"
-                @click="post.isBookmarked = !post.isBookmarked"
+                @click="postBookmarked(post.postId)"
               >
               </v-btn>
             </div>
           </v-card-actions>
-          <div v-if="showComments">
+          <div v-if="post.showComments">
             <v-list :items="post.comments" lines="three" item-props>
               <template v-slot:subtitle="{ subtitle }">
                 <div v-html="subtitle"></div>
               </template>
             </v-list>
+            <div class="comment-bar">
+              <v-text-field
+                class="comment-textarea"
+                placeholder="Write your comment here..."
+                v-model="comment[0].content"
+              ></v-text-field>
+              <v-btn color="#fa9392" @click="sendComment(post.postId)">Send Comment</v-btn>
+            </div>
           </div>
           <v-divider></v-divider>
         </v-card>
@@ -125,6 +133,7 @@
     </v-row>
   </v-container>
 </template>
+
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { useAppStore } from '@/store/app';
@@ -139,9 +148,14 @@ const userStore = useUserStore();
 const postStore = usePostStore();
 const getErrorMessage = ref(false);
 const postIsLoading = ref(false);
-const showComments = ref(false);
 const posts = ref([]);
 const route = useRoute();
+
+const comment = ref([{
+  userAppId: localStorage.getItem('reduxState'),
+  content: '',
+  postId: 0,
+}]);
 
 onBeforeMount(async () => {
   posts.value = [];
@@ -172,10 +186,44 @@ onBeforeMount(async () => {
   }
 });
 
+const postLike = async (postId) => {
+  try {
+    const userId = localStorage.getItem('reduxState');
+    const response = await postStore.likePost(postId, userId);
+    console.log(response);
+    const likedPostIndex = posts.value.findIndex((post) => post.postId === postId);
+    if (likedPostIndex === -1) return;
+    posts.value[likedPostIndex].likeCount++;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const sendComment = async (postId) => {
+  comment.value[0].postId = postId;
+  console.log(comment.value);
+  try {
+    const response = await postStore.commentPost(comment.value[0]);
+    console.log(response);
+    comment.value.content = '';
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const postBookmarked = async (postId) => {
+  try {
+    const userId = localStorage.getItem('reduxState');
+    const response = await postStore.bookmarkedPost(postId, userId);
+    console.log(response);
+  } catch (err) {
+    console.log(err);
+  }
 const addBasket = (post) => {
   addressStore.saveUserSelectPost(post);
 };
 </script>
+
 <style lang="scss" scoped>
 @media screen and (max-width: 425px) {
   .mobile-user-info {
@@ -202,6 +250,31 @@ const addBasket = (post) => {
         }
       }
     }
+  }
+}
+
+.comment-bar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1px;
+  height: 75px;
+  background-color: white; /* Arka plan beyaz yapıldı */
+  border: none; /* Kenar kaldırıldı */
+
+  .comment-textarea {
+    margin-bottom: -2px;
+    min-height: 50px !important;
+    font-size: 14px;
+    color: #000; /* Text rengini siyah yaptım */
+    background-color: white; /* Arka plan beyaz yapıldı */
+    border: 1px solid #ccc; /* İnce bir kenarlık eklendi */
+    border-radius: 4px; /* Kenarları yuvarlak yapıldı */
+    padding: 5px; /* İç kenar boşluğu eklendi */
+  }
+
+  .v-btn {
+    align-self: flex-end;
+    color: #fa9392;
   }
 }
 </style>

@@ -50,18 +50,24 @@ class PostService extends ArtyfyService {
   // for the user to interact with posts
   async sendPostSave(postId, userId) {
     return await this._axios
-      .post(`/api/Posts/save?postId=${postId}&userId=${userId}`)
+      .post(`/api/Posts/save?postId=${postId}&userId=${userId}` )
       .then((res) => {
         return res;
       });
   }
-  async sendPostLike(params) {
-    return await this._axios.post('/api/Posts/like', params).then((res) => {
+  async sendPostLike(postId, userId) {
+    return await this._axios.post(`/api/Posts/like?postId=${postId}&userId=${userId}`).then((res) => {
       return res;
     });
   }
-  async sendPostComment(params) {
-    return await this._axios.post('/api/Comments/add', params).then((res) => {
+  async sendPostComment(content) {
+    return await this._axios.post('/api/Comments/add', content).then((res) => {
+      return res;
+    });
+  }
+  
+  async fetchNotifications(userAppId) {
+    return await this._axios.get(`/api/Notifications?userAppId=${userAppId}`).then((res) => {
       return res;
     });
   }
@@ -73,14 +79,7 @@ class PostService extends ArtyfyService {
       });
   }
 
-  // NOTIFICATIONS
-  async fetchNotifications(id) {
-    return await this._axios
-      .get(`/api/Notifications?userAppId=${id}`)
-      .then((res) => {
-        return res;
-      });
-  }
+ 
 }
 
 export default new PostService();

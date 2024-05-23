@@ -34,12 +34,28 @@
         </div>
       </div>
     </div>
+    <div v-else class="no-notification">Bildirim yok</div>
   </v-layout>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { usePostStore } from '@/store/post';
+
+const notifications = ref([]);
+const postStore = usePostStore();
+const sendNotification = async (userId) => {
+  try {
+    const userAppId = localStorage.getItem('reduxState');
+    const response = await postStore.notificationPage(userAppId);
+    console.log(response);
+  } catch (err) {
+    console.log(err);
+  }
+};
+onMounted(async () =>  {
+ await sendNotification(userId);
+});
 import router from '@/router';
 
 const notifications = ref([]);
@@ -63,7 +79,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .notification-layout {
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .notification-list {
@@ -91,5 +110,10 @@ onMounted(() => {
 .notification-content {
   flex: 1;
   font-size: 17px;
+}
+
+.no-notification {
+  font-size: 18px;
+  color: #888;
 }
 </style>
