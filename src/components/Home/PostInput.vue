@@ -95,9 +95,8 @@
         prepend-icon="mdi-paperclip"
         variant="underlined"
         accept="image/*"
-        @change="imagesUploaded"
+        @change="imagesUploaded(post.image)"
         counter
-        multiple
       >
         <template v-slot:selection="{ fileNames }">
           <template v-for="(fileName, index) in fileNames" :key="fileName">
@@ -131,7 +130,7 @@ import { useSearchStore } from '@/store/search';
 import { useUserStore } from '@/store/user';
 import { usePostStore } from '@/store/post';
 import categoriesService from '@/services/categories.service';
-import axios from 'axios';
+// import axios from 'axios';
 
 const appStore = useAppStore();
 const searchStore = useSearchStore();
@@ -154,6 +153,7 @@ const post = ref({
   appUserId: '',
   categoryId: null,
 });
+const saveFormat = ref('');
 
 const filteredPosts = computed(() => {
   return searchStore.fetchPost(searchValue.value);
@@ -166,7 +166,7 @@ onBeforeMount(async () => {
     items.value = [...items.value, value.name];
   }
 
-  post.value.appUserId = userStore.userDetail.id;
+  post.value.appUserId = localStorage.getItem('reduxState');
 });
 
 const selectMenu = (v) => {
@@ -183,26 +183,35 @@ const selectMenu = (v) => {
   console.log('Categories IDs: ,', post.value.categoryId);
 };
 
-const imagesUploaded = () => {
-  console.log(userStore.userDetail);
+const imagesUploaded = async (image) => {
+  // Convert to FormData
+  let formData = new FormData();
+  formData.append('fileToUpload', image[0]);
+  formData.append('submit', 'submit');
+  console.log('image', image[0]);
+  let parts = image[0].name.split('.');
+  saveFormat.value = '.' + parts[1];
 
-  // convert to formData
-  const formData = new FormData();
-  for (let i = 0; i < post.value.image.length; i++) {
-    formData.append('files', post.value.image[i]);
+  try {
+    await fetch(
+      `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}&fileDir=artyfy`,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData,
+      },
+    );
+  } catch (error) {
+    console.error('ERROR: ', error);
   }
-  formData.forEach(async (value, key) => {
-    console.log('FORMDATA: ', key, value);
-    // const res = await axios.post(
-    //   `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}&fileDir=artyfy`,
-    //   value,
-    // );
-    // console.log('RESPONSE: ', res);
-  });
 };
 
 const sendPost = async () => {
   console.log('sending for post value is : ', post.value);
+  post.value.image = [
+    `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}${saveFormat.value}`,
+  ];
+  console.log('post value ', post.value);
   const res = await postStore.sendPost(post.value);
   console.log(res);
 

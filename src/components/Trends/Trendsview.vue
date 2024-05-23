@@ -40,12 +40,12 @@
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>
           <div class="mt-4">
-            <span class="font-bold text-xl">{{ item.productPrice }} ₺</span>
+            <span class="font-bold text-xl">{{ item.price }} ₺</span>
           </div>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="orange" @click="goPostDetail(item.postId)">{{
+          <v-btn color="orange" @click="goPostDetail(item.id)">{{
             $t('shop.review')
           }}</v-btn>
         </v-card-actions>
@@ -67,17 +67,19 @@
           ></v-carousel-item>
         </v-carousel>
 
+        <v-card-subtitle class="pt-4">{{ item.userFullName }}</v-card-subtitle>
+        <v-card-subtitle class="pt-4">{{ item.userName }}</v-card-subtitle>
         <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
 
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>
           <div class="mt-4">
-            <span class="font-bold text-xl">{{ item.productPrice }} ₺</span>
+            <span class="font-bold text-xl">{{ item.price }} ₺</span>
           </div>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="orange" @click="goPostDetail(item.postId)">{{
+          <v-btn color="orange" @click="goPostDetail(item.id)">{{
             $t('shop.review')
           }}</v-btn>
         </v-card-actions>
