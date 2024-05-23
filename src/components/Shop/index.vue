@@ -35,16 +35,16 @@
       >
         <v-carousel height="300">
           <v-carousel-item
-            v-for="(img, i) in item.image"
+            v-for="(img, i) in item.images"
             :key="i"
             :src="img"
             cover
           ></v-carousel-item>
         </v-carousel>
 
-        <v-img :src="item.image"> </v-img>
-
-        <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
+        <v-card-subtitle class="pt-4"
+          >{{ item.userFullName }} - @{{ item.userName }}</v-card-subtitle
+        >
 
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>
@@ -69,14 +69,16 @@
       >
         <v-carousel height="300">
           <v-carousel-item
-            v-for="(img, i) in item.image"
+            v-for="(img, i) in item.images"
             :key="i"
             :src="img"
             cover
           ></v-carousel-item>
         </v-carousel>
 
-        <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
+        <v-card-subtitle class="pt-4"
+          >{{ item.userFullName }} - @{{ item.userName }}</v-card-subtitle
+        >
 
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>

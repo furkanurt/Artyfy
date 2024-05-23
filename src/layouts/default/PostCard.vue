@@ -88,7 +88,7 @@
                   prepend-icon="mdi-heart"
                   size="small"
                   :color="post.isLikeIt ? 'red' : 'black'"
-                  @click="postLike(post.postId)"
+                  @click="(post.isLikeIt = !post.isLike), postLike(post.postId)"
                 >
                   <span class="align-middle">{{ post.likeCount }}</span>
                 </v-btn>
@@ -107,7 +107,10 @@
                   post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
                 "
                 size="small"
-                @click="postBookmarked(post.postId)"
+                @click="
+                  (post.isBookmarked = !post.isBookmarked),
+                    postBookmarked(post.postId)
+                "
               >
               </v-btn>
             </div>
@@ -121,10 +124,14 @@
             <div class="comment-bar">
               <v-text-field
                 class="comment-textarea"
-                placeholder="Write your comment here..."
+                placeholder="Yorum yaz..."
                 v-model="comment[0].content"
+                variant="solo"
+                hide-details="auto"
               ></v-text-field>
-              <v-btn color="#fa9392" @click="sendComment(post.postId)">Send Comment</v-btn>
+              <v-btn color="#fa9392" @click="sendComment(post.postId)"
+                >Yorumu Gönder</v-btn
+              >
             </div>
           </div>
           <v-divider></v-divider>
@@ -151,11 +158,13 @@ const postIsLoading = ref(false);
 const posts = ref([]);
 const route = useRoute();
 
-const comment = ref([{
-  userAppId: localStorage.getItem('reduxState'),
-  content: '',
-  postId: 0,
-}]);
+const comment = ref([
+  {
+    userAppId: localStorage.getItem('reduxState'),
+    content: '',
+    postId: 0,
+  },
+]);
 
 onBeforeMount(async () => {
   posts.value = [];
@@ -191,7 +200,9 @@ const postLike = async (postId) => {
     const userId = localStorage.getItem('reduxState');
     const response = await postStore.likePost(postId, userId);
     console.log(response);
-    const likedPostIndex = posts.value.findIndex((post) => post.postId === postId);
+    const likedPostIndex = posts.value.findIndex(
+      (post) => post.postId === postId,
+    );
     if (likedPostIndex === -1) return;
     posts.value[likedPostIndex].likeCount++;
   } catch (err) {
@@ -208,7 +219,7 @@ const sendComment = async (postId) => {
     comment.value.content = '';
   } catch (err) {
     console.log(err);
-  }
+  }
 };
 
 const postBookmarked = async (postId) => {
@@ -219,6 +230,7 @@ const postBookmarked = async (postId) => {
   } catch (err) {
     console.log(err);
   }
+};
 const addBasket = (post) => {
   addressStore.saveUserSelectPost(post);
 };
@@ -256,21 +268,10 @@ const addBasket = (post) => {
 .comment-bar {
   display: flex;
   flex-direction: column;
+  padding: 20px 20px;
   margin-top: 1px;
-  height: 75px;
   background-color: white; /* Arka plan beyaz yapıldı */
   border: none; /* Kenar kaldırıldı */
-
-  .comment-textarea {
-    margin-bottom: -2px;
-    min-height: 50px !important;
-    font-size: 14px;
-    color: #000; /* Text rengini siyah yaptım */
-    background-color: white; /* Arka plan beyaz yapıldı */
-    border: 1px solid #ccc; /* İnce bir kenarlık eklendi */
-    border-radius: 4px; /* Kenarları yuvarlak yapıldı */
-    padding: 5px; /* İç kenar boşluğu eklendi */
-  }
 
   .v-btn {
     align-self: flex-end;

@@ -11,12 +11,16 @@
       >
         <v-carousel height="300">
           <v-carousel-item
-            v-for="(img, i) in bookmark.image"
+            v-for="(img, i) in bookmark.images"
             :key="i"
             :src="img"
             cover
           ></v-carousel-item>
         </v-carousel>
+
+        <v-card-subtitle class="pt-4"
+          >{{ item.userFullName }} - @{{ item.userName }}</v-card-subtitle
+        >
 
         <div class="card-content">
           <v-card-title class="card-title">{{

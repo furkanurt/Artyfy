@@ -1,6 +1,6 @@
 <template>
   <v-layout class="notification-layout">
-    <div class="notification-list">
+    <div class="notification-list" v-if="notifications.length > 0">
       <div
         v-for="(notification, index) in notifications"
         :key="index"
@@ -34,29 +34,13 @@
         </div>
       </div>
     </div>
-    <div v-else class="no-notification">Bildirim yok</div>
+    <div v-else>Bildirim yok</div>
   </v-layout>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { usePostStore } from '@/store/post';
-
-const notifications = ref([]);
-const postStore = usePostStore();
-const sendNotification = async (userId) => {
-  try {
-    const userAppId = localStorage.getItem('reduxState');
-    const response = await postStore.notificationPage(userAppId);
-    console.log(response);
-  } catch (err) {
-    console.log(err);
-  }
-};
-onMounted(async () =>  {
- await sendNotification(userId);
-});
-import router from '@/router';
 
 const notifications = ref([]);
 const postStore = usePostStore();
