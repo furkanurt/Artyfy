@@ -102,7 +102,9 @@ const trends = ref([]);
 
 const fetchTrendsPosts = async () => {
   try {
-    const res = await postStore.fetchTrendsPost();
+    const res = await postStore.fetchTrendsPost(
+      localStorage.getItem('reduxState'),
+    );
     trends.value = res;
   } catch (err) {
     console.error(err);

@@ -74,9 +74,9 @@ export const usePostStore = defineStore('post', {
         return err;
       }
     },
-    async fetchTrendsPost() {
+    async fetchTrendsPost(id) {
       try {
-        const res = await postService.fetchTrendPost();
+        const res = await postService.fetchTrendPost(id);
         return res.data.data;
       } catch (err) {
         console.log(err);

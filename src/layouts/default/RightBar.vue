@@ -126,7 +126,9 @@ const goPostDetail = (id) => {
 
 const fetchTrendsPosts = async () => {
   try {
-    const res = await postStore.fetchTrendsPost();
+    const res = await postStore.fetchTrendsPost(
+      localStorage.getItem('reduxState'),
+    );
     trendSuggestion.value = res;
   } catch (err) {
     console.error(err);

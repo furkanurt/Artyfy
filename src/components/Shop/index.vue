@@ -42,12 +42,14 @@
           ></v-carousel-item>
         </v-carousel>
 
+        <v-img :src="item.image"> </v-img>
+
         <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
 
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>
           <div class="mt-4">
-            <span class="font-bold text-xl">{{ item.productPrice }} ₺</span>
+            <span class="font-bold text-xl">{{ item.price }} ₺</span>
           </div>
         </v-card-text>
 
@@ -79,7 +81,7 @@
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>
           <div class="mt-4">
-            <span class="font-bold text-xl">{{ item.productPrice }} ₺</span>
+            <span class="font-bold text-xl">{{ item.price }} ₺</span>
           </div>
         </v-card-text>
 
