@@ -2,11 +2,7 @@
   <v-layout id="home-layout">
     <Profilephoto />
     <div>
-      <PostCard
-        :posts="posts"
-        :search-result-post="filteredPosts"
-        :show-comments="false"
-      />
+      <PostCard/>
     </div>
   </v-layout>
 </template>
