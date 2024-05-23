@@ -200,8 +200,8 @@ const updateUserProfile = async () => {
 .v-card {
   background-color: white;
   align-items: center;
-  width: 500px;
 }
+
 h4 {
   font-size: large;
   font-weight: 500;
