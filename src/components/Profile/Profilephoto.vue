@@ -40,7 +40,7 @@
         <v-btn @click="dialog = true" append-icon="mdi-account"
           >Profil Düzenle</v-btn
         >
-        <v-dialog v-model="dialog" max-width="50%">
+        <v-dialog v-model="dialog" max-width="100%">
           <v-card class="py-7">
             <div class="input-box">
               <div
@@ -222,5 +222,10 @@ h4 {
     rgba(244, 220, 158, 1) 50%,
     rgba(252, 147, 148, 1) 100%
   );
+}
+.v-card-actions {
+  top: 0;
+  position: absolute;
+  right: 0;
 }
 </style>
