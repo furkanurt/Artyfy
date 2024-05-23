@@ -1,93 +1,183 @@
 <template>
-    <div>
-      <nav class="navbar">
-      <div class="logo">
-        <h1> WHAT IS TRENDS ON ARTFY</h1>
-      </div>
-      <div class="search-box">
-        <input type="text" v-model="searchQuery" placeholder="Search..." @input="search">
-      </div>
-    </nav>
-      <v-row>
-        <v-col
-          v-for="(n, index) in 36"
-          :key="index"
-          cols="12"
-          md="4"
-        >
-          <v-card class="mx-auto" max-width="344" style="background-color: #ededed ; border-radius: 10px;"  >
-            <v-img
-              height="200px"
-              :src="getRandomImage()"
-              cover
-            ></v-img>
-      
-            <v-card-title> </v-card-title>
-      
-            <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
-      
-            <div class="text-center pa-4">
-              <v-btn style="color: #f99292;" @click="dialog = true"> Look At the Post </v-btn>
-      
-              <v-dialog v-model="dialog" width="auto" style="background:non;" >
-                <v-card 
-                  max-width="900"
-                  prepend-icon="mdi-update"
-                  text="Your application will relaunch automatically after the update is complete."
-                  title="Update in progress"
-                >
-                  <v-img src="https://source.unsplash.com/random/900x600" aspect-ratio="2.5" style="margin: 10px; border-radius: 5;"></v-img>
-                  <v-card-subtitle> Like | Comment | Share </v-card-subtitle>
-                  <template v-slot:actions>
-                    <v-btn class="ms-auto" text="Ok" @click="dialog = false"></v-btn>
-                  </template >
-                </v-card>
-              </v-dialog>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
+  <div
+    class="flex justify-center h-screen items-center"
+    v-if="trends.length === 0"
+  >
+    <img src="@/assets/images/tube-spinner.svg" class="w-20 h-20" />
+  </div>
+  <div v-else>
+    <div
+      class="w-full p-6 items-center flex justify-between"
+      v-if="!appStore.isMobile"
+    >
+      <v-text-field
+        v-model="searchValue"
+        label="ARTYFY'da bugün trendler olanlar..."
+        density="compact"
+        variant="solo"
+        hide-details="auto"
+        append-inner-icon="mdi-magnify"
+      ></v-text-field>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        dialog: false,
+    <v-container v-if="mobileFilteredPost.length === 0">
+      <v-card
+        v-for="(item, i) in trends"
+        :key="i"
+        class="mx-auto"
+        max-width="300"
+      >
+        <v-carousel height="300">
+          <v-carousel-item
+            v-for="(img, i) in item.image"
+            :key="i"
+            :src="img"
+            cover
+          ></v-carousel-item>
+        </v-carousel>
+
+        <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
+
+        <v-card-text>
+          <div>{{ item.content.substring(0, 130) }}...</div>
+          <div class="mt-4">
+            <span class="font-bold text-xl">{{ item.price }} ₺</span>
+          </div>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn color="orange" @click="goPostDetail(item.id)">{{
+            $t('shop.review')
+          }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-container>
+    <v-container v-else>
+      <v-card
+        v-for="(item, i) in mobileFilteredPost"
+        :key="i"
+        class="mx-auto"
+        max-width="400"
+      >
+        <v-carousel height="300">
+          <v-carousel-item
+            v-for="(img, i) in item.image"
+            :key="i"
+            :src="img"
+            cover
+          ></v-carousel-item>
+        </v-carousel>
+
+        <v-card-subtitle class="pt-4">{{ item.userFullName }}</v-card-subtitle>
+        <v-card-subtitle class="pt-4">{{ item.userName }}</v-card-subtitle>
+        <v-card-subtitle class="pt-4">{{ item.name }}</v-card-subtitle>
+
+        <v-card-text>
+          <div>{{ item.content.substring(0, 130) }}...</div>
+          <div class="mt-4">
+            <span class="font-bold text-xl">{{ item.price }} ₺</span>
+          </div>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn color="orange" @click="goPostDetail(item.id)">{{
+            $t('shop.review')
+          }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-container>
+  </div>
+</template>
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue';
+import { usePostStore } from '@/store/post';
+import { useAppStore } from '@/store/app';
+import { useSearchStore } from '@/store/search';
+import router from '@/router';
+
+const searchValue = ref('');
+const postStore = usePostStore();
+const searchStore = useSearchStore();
+const appStore = useAppStore();
+const trends = ref([]);
+
+const fetchTrendsPosts = async () => {
+  try {
+    const res = await postStore.fetchTrendsPost(
+      localStorage.getItem('reduxState'),
+    );
+    trends.value = res;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+onMounted(() => {
+  fetchTrendsPosts();
+});
+
+const mobileFilteredPost = computed(() => {
+  return searchStore.searchMarketPost;
+});
+
+const goPostDetail = (id) => {
+  // searchStore.fetchMarketResultPost(id);
+
+  setTimeout(() => {
+    router.push(`/post-detail/${id}`);
+  }, 600);
+};
+
+watch(searchValue, async () => {
+  if (searchValue.value) {
+    trends.value.some((item) => {
+      if (item.content === searchValue.value) {
+        trends.value = [];
+        trends.value = [...trends.value, item];
       }
-    },
-  
-    methods: {
-      getRandomImage() {
-        const randomIndex = Math.floor(Math.random() * 1000) + 1; 
-        return `https://source.unsplash.com/random/344x200/?landscape&${randomIndex}`;
-      },
-    },
+    });
+  } else {
+    const res = await postStore.fetchSellablePost(
+      localStorage.getItem('reduxState'),
+    );
+    trends.value = res;
   }
-  </script>
-  <style scoped>
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    color: #fff;
-    padding: 10px;
-    margin-bottom: 5px;
+});
+</script>
+
+<style lang="scss" scoped>
+.v-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 30px;
+  max-width: 100% !important;
+
+  .v-card-text {
+    height: 150px;
   }
-  .logo h1 {
-    margin: 0;
-    margin-left: 348px;
-    color: #f99292;
-    font-weight: 900;
+}
+
+@media screen and (max-width: 1264px) {
+  .v-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
   }
-  
-  .search-box input {
-    width: 500px;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1.5px solid #ccc;
+}
+
+@media screen and (max-width: 1040px) {
+  .v-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .v-container {
+    display: grid;
+    grid-template-columns: auto;
+    margin-top: 30px;
+    gap: 30px;
+  }
+}
 </style>
-  

@@ -1,7 +1,4 @@
 import ArtyfyService from './artyfy.service';
-import DummyService from './dummy.service';
-
-const posts = DummyService.fetchPost();
 
 class SearchService extends ArtyfyService {
   async fetchShopPost() {
@@ -12,12 +9,6 @@ class SearchService extends ArtyfyService {
       });
   }
 
-  fetchSearchPosts(searchValue) {
-    return posts.filter(({ name, userName }) =>
-      [name, userName].some((val) => val.toLowerCase().includes(searchValue)),
-    );
-  }
-
   fetchSearchMarketPosts(searchValue) {
     const marketPost = this.fetchShopPost();
     return marketPost.filter(({ name, userName, content }) =>
@@ -25,12 +16,6 @@ class SearchService extends ArtyfyService {
         val.toLowerCase().includes(searchValue),
       ),
     );
-  }
-
-  fetchSearchResultPost(params) {
-    return posts.filter((item) => {
-      if (item.id == params) return item;
-    });
   }
 
   async fetchSearchMarketResultPost(params) {

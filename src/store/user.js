@@ -32,6 +32,8 @@ export const useUserStore = defineStore('user', {
       localStorage.removeItem('token');
       localStorage.removeItem('reduxState');
       localStorage.removeItem('userID');
+      localStorage.removeItem('userBasketPost');
+      localStorage.removeItem('userAddres');
     },
     fetchUserID(token) {
       let base64Url = token.split('.')[1];
@@ -84,7 +86,7 @@ export const useUserStore = defineStore('user', {
     },
     async updateUserProfile(params) {
       try {
-        const response = await authService.updateUserProfile(params); 
+        const response = await authService.updateUserProfile(params);
         return response;
       } catch (err) {
         console.error(err);

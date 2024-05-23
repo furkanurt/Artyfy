@@ -17,9 +17,13 @@
 import { useSearchStore } from '@/store/search';
 import PostCard from '@/layouts/default/PostCard.vue';
 import PostInput from '@/components/Home/PostInput.vue';
+import { onMounted } from 'vue';
 
 const searchStore = useSearchStore();
-searchStore.fetchPost('');
+
+onMounted(() => {
+  searchStore.fetchPost('');
+});
 </script>
 <style lang="scss" scoped>
 .v-layout {
@@ -28,11 +32,11 @@ searchStore.fetchPost('');
   width: 50%;
 }
 
-@media screen and (max-width: 1264px) {
+@media screen and (min-width: 768px) and (max-width: 1264px) {
   .v-layout {
     display: block;
     position: absolute !important;
-    width: auto;
+    width: 66%;
   }
 }
 

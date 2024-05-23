@@ -68,10 +68,37 @@ export const usePostStore = defineStore('post', {
         return err.response.data;
       }
     },
-    async fetchSellablePost() {
+    async fetchSellablePost(id) {
       try {
-        const res = await postService.fetchSellablePost();
+        const res = await postService.fetchSellablePost(id);
         this.postForMarket = res.data.data;
+        return res.data.data;
+      } catch (err) {
+        console.log(err);
+        return err;
+      }
+    },
+    async fetchSavedPost(id) {
+      try {
+        const res = await postService.fetchSavedPosts(id);
+        return res.data.data;
+      } catch (err) {
+        console.log(err);
+        return err;
+      }
+    },
+    async fetchNotification(id) {
+      try {
+        const res = await postService.fetchNotifications(id);
+        return res.data.data;
+      } catch (err) {
+        console.log(err);
+        return err;
+      }
+    },
+    async fetchTrendsPost(id) {
+      try {
+        const res = await postService.fetchTrendPost(id);
         return res.data.data;
       } catch (err) {
         console.log(err);

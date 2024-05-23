@@ -55,6 +55,8 @@
                       class="text-white w-4 h-4 mx-2 my-2"
                       rounded="xl"
                       :size="appStore.isMobile ? 'x-small' : 'small'"
+                      :disabled="post.isSellable === false"
+                      @click="addBasket(post)"
                     >
                       <v-icon color="white"> mdi-shopping-outline </v-icon>
                     </v-btn>
@@ -138,14 +140,16 @@ import { useAppStore } from '@/store/app';
 import { usePostStore } from '@/store/post';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '@/store/user';
+import { useAddressStore } from '@/store/address';
 
-const route = useRoute();
+const addressStore = useAddressStore();
 const appStore = useAppStore();
 const userStore = useUserStore();
 const postStore = usePostStore();
 const getErrorMessage = ref(false);
 const postIsLoading = ref(false);
 const posts = ref([]);
+const route = useRoute();
 
 const comment = ref([{
   userAppId: localStorage.getItem('reduxState'),
@@ -155,9 +159,8 @@ const comment = ref([{
 
 onBeforeMount(async () => {
   posts.value = [];
-
-  console.log('posts res: ', route);
-  if (route.name === 'home') {
+  console.log(route);
+  if (route.name === 'home' || route.name === 'profile') {
     const res = await postStore.fetchAllPost(userStore.userDetail?.id);
     if (res.error) {
       getErrorMessage.value = true;
@@ -216,6 +219,8 @@ const postBookmarked = async (postId) => {
   } catch (err) {
     console.log(err);
   }
+const addBasket = (post) => {
+  addressStore.saveUserSelectPost(post);
 };
 </script>
 

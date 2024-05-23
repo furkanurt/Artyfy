@@ -20,17 +20,17 @@ class PostService extends ArtyfyService {
         return res;
       });
   }
-  async fetchSellablePost() {
+  async fetchSellablePost(id) {
     // for market
     return await this._axios
-      .get('/api/Posts/getSellableProducts')
+      .get(`/api/Posts/getSellableProducts?userAppId=${id}`)
       .then((res) => {
         return res;
       });
   }
   async fetchSavedPosts(id) {
     return await this._axios
-      .get('/api/Posts/listSavedPosts', id)
+      .get(`/api/Posts/listSavedPosts?userId=${id}`)
       .then((res) => {
         return res;
       });
@@ -71,6 +71,15 @@ class PostService extends ArtyfyService {
       return res;
     });
   }
+  async fetchTrendPost(id) {
+    return await this._axios
+      .get(`/api/Posts/trendPosts?userAppId=${id}`)
+      .then((res) => {
+        return res;
+      });
+  }
+
+ 
 }
 
 export default new PostService();

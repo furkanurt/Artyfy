@@ -41,25 +41,20 @@ import { ref, computed } from 'vue';
 import Products from './Products.vue';
 import AddressForm from './AddressForm.vue';
 import Payment from './Payment.vue';
-import PaymentMessage from './PaymentMessage.vue';
 
 const e1 = ref(1);
 const steps = ref([
   {
     id: 1,
-    name: 'Products',
+    name: 'Sepet',
   },
   {
     id: 2,
-    name: 'Address',
+    name: 'Adres',
   },
   {
     id: 3,
-    name: 'Payment',
-  },
-  {
-    id: 4,
-    name: 'Message',
+    name: 'Ödeme',
   },
 ]);
 
@@ -75,7 +70,6 @@ const pages = ref({
   1: Products,
   2: AddressForm,
   3: Payment,
-  4: PaymentMessage,
 });
 
 const currentStepComponent = computed(() => {
