@@ -28,18 +28,40 @@ export const usePostStore = defineStore('post', {
         return err.response.data;
       }
     },
-    async sendPost(params) {
+    async likePost(postId, userId) {
       try {
-        const res = await postService.createPost(params);
+        const response = await 
+        postService.sendPostLike(postId, userId);
+        return response.data;
+      } catch (err) {
+        console.error('Error liking post:', err);
+        return { err };
+      }
+    },
+    async bookmarkedPost(postId, userId) {
+      try {
+        const res = await 
+        postService.sendPostSave(postId, userId);
+        return res.data;
+      } catch (err) {
+        console.error('Error saving data:', err);
+        return err;
+      }
+    },
+    async commentPost(content) {
+      try {
+        const res = await 
+        postService.sendPostComment(content);
         return res.data;
       } catch (err) {
         console.error('err:', err.response.data);
         return err.response.data;
       }
     },
-    async sendSave(postId, userId) {
+    async notificationPage(userAppId) {
       try {
-        const res = await postService.sendPostSave(postId, userId);
+        const res = await 
+        postService.fetchNotifications(userAppId);
         return res.data;
       } catch (err) {
         console.error('err:', err.response.data);

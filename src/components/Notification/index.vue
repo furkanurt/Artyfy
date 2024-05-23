@@ -23,119 +23,28 @@
         </div>
       </div>
     </div>
+    <div v-else class="no-notification">Bildirim yok</div>
   </v-layout>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { usePostStore } from '@/store/post';
 
-const notifications = ref([
-  {
-    id: 1,
-    username: 'Devon Lane',
-    message: 'New Post! Click and see the content.',
-  },
-  {
-    id: 2,
-    username: 'Darlene Roberts',
-    message: "New Photo! Click and comment. 📸'",
-  },
-  {
-    id: 3,
-    username: 'John Wick',
-    message: 'I have news for you. Are you curious?',
-  },
-  {
-    id: 4,
-    username: 'Jordan Man',
-    message: 'Like your Post!',
-  },
-  {
-    id: 5,
-    username: 'Jennifer Foreman',
-    message: 'Commend on your post! : I like it very much ❤',
-  },
-  {
-    id: 6,
-    username: 'Michael Johnson',
-    message: 'Tagged you in a photo. Check it out!',
-  },
-  {
-    id: 7,
-    username: 'Alice Smith',
-    message: 'Shared a post with you. Have a look!',
-  },
-  {
-    id: 8,
-    username: 'Emily Brown',
-    message: 'Started following you. Follow back?',
-  },
-  {
-    id: 9,
-    username: 'Chris Green',
-    message: 'Sent you a friend request.',
-  },
-  {
-    id: 10,
-    username: 'Alex Turner',
-    message: 'Liked your photo!',
-  },
-  {
-    id: 11,
-    username: 'Sophia Martinez',
-    message: 'Commented on your post: Great content!',
-  },
-  {
-    id: 12,
-    username: 'Ethan Johnson',
-    message: 'Mentioned you in a comment.',
-  },
-  {
-    id: 13,
-    username: 'Emma Wilson',
-    message: 'Replied to your comment: Thanks!',
-  },
-  {
-    id: 14,
-    username: 'Olivia White',
-    message: 'Invited you to an event.',
-  },
-  {
-    id: 15,
-    username: 'Matthew Lee',
-    message: 'Shared a story with you.',
-  },
-  {
-    id: 16,
-    username: 'Daniel Clark',
-    message: 'Tagged you in a post.',
-  },
-  {
-    id: 17,
-    username: 'Sophie Turner',
-    message: 'Liked your comment.',
-  },
-  {
-    id: 18,
-    username: 'Lucas Martinez',
-    message: 'Added you as a collaborator.',
-  },
-  {
-    id: 19,
-    username: 'Grace Adams',
-    message: 'Started following you.',
-  },
-  {
-    id: 20,
-    username: 'Aaron Brown',
-    message: 'Shared a video with you.',
-  },
-  {
-    id: 21,
-    username: 'Isabella Harris',
-    message: 'Sent you a message.',
-  },
-]);
+const notifications = ref([]);
+const postStore = usePostStore();
+const sendNotification = async (userId) => {
+  try {
+    const userAppId = localStorage.getItem('reduxState');
+    const response = await postStore.notificationPage(userAppId);
+    console.log(response);
+  } catch (err) {
+    console.log(err);
+  }
+};
+onMounted(async () =>  {
+ await sendNotification(userId);
+});
 
 const fetchRandomProfilePicture = async () => {
   try {
@@ -157,7 +66,10 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .notification-layout {
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .notification-list {
@@ -185,5 +97,10 @@ onMounted(async () => {
 .notification-content {
   flex: 1;
   font-size: 17px;
+}
+
+.no-notification {
+  font-size: 18px;
+  color: #888;
 }
 </style>
