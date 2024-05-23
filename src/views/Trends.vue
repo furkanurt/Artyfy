@@ -1,7 +1,7 @@
 <template>
   <div v-if="appStore.isMobile">
     <AppBar />
-    <TrendsView />
+    <Trendsview />
   </div>
   <v-app v-if="!appStore.isMobile">
     <v-row no-gutters v-if="appStore.breakpoint === 'md'">
@@ -13,7 +13,7 @@
 
       <v-col cols="8">
         <v-sheet>
-          <TrendsView />
+          <Trendsview />
         </v-sheet>
       </v-col>
     </v-row>
@@ -26,7 +26,7 @@
 
       <v-col cols="9">
         <v-sheet>
-          <TrendsView />
+          <Trendsview />
         </v-sheet>
       </v-col>
     </v-row>
@@ -34,7 +34,7 @@
 </template>
 <script setup>
 import LeftBar from '@/layouts/default/LeftBar.vue';
-import TrendsView from '@/components/Trends/TrendsView.vue';
+import Trendsview from '@/components/Trends/Trendsview.vue';
 import AppBar from '@/layouts/default/AppBar.vue';
 import { useAppStore } from '@/store/app';
 

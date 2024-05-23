@@ -1,7 +1,7 @@
 <template>
   <div v-if="appStore.isMobile">
     <AppBar />
-    <ProfileView />
+    <Profileview />
   </div>
   <v-app v-if="!appStore.isMobile">
     <v-row no-gutters v-if="appStore.breakpoint === 'md'">
@@ -13,7 +13,7 @@
 
       <v-col cols="8">
         <v-sheet>
-          <ProfileView />
+          <Profileview />
         </v-sheet>
       </v-col>
     </v-row>
@@ -22,7 +22,7 @@
         <left-bar />
       </v-col>
       <v-col cols="12" sm="6">
-        <ProfileView />
+        <Profileview />
       </v-col>
       <v-col cols="12" sm="3" class="mobile-right">
         <v-divider vertical></v-divider>
@@ -37,7 +37,7 @@ import LeftBar from '@/layouts/default/LeftBar.vue';
 import RightBar from '@/layouts/default/RightBar.vue';
 import AppBar from '@/layouts/default/AppBar.vue';
 import { useAppStore } from '@/store/app';
-import ProfileView from '@/components/Profile/ProfileView.vue';
+import Profileview from '@/components/Profile/Profileview.vue';
 
 const appStore = useAppStore();
 </script>

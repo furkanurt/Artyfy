@@ -1,6 +1,6 @@
 <template>
   <v-layout id="home-layout">
-    <ProfilePhoto />
+    <Profilephoto />
     <div>
       <PostCard />
     </div>
@@ -8,7 +8,7 @@
 </template>
 <script setup>
 import PostCard from '@/layouts/default/PostCard.vue';
-import ProfilePhoto from '@/components/Profile/ProfilePhoto.vue';
+import Profilephoto from '@/components/Profile/Profilephoto.vue';
 </script>
 <style lang="scss" scoped>
 .v-layout {
