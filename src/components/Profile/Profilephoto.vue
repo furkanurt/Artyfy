@@ -6,77 +6,128 @@
     <img src="@/assets/images/tube-spinner.svg" class="w-20 h-20" />
   </div>
   <div v-else>
-    <v-parallax src="https://source.unsplash.com/random/900x600">
+    <div class="parallax">
       <div
         class="d-flex flex-column fill-height justify-center align-center text-white"
       >
         <h1 class="text-h4 font-weight-thin mb-4">
-          <v-avatar :size="120">
+          <v-avatar :size="100">
             <img
-              :src="
-                userInfo.image
-                  ? userInfo.image
-                  : 'https://randomuser.me/api/portraits/women/50.jpg'
-              "
-              alt="User Avatar"
+              v-if="userInfo.image"
+              :src="userInfo.image"
+              alt="profilPhoto"
             />
+            <v-img
+              v-else
+              src="@/assets/profile.png"
+              class="bg-white"
+              alt="profilPhoto"
+            ></v-img>
           </v-avatar>
         </h1>
         <h4 class="subheading">@{{ userInfo.userName }}</h4>
       </div>
-    </v-parallax>
+    </div>
 
     <div class="empty-container">
       <div class="left-container">
-      <div class="inner-box">
-        <h4>{{ userInfo.fullName }}</h4>
-        <h5> {{ userInfo.city }}</h5>
-      </div>
+        <div class="inner-box">
+          <h4>{{ userInfo.fullName }}</h4>
+          <h5>{{ userInfo.city }}</h5>
+        </div>
       </div>
       <div class="right-container">
         <v-btn @click="dialog = true" append-icon="mdi-account"
-          >Edit Profile</v-btn
+          >Profil Düzenle</v-btn
         >
         <v-dialog v-model="dialog" max-width="50%">
-  <v-card>
-    <v-img src="https://picjj.com/images/2024/05/09/s0irz.png" width="140px"></v-img>
-    <div class="input-box">
-      <div class="input-item" style=" display: flex; margin-bottom: 10%; margin-top: 0%">
-        <v-avatar :size="90">
-          <img :src="userInfo.image ? userInfo.image : 'https://randomuser.me/api/portraits/women/50.jpg'" alt="User Avatar" />
-        </v-avatar>
-      </div>
-      <div class="input-item">
-        <h1>Profile Picture</h1>
-        <v-file-input v-model="editedUser.image" density="compact" variant="outlined" placeholder="Change Your Profile Picture"></v-file-input>
-      </div>
-      <div class="input-item">
-        <h1>Username</h1>
-        <v-text-field v-model="editedUser.userName" density="compact" variant="outlined" placeholder="You cant change your username" disabled></v-text-field>
-      </div>
-      <div class="input-item">
-        <h1>Name</h1>
-        <v-text-field v-model="editedUser.fullName" density="compact" variant="outlined" placeholder="Change Name"></v-text-field>
-      </div>
-      <div class="input-item">
-        <h1>Email</h1>
-        <v-text-field v-model="editedUser.email" density="compact" placeholder="Edit Mail" prepend-inner-icon="mdi-email-outline" variant="outlined" type="email"></v-text-field>
-      </div>
-      <div class="input-item">
-        <h1>Phone Number</h1>
-        <v-text-field v-model="editedUser.phoneNumber" density="compact" variant="outlined" placeholder="Change Phone Number"></v-text-field>
-      </div>
-      <div class="input-item">
-        <h1>City</h1>
-        <v-text-field v-model="editedUser.city" density="compact" variant="outlined" placeholder="Change City"></v-text-field>
-      </div>
-      <div class="input-item">
-      <v-btn @click="updateUserProfile" append-icon="mdi-account">Save Changes</v-btn>
-      </div>
-    </div>
-  </v-card>
-</v-dialog>
-
+          <v-card class="py-7">
+            <div class="input-box">
+              <div
+                class="input-item"
+                style="display: flex; margin-bottom: 10%; margin-top: 0%"
+              >
+                <v-avatar :size="90">
+                  <img
+                    v-if="userInfo.image"
+                    :src="userInfo.image"
+                    alt="profilephoto"
+                  />
+                  <v-img
+                    v-else
+                    src="@/assets/profile.png"
+                    alt="profilephoto"
+                  ></v-img>
+                </v-avatar>
+              </div>
+              <div class="input-item">
+                <h1>Profil Fotoğrafı</h1>
+                <v-file-input
+                  v-model="editedUser.image"
+                  density="compact"
+                  variant="outlined"
+                  placeholder="Profil Fotoğrafınızı Değiştirin"
+                ></v-file-input>
+              </div>
+              <div class="input-item">
+                <h1>Kullanıcı Adı</h1>
+                <v-text-field
+                  v-model="editedUser.userName"
+                  density="compact"
+                  variant="outlined"
+                  placeholder="Kullanıcı Adınızı Değiştirin"
+                  disabled
+                ></v-text-field>
+              </div>
+              <div class="input-item">
+                <h1>İsim Soyisim</h1>
+                <v-text-field
+                  v-model="editedUser.fullName"
+                  density="compact"
+                  variant="outlined"
+                  placeholder="Adınızı Değiştirin"
+                ></v-text-field>
+              </div>
+              <div class="input-item">
+                <h1>E-posta</h1>
+                <v-text-field
+                  v-model="editedUser.email"
+                  density="compact"
+                  placeholder="e-posta adresinizi değiştirin"
+                  prepend-inner-icon="mdi-email-outline"
+                  variant="outlined"
+                  type="email"
+                ></v-text-field>
+              </div>
+              <div class="input-item">
+                <h1>Telefon Numarası</h1>
+                <v-text-field
+                  v-model="editedUser.phoneNumber"
+                  density="compact"
+                  variant="outlined"
+                  placeholder="Telefon Numaranızı Değiştirin"
+                ></v-text-field>
+              </div>
+              <div class="input-item">
+                <h1>Şehir</h1>
+                <v-text-field
+                  v-model="editedUser.city"
+                  density="compact"
+                  variant="outlined"
+                  placeholder="Şehir Değiştirin"
+                ></v-text-field>
+              </div>
+              <div class="input-item">
+                <v-btn @click="updateUserProfile" append-icon="mdi-account"
+                  >Değişiklikleri Kaydet</v-btn
+                >
+              </div>
+            </div>
+            <v-card-actions>
+              <v-btn text="KAPAT" @click="dialog = false"></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </div>
   </div>
@@ -93,8 +144,8 @@ const editedUser = ref([]);
 
 onMounted(async () => {
   await userStore.fetchUserDetail();
-  editedUser.value = userStore.userDetail;
   userInfo.value = userStore.userDetail;
+  editedUser.value = userStore.userDetail;
 });
 
 const updateUserProfile = async () => {
@@ -121,7 +172,7 @@ const updateUserProfile = async () => {
   justify-content: space-between;
   padding: 0 20px;
 }
-.left-container{
+.left-container {
   background-color: #ededed;
   height: 70%;
   width: fit-content;
@@ -129,7 +180,6 @@ const updateUserProfile = async () => {
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(8, 8, 8, 0.1);
   margin-right: 50px;
-  
 }
 .inner-box h1 {
   padding: 10%;
@@ -162,5 +212,15 @@ h4 {
 }
 .right-container {
   width: auto;
+}
+.parallax {
+  height: 400px;
+  background: rgb(252, 147, 148);
+  background: linear-gradient(
+    344deg,
+    rgba(252, 147, 148, 1) 0%,
+    rgba(244, 220, 158, 1) 50%,
+    rgba(252, 147, 148, 1) 100%
+  );
 }
 </style>

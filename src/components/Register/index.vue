@@ -258,7 +258,6 @@ const register = async () => {
     return;
   } else {
     const res = await userStore.userRegister(payload.value);
-    console.log('USER INFORMATION: ', payload.value);
     if (res.data.errors) {
       loading.value = false;
       resgisterErr.value = res.data.error.errors[0];

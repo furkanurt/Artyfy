@@ -56,7 +56,6 @@ const deleteProduct = (key) => {
     'userBasketPost',
     JSON.stringify(productsOnBasket.value),
   );
-  console.log(JSON.parse(localStorage.getItem('userBasketPost')));
 };
 </script>
 

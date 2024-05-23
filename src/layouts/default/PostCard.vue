@@ -134,7 +134,6 @@ import { useUserStore } from '@/store/user';
 import { useAddressStore } from '@/store/address';
 
 const addressStore = useAddressStore();
-const route = useRoute();
 const appStore = useAppStore();
 const userStore = useUserStore();
 const postStore = usePostStore();
@@ -142,12 +141,12 @@ const getErrorMessage = ref(false);
 const postIsLoading = ref(false);
 const showComments = ref(false);
 const posts = ref([]);
+const route = useRoute();
 
 onBeforeMount(async () => {
   posts.value = [];
-
-  console.log('posts res: ', route);
-  if (route.name === 'home') {
+  console.log(route);
+  if (route.name === 'home' || route.name === 'profile') {
     const res = await postStore.fetchAllPost(userStore.userDetail?.id);
     if (res.error) {
       getErrorMessage.value = true;

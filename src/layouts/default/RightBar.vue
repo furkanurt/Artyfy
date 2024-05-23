@@ -19,26 +19,32 @@
           </div>
         </v-card-item>
 
-        <v-card-item v-for="(item, index) in trendSuggestion" :key="index">
+        <v-card-item
+          v-for="(item, index) in trendSuggestion.slice(0, 3)"
+          :key="index"
+        >
           <div class="card-item">
             <div style="min-width: 130px; margin-right: 10px">
-              <v-card-subtitle>@{{ item.writer }} • Last Night</v-card-subtitle>
-              <v-card-text style="margin: 6px 0px">
-                {{ item.text.substring(0, 40) }}...
-              </v-card-text>
+              <v-card-subtitle>{{
+                item.userFullName ? item.userFullName : 'Gülsüm Vural'
+              }}</v-card-subtitle>
               <v-card-subtitle
-                >{{ $t('trendingWith') }}
-                <span style="color: #fa9392"
-                  >#{{ item.trending }}</span
-                ></v-card-subtitle
+                >@{{
+                  item.userName ? item.userName : 'gvural'
+                }}</v-card-subtitle
               >
+              <v-card-text style="margin: 6px 0px">
+                {{ item.content.substring(0, 40) }}...
+              </v-card-text>
             </div>
             <div>
               <v-img
                 :width="100"
                 max-height="100"
                 cover
-                :src="item.photo"
+                :src="
+                  item.imageUrl ? item.imageUrl[0] : 'https://picsum.photos/200'
+                "
               ></v-img>
             </div>
           </div>
@@ -46,7 +52,11 @@
         </v-card-item>
 
         <v-card-item>
-          <v-btn variant="text" style="color: #fa9392; padding: 0px">
+          <v-btn
+            variant="text"
+            style="color: #fa9392; padding: 0px"
+            @click="router.push('/trends')"
+          >
             {{ $t('showMore') }}
           </v-btn>
         </v-card-item>
@@ -97,16 +107,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import router from '@/router';
-import DummyService from '@/services/dummy.service';
 import { usePostStore } from '@/store/post';
 import dayjs from 'dayjs';
 
 const searchValue = ref('');
 const postStore = usePostStore();
 const searchPostRes = ref([]);
-const trendSuggestion = DummyService.fetchTrendSuggestions();
+const trendSuggestion = ref([]);
 const year = dayjs().year();
 
 const goPostDetail = (id) => {
@@ -114,6 +123,19 @@ const goPostDetail = (id) => {
     router.push(`/post-detail/${id}`);
   }, 600);
 };
+
+const fetchTrendsPosts = async () => {
+  try {
+    const res = await postStore.fetchTrendsPost();
+    trendSuggestion.value = res;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+onMounted(() => {
+  fetchTrendsPosts();
+});
 
 watch(searchValue, () => {
   searchPostRes.value = [];

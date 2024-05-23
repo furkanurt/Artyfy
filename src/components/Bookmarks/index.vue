@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <v-container>
+    <v-container v-if="posts.length > 0">
       <v-card
         v-for="(bookmark, index) in posts"
         :key="index"
@@ -37,6 +37,7 @@
         </v-card-actions>
       </v-card>
     </v-container>
+    <v-container v-else>Kaydedilmiş post bulunamadı.</v-container>
   </div>
 </template>
 
@@ -56,7 +57,6 @@ onMounted(async () => {
       localStorage.getItem('reduxState'),
     );
     posts.value = response;
-    console.log(response);
   } catch (error) {
     console.error('Error fetching saved posts:', error);
   }

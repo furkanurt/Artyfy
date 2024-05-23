@@ -37,14 +37,19 @@
         <div class="profile" v-if="userDetail">
           <div style="display: flex" @click="goToProfile()">
             <v-img
+              v-if="userDetail.imageUrl"
               :width="40"
               :height="40"
               cover
-              :src="
-                userDetail.imageUrl
-                  ? userDetail.imageUrl
-                  : 'https://i.pravatar.cc/40'
-              "
+              :src="userDetail.imageUrl"
+              class="profile-img"
+            ></v-img>
+            <v-img
+              v-else
+              :width="40"
+              :height="40"
+              cover
+              src="@/assets/profile.png"
               class="profile-img"
             ></v-img>
             <div style="display: grid; margin-left: 10px; font-size: 14px">
@@ -80,14 +85,10 @@
 import { onMounted, ref } from 'vue';
 import router from '@/router';
 import { useUserStore } from '@/store/user';
-// import { useAppStore } from '@/store/app';
 import { useRoute } from 'vue-router';
-// import i18n from '@/i18n';
 
 const userStore = useUserStore();
-// const appStore = useAppStore();
 const route = useRoute();
-// const { availableLocales } = i18n.global;
 
 const userDetail = ref();
 const value = [
@@ -117,7 +118,6 @@ const clickMenuItem = (value) => {
 };
 
 const goToProfile = () => {
-  console.log('clicked profile');
   router.push('/profile');
 };
 
@@ -125,11 +125,6 @@ const logout = async () => {
   await userStore.userLogout();
   router.push('/login');
 };
-
-// const changeLanguage = (e) => {
-//   localStorage.setItem('portalLang', e);
-//   appStore.setLocale(e);
-// };
 </script>
 
 <style lang="scss" scoped>

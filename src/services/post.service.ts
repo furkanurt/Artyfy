@@ -65,12 +65,19 @@ class PostService extends ArtyfyService {
       return res;
     });
   }
+  async fetchTrendPost() {
+    return await this._axios.get('/api/Posts/trendPosts').then((res) => {
+      return res;
+    });
+  }
 
   // NOTIFICATIONS
   async fetchNotifications(id) {
-    return await this._axios.get('/api/Notifications', id).then((res) => {
-      return res;
-    });
+    return await this._axios
+      .get(`/api/Notifications?userAppId=${id}`)
+      .then((res) => {
+        return res;
+      });
   }
 }
 

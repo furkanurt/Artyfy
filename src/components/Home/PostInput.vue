@@ -78,6 +78,7 @@
                   :model-value="post.price"
                   variant="solo"
                   density="comfortable"
+                  :disabled="!post.isSellable"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -130,6 +131,7 @@ import { useSearchStore } from '@/store/search';
 import { useUserStore } from '@/store/user';
 import { usePostStore } from '@/store/post';
 import categoriesService from '@/services/categories.service';
+import axios from 'axios';
 
 const appStore = useAppStore();
 const searchStore = useSearchStore();
@@ -182,17 +184,21 @@ const selectMenu = (v) => {
 };
 
 const imagesUploaded = () => {
+  console.log(userStore.userDetail);
+
   // convert to formData
   const formData = new FormData();
   for (let i = 0; i < post.value.image.length; i++) {
     formData.append('files', post.value.image[i]);
   }
-  formData.forEach((value, key) => {
+  formData.forEach(async (value, key) => {
     console.log('FORMDATA: ', key, value);
-    post.value.image = [post.value.image, ...value];
+    // const res = await axios.post(
+    //   `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}&fileDir=artyfy`,
+    //   value,
+    // );
+    // console.log('RESPONSE: ', res);
   });
-
-  console.log('uploaded image: ', post.value.image);
 };
 
 const sendPost = async () => {
