@@ -45,19 +45,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import router from '@/router';
+import { useAddressStore } from '@/store/address';
 
-const productsOnBasket = ref(
-  JSON.parse(localStorage.getItem('userBasketPost')),
-);
+const productsOnBasket = ref([]);
+const addressStore = useAddressStore();
+
+onMounted(() => {
+  productsOnBasket.value = addressStore.userSelectPost;
+});
 
 const deleteProduct = (key) => {
   productsOnBasket.value.splice(key, 1);
-  localStorage.setItem(
-    'userBasketPost',
-    JSON.stringify(productsOnBasket.value),
-  );
 };
 </script>
 

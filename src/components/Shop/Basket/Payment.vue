@@ -18,7 +18,7 @@
             ref="cardNo"
             v-model="paymentInformation.cardNo"
             :error-messages="v$.cardNo.$errors.map((e) => e.$message)"
-            counter="25"
+            counter="16"
             label="Kart No"
             required
           ></v-text-field>
@@ -27,6 +27,7 @@
             v-model="paymentInformation.cvc"
             :error-messages="v$.cvc.$errors.map((e) => e.$message)"
             label="CVC"
+            counter="3"
             required
           ></v-text-field>
           <v-text-field
@@ -34,6 +35,7 @@
             v-model="paymentInformation.skt"
             :error-messages="v$.skt.$errors.map((e) => e.$message)"
             label="Son Kullanma Tarihi"
+            counter="5"
             required
           ></v-text-field>
         </v-card-text>
@@ -87,9 +89,9 @@ const succesPayment = ref(false);
 const rules = computed(() => {
   return {
     name: { required },
-    cardNo: { required, minLength: minLength(25) },
-    cvc: { required },
-    skt: { required },
+    cardNo: { required, minLength: minLength(16) },
+    cvc: { required, minLength: minLength(3) },
+    skt: { required, minLength: minLength(5) },
   };
 });
 
@@ -106,13 +108,11 @@ const submit = async () => {
 
   setTimeout(() => {
     succesPayment.value = false;
-  }, 600);
+  }, 700);
 
   setTimeout(() => {
-    localStorage.removeItem('userBasketPost');
-    localStorage.removeItem('userAddres');
     router.push('/shop');
-  }, 400);
+  }, 5000);
 };
 </script>
 
