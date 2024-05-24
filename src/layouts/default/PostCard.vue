@@ -100,9 +100,11 @@
                   prepend-icon="mdi-heart"
                   size="small"
                   :color="post.isLikeIt ? 'red' : 'black'"
-                  @click="(post.isLikeIt = !post.isLike), postLike(post.postId)"
+                  @click="
+                    (post.isLikeIt = !post.isLikeIt), postLike(post.postId)
+                  "
                 >
-                  <span class="align-middle">{{ post.likeCount }}</span>
+                  <span class="align-middle">{{ post.likeCount }} </span>
                 </v-btn>
                 <v-btn
                   prepend-icon="mdi-comment"
@@ -116,12 +118,11 @@
               <v-btn
                 class="ml-0"
                 :prepend-icon="
-                  post.isBookmarked ? `mdi-bookmark` : `mdi-bookmark-outline`
+                  post.isSaveIt ? `mdi-bookmark` : `mdi-bookmark-outline`
                 "
                 size="small"
                 @click="
-                  (post.isBookmarked = !post.isBookmarked),
-                    postBookmarked(post.postId)
+                  (post.isSaveIt = !post.isSaveIt), postBookmarked(post.postId)
                 "
               >
               </v-btn>

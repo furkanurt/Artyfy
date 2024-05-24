@@ -40,7 +40,7 @@
         <v-btn @click="dialog = true" append-icon="mdi-account"
           >Profil Düzenle</v-btn
         >
-        <v-dialog v-model="dialog" max-width="100%">
+        <v-dialog v-model="dialog" max-width="100%" persistent>
           <v-card class="py-7">
             <div class="input-box">
               <div
@@ -125,9 +125,6 @@
                 >
               </div>
             </div>
-            <v-card-actions>
-              <v-btn text="KAPAT" @click="dialog = false"></v-btn>
-            </v-card-actions>
           </v-card>
         </v-dialog>
       </div>
@@ -138,6 +135,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useUserStore } from '@/store/user';
+import router from '@/router';
 
 const userStore = useUserStore();
 const dialog = ref(false);
@@ -176,8 +174,8 @@ const updateUserProfile = async () => {
   editedUser.value.imageUrl = `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}${saveFormat.value}`;
   try {
     await userStore.updateUserProfile(editedUser.value);
-    await userStore.fetchUserDetail();
-    dialog.value = false;
+    // dialog.value = false;
+    router.push('/profile');
   } catch (error) {
     console.error(error);
   }

@@ -4,6 +4,13 @@
       <PostInput />
       <div>
         <PostCard />
+        <v-alert
+          type="warning"
+          class="mb-10 px-5"
+          transition="slide-y-transition"
+        >
+          Daha fazlası için premium almalısınız.
+        </v-alert>
       </div>
     </v-layout>
     <div class="absolute bottom-0 z-[10000]" v-if="getErrorMessage">
