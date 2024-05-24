@@ -13,8 +13,8 @@
         <h1 class="text-h4 font-weight-thin mb-4">
           <v-avatar :size="100">
             <img
-              v-if="userInfo.image"
-              :src="userInfo.image"
+              v-if="userInfo.imageUrl"
+              :src="userInfo.imageUrl"
               alt="profilPhoto"
             />
             <v-img
@@ -49,8 +49,8 @@
               >
                 <v-avatar :size="90">
                   <img
-                    v-if="userInfo.image"
-                    :src="userInfo.image"
+                    v-if="userInfo.imageUrl"
+                    :src="userInfo.imageUrl"
                     alt="profilephoto"
                   />
                   <v-img
@@ -63,10 +63,12 @@
               <div class="input-item">
                 <h1>Profil Fotoğrafı</h1>
                 <v-file-input
-                  v-model="editedUser.image"
+                  v-model="editedUser.imageUrl"
                   density="compact"
                   variant="outlined"
                   placeholder="Profil Fotoğrafınızı Değiştirin"
+                  accept="image/*"
+                  @change="imagesUploaded(editedUser.imageUrl)"
                 ></v-file-input>
               </div>
               <div class="input-item">
@@ -141,6 +143,7 @@ const userStore = useUserStore();
 const dialog = ref(false);
 const userInfo = ref([]);
 const editedUser = ref([]);
+const saveFormat = ref('');
 
 onMounted(async () => {
   await userStore.fetchUserDetail();
@@ -148,7 +151,29 @@ onMounted(async () => {
   editedUser.value = userStore.userDetail;
 });
 
+const imagesUploaded = async (image) => {
+  let formData = new FormData();
+  formData.append('fileToUpload', image[0]);
+  formData.append('submit', 'submit');
+  let parts = image[0].name.split('.');
+  saveFormat.value = '.' + parts[1];
+
+  try {
+    await fetch(
+      `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}&fileDir=artyfy`,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData,
+      },
+    );
+  } catch (error) {
+    console.error('ERROR: ', error);
+  }
+};
+
 const updateUserProfile = async () => {
+  editedUser.value.imageUrl = `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}${saveFormat.value}`;
   try {
     await userStore.updateUserProfile(editedUser.value);
     await userStore.fetchUserDetail();

@@ -11,7 +11,7 @@
         }"
       >
         <img
-          :src="notification.imageUrl"
+          :src="`https://mst-images.com.tr/artyfy/${notification.imageUrl}`"
           alt="Profile"
           class="profile-picture"
         />
@@ -65,7 +65,6 @@ onMounted(() => {
 .notification-layout {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100vh;
 }
 

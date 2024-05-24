@@ -30,7 +30,11 @@
             <div class="flex justify-between">
               <div class="flex align-middle my-2">
                 <v-avatar :size="appStore.isMobile ? '32' : '48'">
-                  <img v-if="post.avatar" :src="post.avatar" alt="avatar" />
+                  <img
+                    v-if="post.userProfileImage"
+                    :src="post.userProfileImage"
+                    alt="avatar"
+                  />
                   <v-img
                     v-else
                     src="@/assets/profile.png"
@@ -67,9 +71,11 @@
                       <v-icon color="white"> mdi-shopping-outline </v-icon>
                     </v-btn>
                   </template>
-                  <span v-if="post.isSellable">{{
-                    $t('postCard.onSale')
-                  }}</span>
+                  <span v-if="post.isSellable"
+                    >{{ $t('postCard.onSale') }}
+                    <br />
+                    <span class="flex justify-center">{{ post.price }}₺</span>
+                  </span>
                   <span v-else>{{ $t('postCard.notOnSale') }}</span>
                 </v-tooltip>
               </div>
@@ -122,21 +128,29 @@
             </div>
           </v-card-actions>
           <div v-if="post.showComments">
-            <v-list :items="post.comments" lines="three" item-props>
-              <template v-slot:subtitle="{ subtitle }">
-                <div v-html="subtitle"></div>
-              </template>
+            <v-list>
+              <v-list-item
+                v-for="(comment, key) in post.comments"
+                :key="key"
+                :title="comment.title"
+                :subtitle="comment.subtitle"
+                :prepend-avatar="`https://mst-images.com.tr/artyfy/${comment.avatar}`"
+              >
+              </v-list-item>
             </v-list>
-            <div class="comment-bar">
+            <div class="flex justify-center items-center pb-4">
               <v-text-field
-                class="comment-textarea"
+                class="comment-textarea pr-4"
                 placeholder="Yorum yaz..."
                 v-model="comment[0].content"
                 variant="solo"
                 hide-details="auto"
               ></v-text-field>
-              <v-btn color="#fa9392" @click="sendComment(post.postId)"
-                >Yorumu Gönder</v-btn
+              <v-btn
+                color="#fa9392"
+                class="text-white"
+                @click="sendComment(post.postId)"
+                >Gönder</v-btn
               >
             </div>
           </div>

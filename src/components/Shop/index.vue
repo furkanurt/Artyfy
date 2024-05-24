@@ -42,13 +42,12 @@
           ></v-carousel-item>
         </v-carousel>
 
-        <v-card-subtitle class="pt-4"
-          >{{ item.userFullName }} - @{{ item.userName }}</v-card-subtitle
-        >
+        <v-card-subtitle class="pt-4">{{ item.userFullName }} </v-card-subtitle>
+        <v-card-subtitle>@{{ item.userName }} </v-card-subtitle>
 
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>
-          <div class="mt-4">
+          <div>
             <span class="font-bold text-xl">{{ item.price }} ₺</span>
           </div>
         </v-card-text>
@@ -76,13 +75,12 @@
           ></v-carousel-item>
         </v-carousel>
 
-        <v-card-subtitle class="pt-4"
-          >{{ item.userFullName }} - @{{ item.userName }}</v-card-subtitle
-        >
+        <v-card-subtitle class="pt-4">{{ item.userFullName }} </v-card-subtitle>
+        <v-card-subtitle>@{{ item.userName }} </v-card-subtitle>
 
         <v-card-text>
           <div>{{ item.content.substring(0, 130) }}...</div>
-          <div class="mt-4">
+          <div>
             <span class="font-bold text-xl">{{ item.price }} ₺</span>
           </div>
         </v-card-text>
@@ -154,11 +152,11 @@ watch(searchValue, async () => {
   }
 }
 
-@media screen and (max-width: 1264px) {
+@media screen and (max-width: 1700px) {
   .v-container {
     display: grid;
     grid-template-columns: auto auto auto;
-    gap: 10px;
+    gap: 30px;
   }
 }
 

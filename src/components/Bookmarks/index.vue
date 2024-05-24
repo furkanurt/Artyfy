@@ -19,8 +19,9 @@
         </v-carousel>
 
         <v-card-subtitle class="pt-4"
-          >{{ item.userFullName }} - @{{ item.userName }}</v-card-subtitle
-        >
+          >{{ bookmark.userFullName }}
+        </v-card-subtitle>
+        <v-card-subtitle>@{{ bookmark.userName }} </v-card-subtitle>
 
         <div class="card-content">
           <v-card-title class="card-title">{{

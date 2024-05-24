@@ -205,11 +205,9 @@ const imagesUploaded = async (image) => {
 };
 
 const sendPost = async () => {
-  console.log('sending for post value is : ', post.value);
   post.value.image = [
     `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}${saveFormat.value}`,
   ];
-  console.log('post value ', post.value);
   const res = await postStore.sendPost(post.value);
   console.log(res);
 
