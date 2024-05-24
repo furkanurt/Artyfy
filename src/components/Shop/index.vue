@@ -121,8 +121,6 @@ const mobileFilteredPost = computed(() => {
 });
 
 const goPostDetail = (id) => {
-  // searchStore.fetchMarketResultPost(id);
-
   setTimeout(() => {
     router.push(`/post-detail/${id}`);
   }, 600);

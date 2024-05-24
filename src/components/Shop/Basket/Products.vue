@@ -12,7 +12,8 @@
             class="p-3 mr-5 rounded"
             :width="100"
             cover
-            :src="product.image"
+            :src="product.images[0]"
+            @click="router.push(`/post-detail/${product.postId}`)"
           ></v-img>
         </template>
 
@@ -45,6 +46,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import router from '@/router';
 
 const productsOnBasket = ref(
   JSON.parse(localStorage.getItem('userBasketPost')),

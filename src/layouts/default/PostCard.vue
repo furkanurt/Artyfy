@@ -10,6 +10,14 @@
         $t('errorMessage.postErrorMessage')
       }}</v-alert>
     </div>
+    <div
+      class="z-[10000] fixed flex justify-center z-50"
+      v-if="addProductToBasket"
+    >
+      <v-alert type="success" class="mb-10" transition="slide-y-transition"
+        >Ürün sepetine eklendi. Sepeti kontrol edin!</v-alert
+      >
+    </div>
     <v-row>
       <v-col v-if="posts">
         <v-card
@@ -22,21 +30,19 @@
             <div class="flex justify-between">
               <div class="flex align-middle my-2">
                 <v-avatar :size="appStore.isMobile ? '32' : '48'">
-                  <img
-                    :src="
-                      post.avatar ? post.avatar : `https://i.pravatar.cc/100`
-                    "
-                    alt="avatar"
-                  />
+                  <img v-if="post.avatar" :src="post.avatar" alt="avatar" />
+                  <v-img
+                    v-else
+                    src="@/assets/profile.png"
+                    alt="profilPhoto"
+                  ></v-img>
                 </v-avatar>
                 <div class="mobile-user-info">
                   <div class="flex ml-5 align-middle div-1">
                     <div class="font-bold mr-2 div1-1">
-                      {{ post.userFullName ? post.userFullName : 'deneme' }}
+                      {{ post.userFullName }}
                     </div>
-                    <div class="mr-2 div1-2">
-                      @{{ post.userName ? post.userName : 'deneme' }}
-                    </div>
+                    <div class="mr-2 div1-2">@{{ post.userName }}</div>
                   </div>
                   <div class="ml-5 div-2">{{ post.content }}</div>
                 </div>
@@ -155,6 +161,7 @@ const userStore = useUserStore();
 const postStore = usePostStore();
 const getErrorMessage = ref(false);
 const postIsLoading = ref(false);
+const addProductToBasket = ref(false);
 const posts = ref([]);
 const route = useRoute();
 
@@ -168,19 +175,7 @@ const comment = ref([
 
 onBeforeMount(async () => {
   posts.value = [];
-  console.log(route);
-  if (route.name === 'home' || route.name === 'profile') {
-    const res = await postStore.fetchAllPost(userStore.userDetail?.id);
-    if (res.error) {
-      getErrorMessage.value = true;
-      setTimeout(() => {
-        getErrorMessage.value = false;
-      }, 3000);
-    } else {
-      posts.value = res;
-      postIsLoading.value = true;
-    }
-  }
+  fetchAllPost();
   if (route.params.id) {
     const res = await postStore.fetchPostDetail(route.params.id);
     if (res.error) {
@@ -195,6 +190,21 @@ onBeforeMount(async () => {
   }
 });
 
+const fetchAllPost = async () => {
+  if (route.name === 'home' || route.name === 'profile') {
+    const res = await postStore.fetchAllPost(userStore.userDetail?.id);
+    if (res.error) {
+      getErrorMessage.value = true;
+      setTimeout(() => {
+        getErrorMessage.value = false;
+      }, 3000);
+    } else {
+      posts.value = res;
+      postIsLoading.value = true;
+    }
+  }
+};
+
 const postLike = async (postId) => {
   try {
     const userId = localStorage.getItem('reduxState');
@@ -208,6 +218,7 @@ const postLike = async (postId) => {
   } catch (err) {
     console.log(err);
   }
+  fetchAllPost();
 };
 
 const sendComment = async (postId) => {
@@ -216,10 +227,12 @@ const sendComment = async (postId) => {
   try {
     const response = await postStore.commentPost(comment.value[0]);
     console.log(response);
-    comment.value.content = '';
   } catch (err) {
     console.log(err);
+  } finally {
+    comment.value.content = '';
   }
+  fetchAllPost();
 };
 
 const postBookmarked = async (postId) => {
@@ -230,9 +243,15 @@ const postBookmarked = async (postId) => {
   } catch (err) {
     console.log(err);
   }
+  fetchAllPost();
 };
 const addBasket = (post) => {
   addressStore.saveUserSelectPost(post);
+  addProductToBasket.value = true;
+
+  setTimeout(() => {
+    addProductToBasket.value = false;
+  }, 2000);
 };
 </script>
 

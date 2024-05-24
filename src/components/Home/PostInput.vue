@@ -130,7 +130,6 @@ import { useSearchStore } from '@/store/search';
 import { useUserStore } from '@/store/user';
 import { usePostStore } from '@/store/post';
 import categoriesService from '@/services/categories.service';
-// import axios from 'axios';
 
 const appStore = useAppStore();
 const searchStore = useSearchStore();
@@ -143,10 +142,10 @@ const searchValue = ref('');
 const items = ref([]);
 const categories = ref([]);
 const value = ref([]);
-const categoryIds = ref([]); // to be used in post create
+const categoryIds = ref([]);
 const post = ref({
   price: null,
-  title: '', // kaldırılabilir
+  title: '',
   content: '',
   image: [],
   isSellable: true,
@@ -184,7 +183,6 @@ const selectMenu = (v) => {
 };
 
 const imagesUploaded = async (image) => {
-  // Convert to FormData
   let formData = new FormData();
   formData.append('fileToUpload', image[0]);
   formData.append('submit', 'submit');

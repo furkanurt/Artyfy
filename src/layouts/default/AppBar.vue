@@ -70,6 +70,7 @@ const value = [
   { text: 'bookmarks', icon: 'mdi-bookmark-outline' },
   { text: 'shop', icon: 'mdi-cart-minus' },
   { text: 'profile', icon: 'mdi-account' },
+  { text: 'basket', icon: 'mdi-basket' },
 ];
 
 onMounted(() => {
@@ -88,6 +89,8 @@ function clickMenuItem(value) {
   showNav.value = false;
   if (value === 'home') {
     router.push('/');
+  } else if (value === 'basket') {
+    router.push('/shop/basket');
   } else {
     router.push(`/${value}`);
   }
