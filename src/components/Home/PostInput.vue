@@ -95,8 +95,9 @@
         prepend-icon="mdi-paperclip"
         variant="underlined"
         accept="image/*"
-        @change="imagesUploaded(post.image)"
+        @change="imagesUploaded()"
         counter
+        multiple
       >
         <template v-slot:selection="{ fileNames }">
           <template v-for="(fileName, index) in fileNames" :key="fileName">
@@ -108,7 +109,7 @@
               v-else-if="index === 2"
               class="text-overline text-grey-darken-3 mx-2"
             >
-              +{{ files.length - 2 }} File(s)
+              +{{ post.image.length - 2 }} File(s)
             </span>
           </template>
         </template>
@@ -152,7 +153,7 @@ const post = ref({
   appUserId: '',
   categoryId: null,
 });
-const saveFormat = ref('');
+const getImageName = ref([]);
 
 const filteredPosts = computed(() => {
   return searchStore.fetchPost(searchValue.value);
@@ -182,32 +183,34 @@ const selectMenu = (v) => {
   console.log('Categories IDs: ,', post.value.categoryId);
 };
 
-const imagesUploaded = async (image) => {
+const imagesUploaded = async () => {
   let formData = new FormData();
-  formData.append('fileToUpload', image[0]);
-  formData.append('submit', 'submit');
-  console.log('image', image[0]);
-  let parts = image[0].name.split('.');
-  saveFormat.value = '.' + parts[1];
 
-  try {
-    await fetch(
-      `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}&fileDir=artyfy`,
-      {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData,
-      },
-    );
-  } catch (error) {
-    console.error('ERROR: ', error);
+  for (var i = 0; i < post.value.image.length; i++) {
+    console.log(post.value.image[i], ',', i);
+    getImageName.value = [...getImageName.value, post.value.image[i].name];
+    formData.append('fileToUpload', post.value.image[i]);
+  }
+
+  for (const value of formData.values()) {
+    console.log('value of formData', value);
+    try {
+      await fetch(
+        `http://mst-images.com.tr/_upload/?fileName=${value.name}&fileDir=artyfy`,
+        {
+          method: 'POST',
+          mode: 'no-cors',
+          body: value,
+        },
+      );
+    } catch (error) {
+      console.error('ERROR: ', error);
+    }
   }
 };
 
 const sendPost = async () => {
-  post.value.image = [
-    `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}${saveFormat.value}`,
-  ];
+  post.value.image = getImageName.value;
   const res = await postStore.sendPost(post.value);
   console.log(res);
 

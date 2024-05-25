@@ -68,7 +68,7 @@
                   variant="outlined"
                   placeholder="Profil Fotoğrafınızı Değiştirin"
                   accept="image/*"
-                  @change="imagesUploaded(editedUser.imageUrl)"
+                  @change="imagesUploaded()"
                 ></v-file-input>
               </div>
               <div class="input-item">
@@ -141,7 +141,7 @@ const userStore = useUserStore();
 const dialog = ref(false);
 const userInfo = ref([]);
 const editedUser = ref([]);
-const saveFormat = ref('');
+const getImageName = ref([]);
 
 onMounted(async () => {
   await userStore.fetchUserDetail();
@@ -149,29 +149,37 @@ onMounted(async () => {
   editedUser.value = userStore.userDetail;
 });
 
-const imagesUploaded = async (image) => {
+const imagesUploaded = async () => {
   let formData = new FormData();
-  formData.append('fileToUpload', image[0]);
-  formData.append('submit', 'submit');
-  let parts = image[0].name.split('.');
-  saveFormat.value = '.' + parts[1];
 
-  try {
-    await fetch(
-      `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}&fileDir=artyfy`,
-      {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData,
-      },
-    );
-  } catch (error) {
-    console.error('ERROR: ', error);
+  for (var i = 0; i < editedUser.value.imageUrllength; i++) {
+    console.log(editedUser.value.imageUrl[i], ',', i);
+    getImageName.value = [
+      ...getImageName.value,
+      editedUser.value.imageUrl[i].name,
+    ];
+    formData.append('fileToUpload', editedUser.value.imageUrl[i]);
+  }
+
+  for (const value of formData.values()) {
+    console.log('value of formData', value);
+    try {
+      await fetch(
+        `http://mst-images.com.tr/_upload/?fileName=${value.name}&fileDir=artyfy`,
+        {
+          method: 'POST',
+          mode: 'no-cors',
+          body: value,
+        },
+      );
+    } catch (error) {
+      console.error('ERROR: ', error);
+    }
   }
 };
 
 const updateUserProfile = async () => {
-  editedUser.value.imageUrl = `http://mst-images.com.tr/_upload/?fileName=${userStore.userDetail.userName}${saveFormat.value}`;
+  editedUser.value.imageUrl = getImageName.value[0];
   try {
     await userStore.updateUserProfile(editedUser.value);
     // dialog.value = false;
