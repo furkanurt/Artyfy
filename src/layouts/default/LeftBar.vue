@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import router from '@/router';
 import { useUserStore } from '@/store/user';
 import { useRoute } from 'vue-router';
@@ -100,7 +100,7 @@ const value = [
   { text: 'profile', icon: 'mdi-account' },
 ];
 
-onMounted(async () => {
+onBeforeMount(async () => {
   const res = await userStore.fetchUserDetail();
   if (res.data.error) {
     logout();

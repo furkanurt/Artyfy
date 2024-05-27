@@ -50,26 +50,30 @@ class PostService extends ArtyfyService {
   // for the user to interact with posts
   async sendPostSave(postId, userId) {
     return await this._axios
-      .post(`/api/Posts/save?postId=${postId}&userId=${userId}` )
+      .post(`/api/Posts/save?postId=${postId}&userId=${userId}`)
       .then((res) => {
         return res;
       });
   }
   async sendPostLike(postId, userId) {
-    return await this._axios.post(`/api/Posts/like?postId=${postId}&userId=${userId}`).then((res) => {
-      return res;
-    });
+    return await this._axios
+      .post(`/api/Posts/like?postId=${postId}&userId=${userId}`)
+      .then((res) => {
+        return res;
+      });
   }
   async sendPostComment(content) {
     return await this._axios.post('/api/Comments/add', content).then((res) => {
       return res;
     });
   }
-  
+
   async fetchNotifications(userAppId) {
-    return await this._axios.get(`/api/Notifications?userAppId=${userAppId}`).then((res) => {
-      return res;
-    });
+    return await this._axios
+      .get(`/api/Notifications?userAppId=${userAppId}`)
+      .then((res) => {
+        return res;
+      });
   }
   async fetchTrendPost(id) {
     return await this._axios
@@ -78,8 +82,6 @@ class PostService extends ArtyfyService {
         return res;
       });
   }
-
- 
 }
 
 export default new PostService();

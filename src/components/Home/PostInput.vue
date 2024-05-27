@@ -59,7 +59,7 @@
                   :label="$t('selectCategory')"
                   density="comfortable"
                   variant="solo"
-                  @update:modelValue="selectMenu"
+                  @update:modelValue="selectMenu(value)"
                 ></v-select>
               </v-col>
 
@@ -88,7 +88,7 @@
     </div>
     <div id="file-input" class="px-7 flex justify-between items-center">
       <v-file-input
-        v-model="post.image"
+        v-model="post.images"
         :show-size="1000"
         label="File input"
         placeholder="Select your files"
@@ -97,7 +97,6 @@
         accept="image/*"
         @change="imagesUploaded()"
         counter
-        multiple
       >
         <template v-slot:selection="{ fileNames }">
           <template v-for="(fileName, index) in fileNames" :key="fileName">
@@ -118,7 +117,7 @@
         rounded="xl"
         class="text-white"
         style="background-color: #fa9392"
-        @click="sendPost"
+        @click="createPost"
         >{{ $t('postCard.post') }}</v-btn
       >
     </div>
@@ -129,31 +128,30 @@ import { useAppStore } from '@/store/app';
 import { computed, onBeforeMount, ref } from 'vue';
 import { useSearchStore } from '@/store/search';
 import { useUserStore } from '@/store/user';
-import { usePostStore } from '@/store/post';
 import categoriesService from '@/services/categories.service';
+import postService from '@/services/post.service';
 
 const appStore = useAppStore();
 const searchStore = useSearchStore();
 const userStore = useUserStore();
-const postStore = usePostStore();
 
 const getErrorMessage = ref(false);
 const getSuccessMessage = ref(false);
 const searchValue = ref('');
 const items = ref([]);
 const categories = ref([]);
-const value = ref([]);
-const categoryIds = ref([]);
+const value = ref();
 const post = ref({
   price: null,
-  title: '',
+  title: 'deneme',
   content: '',
-  image: [],
+  images: [],
   isSellable: true,
   appUserId: '',
   categoryId: null,
 });
 const getImageName = ref([]);
+const date = new Date();
 
 const filteredPosts = computed(() => {
   return searchStore.fetchPost(searchValue.value);
@@ -166,63 +164,63 @@ onBeforeMount(async () => {
     items.value = [...items.value, value.name];
   }
 
+  console.log(date.getUTCMonth());
   post.value.appUserId = localStorage.getItem('reduxState');
 });
 
-const selectMenu = (v) => {
-  let id = [];
-  v.map((y) => {
-    categories.value.filter((x) => {
-      if (y === x.name) {
-        id = [...id, x.id];
-      }
-    });
+const selectMenu = () => {
+  categories.value.filter((x) => {
+    if (value.value === x.name) {
+      console.log(x.id);
+      post.value.categoryId = x.id;
+    }
   });
-  categoryIds.value = id;
-  post.value.categoryId = categoryIds.value;
-  console.log('Categories IDs: ,', post.value.categoryId);
 };
 
 const imagesUploaded = async () => {
-  let formData = new FormData();
+  for (var i = 0; i < post.value.images.length; i++) {
+    let newFormData = new FormData();
 
-  for (var i = 0; i < post.value.image.length; i++) {
-    console.log(post.value.image[i], ',', i);
-    getImageName.value = [...getImageName.value, post.value.image[i].name];
-    formData.append('fileToUpload', post.value.image[i]);
-  }
+    newFormData.append('fileToUpload', post.value.images[i]);
+    newFormData.append('submit', 'submit');
 
-  for (const value of formData.values()) {
-    console.log('value of formData', value);
     try {
-      await fetch(
-        `http://mst-images.com.tr/_upload/?fileName=${value.name}&fileDir=artyfy`,
+      const res = await fetch(
+        `https://mst-images.com.tr/_upload/?fileName=${
+          userStore.userDetail.userName + [i][0]
+        }&fileDir=artyfy`,
         {
           method: 'POST',
-          mode: 'no-cors',
-          body: value,
+          body: newFormData,
         },
       );
+
+      res.json().then((r) => {
+        getImageName.value.push(r.content);
+      });
     } catch (error) {
       console.error('ERROR: ', error);
     }
   }
 };
 
-const sendPost = async () => {
-  post.value.image = getImageName.value;
-  const res = await postStore.sendPost(post.value);
-  console.log(res);
+const createPost = async () => {
+  post.value.images = getImageName.value;
 
-  if (res.errors) {
+  try {
+    const res = await postService.createPost(post.value);
+    console.log(res);
+
+    if (res.message) {
+      getSuccessMessage.value = true;
+      setTimeout(() => {
+        getSuccessMessage.value = false;
+      }, 3000);
+    }
+  } catch (err) {
     getErrorMessage.value = true;
     setTimeout(() => {
       getErrorMessage.value = false;
-    }, 3000);
-  } else if (res.message) {
-    getSuccessMessage.value = true;
-    setTimeout(() => {
-      getSuccessMessage.value = false;
     }, 3000);
   }
 

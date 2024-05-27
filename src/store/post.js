@@ -30,8 +30,7 @@ export const usePostStore = defineStore('post', {
     },
     async likePost(postId, userId) {
       try {
-        const response = await 
-        postService.sendPostLike(postId, userId);
+        const response = await postService.sendPostLike(postId, userId);
         return response.data;
       } catch (err) {
         console.error('Error liking post:', err);
@@ -40,8 +39,7 @@ export const usePostStore = defineStore('post', {
     },
     async bookmarkedPost(postId, userId) {
       try {
-        const res = await 
-        postService.sendPostSave(postId, userId);
+        const res = await postService.sendPostSave(postId, userId);
         return res.data;
       } catch (err) {
         console.error('Error saving data:', err);
@@ -50,8 +48,7 @@ export const usePostStore = defineStore('post', {
     },
     async commentPost(content) {
       try {
-        const res = await 
-        postService.sendPostComment(content);
+        const res = await postService.sendPostComment(content);
         return res.data;
       } catch (err) {
         console.error('err:', err.response.data);
@@ -60,8 +57,7 @@ export const usePostStore = defineStore('post', {
     },
     async notificationPage(userAppId) {
       try {
-        const res = await 
-        postService.fetchNotifications(userAppId);
+        const res = await postService.fetchNotifications(userAppId);
         return res.data;
       } catch (err) {
         console.error('err:', err.response.data);
@@ -99,6 +95,15 @@ export const usePostStore = defineStore('post', {
     async fetchTrendsPost(id) {
       try {
         const res = await postService.fetchTrendPost(id);
+        return res.data.data;
+      } catch (err) {
+        console.log(err);
+        return err;
+      }
+    },
+    async createPost(params) {
+      try {
+        const res = await postService.sendPost(params);
         return res.data.data;
       } catch (err) {
         console.log(err);

@@ -8,6 +8,7 @@
           type="warning"
           class="mb-10 px-5"
           transition="slide-y-transition"
+          v-if="postStore.postsForUser"
         >
           Daha fazlası için premium almalısınız.
         </v-alert>
@@ -21,12 +22,14 @@
   </div>
 </template>
 <script setup>
+import { onMounted } from 'vue';
 import { useSearchStore } from '@/store/search';
+import { usePostStore } from '@/store/post';
 import PostCard from '@/layouts/default/PostCard.vue';
 import PostInput from '@/components/Home/PostInput.vue';
-import { onMounted } from 'vue';
 
 const searchStore = useSearchStore();
+const postStore = usePostStore();
 
 onMounted(() => {
   searchStore.fetchPost('');

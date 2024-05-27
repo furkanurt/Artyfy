@@ -150,28 +150,26 @@ onMounted(async () => {
 });
 
 const imagesUploaded = async () => {
-  let formData = new FormData();
+  for (var i = 0; i < editedUser.value.image.length; i++) {
+    let newFormData = new FormData();
 
-  for (var i = 0; i < editedUser.value.imageUrllength; i++) {
-    console.log(editedUser.value.imageUrl[i], ',', i);
-    getImageName.value = [
-      ...getImageName.value,
-      editedUser.value.imageUrl[i].name,
-    ];
-    formData.append('fileToUpload', editedUser.value.imageUrl[i]);
-  }
+    newFormData.append('fileToUpload', editedUser.value.image[i]);
+    newFormData.append('submit', 'submit');
 
-  for (const value of formData.values()) {
-    console.log('value of formData', value);
     try {
-      await fetch(
-        `http://mst-images.com.tr/_upload/?fileName=${value.name}&fileDir=artyfy`,
+      const res = await fetch(
+        `https://mst-images.com.tr/_upload/?fileName=${
+          userStore.userDetail.userName + '-pp'
+        }&fileDir=artyfy`,
         {
           method: 'POST',
-          mode: 'no-cors',
-          body: value,
+          body: newFormData,
         },
       );
+
+      res.json().then((r) => {
+        getImageName.value.push(r.content);
+      });
     } catch (error) {
       console.error('ERROR: ', error);
     }
@@ -179,10 +177,9 @@ const imagesUploaded = async () => {
 };
 
 const updateUserProfile = async () => {
-  editedUser.value.imageUrl = getImageName.value[0];
+  editedUser.value.imageUrl = getImageName.value;
   try {
     await userStore.updateUserProfile(editedUser.value);
-    // dialog.value = false;
     router.push('/profile');
   } catch (error) {
     console.error(error);

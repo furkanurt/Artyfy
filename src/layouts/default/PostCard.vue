@@ -163,16 +163,14 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useAppStore } from '@/store/app';
 import { usePostStore } from '@/store/post';
 import { useRoute } from 'vue-router';
-import { useUserStore } from '@/store/user';
 import { useAddressStore } from '@/store/address';
 
 const addressStore = useAddressStore();
 const appStore = useAppStore();
-const userStore = useUserStore();
 const postStore = usePostStore();
 const getErrorMessage = ref(false);
 const postIsLoading = ref(false);
@@ -188,7 +186,7 @@ const comment = ref([
   },
 ]);
 
-onBeforeMount(async () => {
+onMounted(async () => {
   posts.value = [];
   fetchAllPost();
   if (route.params.id) {
@@ -207,7 +205,9 @@ onBeforeMount(async () => {
 
 const fetchAllPost = async () => {
   if (route.name === 'home' || route.name === 'profile') {
-    const res = await postStore.fetchAllPost(userStore.userDetail?.id);
+    const res = await postStore.fetchAllPost(
+      localStorage.getItem('reduxState'),
+    );
     if (res.error) {
       getErrorMessage.value = true;
       setTimeout(() => {
